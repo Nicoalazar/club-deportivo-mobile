@@ -1,0 +1,46 @@
+package com.grupo9.clubdeportivo
+
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+
+class LoginActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_login)
+
+        val etUsuario  = findViewById<EditText>(R.id.etUsuario)
+        val etPassword = findViewById<EditText>(R.id.etPassword)
+        val btnIngresar = findViewById<Button>(R.id.btnIngresar)
+        val tvError    = findViewById<TextView>(R.id.tvError)
+
+        btnIngresar.setOnClickListener {
+
+            val usuario  = etUsuario.text.toString().trim()
+            val password = etPassword.text.toString().trim()
+
+            // Validación básica de campos vacíos
+            if (usuario.isEmpty() || password.isEmpty()) {
+                tvError.text = "Completá todos los campos"
+                tvError.visibility = View.VISIBLE
+                return@setOnClickListener
+            }
+
+            // Credenciales hardcodeadas (sin DB por ahora)
+            if (usuario == "admin" && password == "admin123") {
+                tvError.visibility = View.GONE
+                val intent = Intent(this, DashboardAdminActivity::class.java)
+                startActivity(intent)
+                finish()
+            } else {
+                tvError.text = "Usuario o contraseña incorrectos"
+                tvError.visibility = View.VISIBLE
+            }
+        }
+    }
+}

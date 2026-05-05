@@ -1,11 +1,11 @@
-# 🏋️ Grupo 20 – Gimnasio y Club
+# 🏋️ Grupo 9 – Gimnasio y Club
 ### Aplicación Android — Gestión de Club Deportivo
 
 ---
 
 ## 📋 Descripción
 
-Aplicación móvil nativa para Android que digitaliza la gestión del **Grupo 20 – Gimnasio y Club**.  
+Aplicación móvil nativa para Android que digitaliza la gestión del **Grupo 9 – Gimnasio y Club**.  
 Permite administrar socios, registrar pagos, controlar vencimientos de cuotas y consultar el cronograma de actividades.
 
 Este proyecto es la migración del sistema de escritorio desarrollado en C#/.NET/WinForms durante las materias **DSOO** y **MDS**, adaptado al ecosistema Android con Kotlin.
@@ -22,7 +22,7 @@ Este proyecto es la migración del sistema de escritorio desarrollado en C#/.NET
 | Tome | A |
 | Zalazar | A |
 
-**Grupo:** Nro. 20  
+**Grupo:** Nro. 9  
 **Materia:** Desarrollo de Aplicaciones Móviles  
 **Profesor:** Prof. Kevin Del Bello  
 **Instituto:** IFTS Nº 29 — 2026, 1° cuatrimestre
@@ -45,7 +45,7 @@ Este proyecto es la migración del sistema de escritorio desarrollado en C#/.NET
 ## 📦 Package
 
 ```
-com.grupo20.clubdeportivo
+com.grupo9.clubdeportivo
 ```
 
 ---
@@ -56,7 +56,7 @@ com.grupo20.clubdeportivo
 app/
 └── src/
     └── main/
-        ├── java/com/grupo20/clubdeportivo/
+        ├── java/com/grupo9/clubdeportivo/
         │   ├── MainActivity.kt          # Punto de entrada (Splash)
         │   ├── LoginActivity.kt         # Pantalla de login
         │   │
@@ -177,7 +177,7 @@ Splash
 
 ## 🔗 Prototipo Figma
 
-[Grupo20 - Club Deportivo App](https://www.figma.com/design/KieX4MyKZjmrFta27p31le)
+[Grupo9 - Club Deportivo App](https://www.figma.com/design/KieX4MyKZjmrFta27p31le)
 
 ---
 
