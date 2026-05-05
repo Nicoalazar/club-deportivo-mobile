@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.grupo9.clubdeportivo.admin.DashboardAdminActivity
 
 class LoginActivity : AppCompatActivity() {
 

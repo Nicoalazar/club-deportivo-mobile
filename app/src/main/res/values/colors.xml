@@ -2,4 +2,16 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="colorBackground">#F5F8FC</color>
+    <color name="colorPrimary">#1B4F8A</color>
+    <color name="colorSecondary">#6AA8D0</color>
+    <color name="colorPrimaryLight">#CCE4F7</color>
+    <color name="colorTextPrimary">#1A1A1A</color>
+    <color name="colorTextMuted">#888888</color>
+    <color name="colorError">#C62828</color>
+    <color name="colorSuccess">#34C759</color>
+    <color name="colorWarning">#FF8D28</color>
+    <color name="colorErrorLight">#FDDEDE</color>
+    <color name="colorStatusOk">#2E7D32</color>
+    <color name="colorStatusOkLight">#E0F4E3</color>
 </resources>

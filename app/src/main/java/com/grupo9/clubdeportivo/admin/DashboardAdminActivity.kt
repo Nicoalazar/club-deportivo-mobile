@@ -1,10 +1,12 @@
-package com.grupo9.clubdeportivo
+package com.grupo9.clubdeportivo.admin
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.grupo9.clubdeportivo.admin.socios.ListaSociosActivity
+import com.grupo9.clubdeportivo.R
 
 class DashboardAdminActivity : AppCompatActivity() {
 

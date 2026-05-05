@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F8FC">
+    android:background="@color/colorBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
             android:text="Bienvenido"
             android:textSize="26sp"
             android:textStyle="bold"
-            android:textColor="#1B4F8A"
+            android:textColor="@color/colorPrimary"
             android:layout_marginBottom="8dp" />
 
         <TextView
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:text="Ingresá con tus datos"
             android:textSize="14sp"
-            android:textColor="#888888"
+            android:textColor="@color/colorTextMuted"
             android:layout_marginBottom="40dp" />
 
         <!-- Campo usuario -->
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:text="Usuario o email"
             android:textSize="13sp"
-            android:textColor="#1B4F8A"
+            android:textColor="@color/colorPrimary"
             android:textStyle="bold"
             android:layout_marginBottom="6dp" />
 
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:text="Contraseña"
             android:textSize="13sp"
-            android:textColor="#1B4F8A"
+            android:textColor="@color/colorPrimary"
             android:textStyle="bold"
             android:layout_marginBottom="6dp" />
 
@@ -89,8 +89,8 @@
             android:layout_height="wrap_content"
             android:text="Usuario o contraseña incorrectos"
             android:textSize="13sp"
-            android:textColor="#C62828"
-            android:background="#FDDEDE"
+            android:textColor="@color/colorError"
+            android:background="@color/colorErrorLight"
             android:padding="10dp"
             android:layout_marginBottom="16dp"
             android:visibility="gone" />
@@ -103,8 +103,8 @@
             android:text="INGRESAR"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#1B4F8A"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/colorPrimary"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp" />
 
@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"
             android:text="¿Olvidaste tu contraseña?"
             android:textSize="13sp"
-            android:textColor="#6AA8D0" />
+            android:textColor="@color/colorSecondary" />
 
     </LinearLayout>
 

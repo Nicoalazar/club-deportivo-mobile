@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="#1B4F8A"
+    android:background="@color/colorPrimary"
     android:padding="32dp">
 
     <ImageView
@@ -20,7 +20,7 @@
         android:text="Grupo 9"
         android:textSize="32sp"
         android:textStyle="bold"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/white"
         android:layout_marginBottom="8dp" />
 
     <TextView
@@ -28,6 +28,6 @@
         android:layout_height="wrap_content"
         android:text="Gimnasio y Club"
         android:textSize="18sp"
-        android:textColor="#CCE4F7" />
+        android:textColor="@color/colorPrimaryLight" />
 
 </LinearLayout>
