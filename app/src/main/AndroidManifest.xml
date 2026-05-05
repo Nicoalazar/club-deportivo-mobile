@@ -21,6 +21,12 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
+            android:name=".admin.BuscarSociosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".admin.RegistrarPagoActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false">
             <intent-filter>
