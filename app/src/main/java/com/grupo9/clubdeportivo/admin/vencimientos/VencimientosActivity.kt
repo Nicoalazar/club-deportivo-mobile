@@ -4,8 +4,12 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.toColorInt
 import com.grupo9.clubdeportivo.R
 
 class VencimientosActivity : AppCompatActivity() {
@@ -16,6 +20,7 @@ class VencimientosActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vencimientos)
 
+        // Inicialización de vistas
         contenedor = findViewById(R.id.contenedorSocios)
         val btnVolver = findViewById<ImageButton>(R.id.btnVolverVencimientos)
         val btnHoy = findViewById<Button>(R.id.btnHoy)
@@ -24,7 +29,8 @@ class VencimientosActivity : AppCompatActivity() {
 
         btnVolver.setOnClickListener { finish() }
 
-        // Carga inicial (Imagen 1)
+        // Carga inicial por defecto
+        actualizarBotones(btnHoy, btn7Dias, btnTodos)
         mostrarHoy()
 
         btnHoy.setOnClickListener {
@@ -66,21 +72,38 @@ class VencimientosActivity : AppCompatActivity() {
 
     private fun agregarSocio(nom: String, fec: String, est: String, col: String) {
         val view = LayoutInflater.from(this).inflate(R.layout.item_socio_vencimiento, contenedor, false)
+
+        // Convertimos el color una sola vez usando la extensión KTX
+        val colorInt = col.toColorInt()
+
         view.findViewById<TextView>(R.id.txtNombreSocio).text = nom
-        view.findViewById<TextView>(R.id.txtFechaSocio).text = fec
-        view.findViewById<TextView>(R.id.txtEstadoSocio).text = est
-        view.findViewById<TextView>(R.id.txtEstadoSocio).setTextColor(Color.parseColor(col))
-        view.findViewById<TextView>(R.id.txtFechaSocio).setTextColor(Color.parseColor(col))
-        view.findViewById<View>(R.id.bordeLateral).setBackgroundColor(Color.parseColor(col))
+
+        view.findViewById<TextView>(R.id.txtFechaSocio).apply {
+            text = fec
+            setTextColor(colorInt)
+        }
+
+        view.findViewById<TextView>(R.id.txtEstadoSocio).apply {
+            text = est
+            setTextColor(colorInt)
+        }
+
+        view.findViewById<View>(R.id.bordeLateral).setBackgroundColor(colorInt)
+
         contenedor.addView(view)
     }
 
-    private fun actualizarBotones(sel: Button, o1: Button, o2: Button) {
-        sel.setBackgroundColor(Color.parseColor("#1B4F8A"))
-        sel.setTextColor(Color.WHITE)
-        o1.setBackgroundColor(Color.WHITE)
-        o1.setTextColor(Color.parseColor("#1B4F8A"))
-        o2.setBackgroundColor(Color.WHITE)
-        o2.setTextColor(Color.parseColor("#1B4F8A"))
+    private fun actualizarBotones(seleccionado: Button, opcion1: Button, opcion2: Button) {
+        val azulPrimario = "#1B4F8A".toColorInt()
+
+        // Estilo para el botón activo
+        seleccionado.setBackgroundColor(azulPrimario)
+        seleccionado.setTextColor(Color.WHITE)
+
+        // Estilo para los botones inactivos
+        listOf(opcion1, opcion2).forEach { boton ->
+            boton.setBackgroundColor(Color.WHITE)
+            boton.setTextColor(azulPrimario)
+        }
     }
 }
