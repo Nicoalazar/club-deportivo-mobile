@@ -1,5 +1,6 @@
 package com.grupo9.clubdeportivo.admin.noSocios
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.LinearLayout
@@ -36,7 +37,9 @@ class ListaNoSociosActivity : AppCompatActivity() {
 
         cards.forEachIndexed { index, card ->
             card.setOnClickListener {
-                Toast.makeText(this, "No Socio: ${noSocios[index]}", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, CobroActividadActivity::class.java)
+                intent.putExtra("INTENT_NOMBRE", noSocios[index])
+                startActivity(intent)
             }
         }
     }
