@@ -11,27 +11,44 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ClubDeportivo">
+
         <activity
             android:name=".admin.noSocios.ListaNoSociosActivity"
             android:exported="false" />
+
         <activity
             android:name=".admin.socios.ListaSociosActivity"
             android:exported="false" />
+
         <activity
             android:name=".admin.DashboardAdminActivity"
             android:exported="false" />
+
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
+
         <activity
             android:name=".MainActivity"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".AltaSocioActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".DetalleSocioActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CobroActividadActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

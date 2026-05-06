@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F7FA">
+
+    <!-- Barra Superior Azul -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#1B4F8F"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp">
+
+        <TextView
+            android:id="@+id/btnVolver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="←"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nuevo Socio"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginStart="16dp" />
+    </LinearLayout>
+
+    <!-- Texto de instrucción -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Completá los datos del nuevo integrante"
+        android:textColor="#757575"
+        android:padding="20dp"
+        android:textSize="14sp" />
+
+
+    <!-- Campo Nombre -->
+    <EditText
+        android:id="@+id/editNombre"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="15dp"
+        android:background="@android:drawable/editbox_background_normal"
+        android:hint="Nombre"
+        android:paddingLeft="15dp"
+        android:inputType="textPersonName" />
+
+    <!-- Campo Apellido -->
+    <EditText
+        android:id="@+id/editApellido"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="15dp"
+        android:background="@android:drawable/editbox_background_normal"
+        android:hint="Apellido"
+        android:paddingLeft="15dp"
+        android:inputType="textPersonName" />
+
+    <!-- Campo DNI -->
+    <EditText
+        android:id="@+id/editDNI"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="15dp"
+        android:background="@android:drawable/editbox_background_normal"
+        android:hint="DNI"
+        android:paddingLeft="15dp"
+        android:inputType="number" />
+
+    <!-- Campo Email -->
+    <EditText
+        android:id="@+id/editEmail"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="15dp"
+        android:background="@android:drawable/editbox_background_normal"
+        android:hint="Email"
+        android:paddingLeft="15dp"
+        android:inputType="textEmailAddress" />
+
+    <!-- Campo Teléfono -->
+    <EditText
+        android:id="@+id/editTelefono"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="15dp"
+        android:background="@android:drawable/editbox_background_normal"
+        android:hint="Teléfono"
+        android:paddingLeft="15dp"
+        android:inputType="phone" />
+
+
+    <!-- Título de la sección de selección -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tipo de inscripción"
+        android:textColor="#1B4F8A"
+        android:textStyle="bold"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" />
+
+    <!-- Contenedor horizontal para los dos botones -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:weightSum="2">
+
+        <!-- Botón Socio -->
+        <Button
+            android:id="@+id/btnTipoSocio"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Socio"
+            android:backgroundTint="#1B4F8A"
+            android:textColor="#FFFFFF"
+            android:layout_marginRight="5dp" />
+
+        <!-- Botón No Socio -->
+        <Button
+            android:id="@+id/btnTipoNoSocio"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="No Socio"
+            android:backgroundTint="#FFFFFF"
+            android:textColor="#1B4F8A"
+            android:layout_marginLeft="5dp" />
+    </LinearLayout>
+
+    <!-- Este espacio vacío empuja el botón hacia abajo -->
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Botón de Guardar -->
+    <Button
+        android:id="@+id/btnGuardar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="20dp"
+        android:text="GUARDAR"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#1B4F8A" />
+
+</LinearLayout>
