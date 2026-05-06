@@ -16,23 +16,28 @@
             android:name=".admin.vencimientos.VencimientosActivity"
             android:exported="false" />
         <activity
-            android:name=".admin.socios.AltaSocioMainActivity"
+            android:name=".admin.socios.AltaSocioActivity"
             android:exported="false" />
+
         <activity
             android:name=".admin.noSocios.ListaNoSociosActivity"
             android:exported="false" />
+
         <activity
             android:name=".admin.socios.ListaSociosActivity"
             android:exported="false" />
+
         <activity
-            android:name=".admin.socios.DetalleSocioMainActivity"
+            android:name=".admin.socios.DetalleSocioActivity"
             android:exported="false" /> <!-- 2. OTRAS ACTIVIDADES -->
         <activity
             android:name=".admin.DashboardAdminActivity"
             android:exported="false" />
+
         <activity
             android:name=".LoginActivity"
-            android:exported="false" /> <!-- 3. PANTALLA DE INICIO (Debe ser exported true para que la app abra) -->
+            android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -42,6 +47,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".admin.noSocios.CobroActividadActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
