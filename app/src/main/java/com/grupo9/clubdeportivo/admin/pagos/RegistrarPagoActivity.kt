@@ -1,5 +1,6 @@
-package com.grupo9.clubdeportivo.admin
+package com.grupo9.clubdeportivo.admin.pagos
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.grupo9.clubdeportivo.databinding.ActivityRegistrarPagoBinding
@@ -39,14 +40,14 @@ class RegistrarPagoActivity : AppCompatActivity() {
     }
 
     private fun seleccionarMetodo(metodo: String) {
-        binding.btnEfectivo.setBackgroundColor(android.graphics.Color.parseColor("#F0F0F0"))
-        binding.btnTransferencia.setBackgroundColor(android.graphics.Color.parseColor("#F0F0F0"))
-        binding.btnDebito.setBackgroundColor(android.graphics.Color.parseColor("#F0F0F0"))
+        binding.btnEfectivo.setBackgroundColor(Color.parseColor("#F0F0F0"))
+        binding.btnTransferencia.setBackgroundColor(Color.parseColor("#F0F0F0"))
+        binding.btnDebito.setBackgroundColor(Color.parseColor("#F0F0F0"))
 
         when (metodo) {
-            "Efectivo" -> binding.btnEfectivo.setBackgroundColor(android.graphics.Color.parseColor("#1A3A5C"))
-            "Transferencia" -> binding.btnTransferencia.setBackgroundColor(android.graphics.Color.parseColor("#1A3A5C"))
-            "Débito" -> binding.btnDebito.setBackgroundColor(android.graphics.Color.parseColor("#1A3A5C"))
+            "Efectivo" -> binding.btnEfectivo.setBackgroundColor(Color.parseColor("#1A3A5C"))
+            "Transferencia" -> binding.btnTransferencia.setBackgroundColor(Color.parseColor("#1A3A5C"))
+            "Débito" -> binding.btnDebito.setBackgroundColor(Color.parseColor("#1A3A5C"))
         }
     }
 }
