@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.grupo9.clubdeportivo.admin.DashboardAdminActivity
 
@@ -18,6 +19,7 @@ class LoginActivity : AppCompatActivity() {
         val etUsuario  = findViewById<EditText>(R.id.etUsuario)
         val etPassword = findViewById<EditText>(R.id.etPassword)
         val btnIngresar = findViewById<Button>(R.id.btnIngresar)
+        val btnRecuperarPassword = findViewById<Button>(R.id.btnRecuperarPassword)
         val tvError    = findViewById<TextView>(R.id.tvError)
 
         btnIngresar.setOnClickListener {
@@ -42,6 +44,10 @@ class LoginActivity : AppCompatActivity() {
                 tvError.text = "Usuario o contraseña incorrectos"
                 tvError.visibility = View.VISIBLE
             }
+        }
+
+        btnRecuperarPassword.setOnClickListener {
+            Toast.makeText(this, "Usuario: admin\nPassword: admin123", Toast.LENGTH_LONG).show()
         }
     }
 }
