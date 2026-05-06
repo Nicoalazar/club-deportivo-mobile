@@ -10,7 +10,12 @@ class CobroActividadActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cobro_actividad)
 
-        val btnVolver: TextView = findViewById(R.id.btnVolverCobro)
+        val btnVolver = findViewById<TextView>(R.id.btnVolverCobro)
+        val tvNombre = findViewById<TextView>(R.id.tvNombreNoSocio)
+
+        val nombre = intent.getStringExtra("INTENT_NOMBRE") ?: "No Socio"
+        tvNombre.text = nombre
+
         btnVolver.setOnClickListener { finish() }
     }
 }
