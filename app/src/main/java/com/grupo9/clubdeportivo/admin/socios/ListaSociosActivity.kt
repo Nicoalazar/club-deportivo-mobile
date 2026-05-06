@@ -31,7 +31,7 @@ class ListaSociosActivity : AppCompatActivity() {
 
         // 3. Botón Nuevo Socio (Lógica corregida)
         btnNuevoSocio.setOnClickListener {
-            val intent = Intent(this, AltaSocioMainActivity::class.java)
+            val intent = Intent(this, AltaSocioActivity::class.java)
             startActivity(intent)
         }
 
@@ -42,7 +42,7 @@ class ListaSociosActivity : AppCompatActivity() {
         cards.forEachIndexed { index, card ->
             card.setOnClickListener {
                 // Aquí también podemos vincularlo para que vaya al Detalle de Socio
-                val intent = Intent(this, DetalleSocioMainActivity::class.java)
+                val intent = Intent(this, DetalleSocioActivity::class.java)
                 startActivity(intent)
 
                 Toast.makeText(this, "Socio: ${socios[index]}", Toast.LENGTH_SHORT).show()

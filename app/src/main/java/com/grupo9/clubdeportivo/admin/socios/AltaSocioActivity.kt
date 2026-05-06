@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class AltaSocioMainActivity : AppCompatActivity() {
+class AltaSocioActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +42,7 @@ class AltaSocioMainActivity : AppCompatActivity() {
                 val fechaVence = sdf.format(cal.time)
 
                 // Navegación con pasaje de datos (E4)
-                val intent = Intent(this, DetalleSocioMainActivity::class.java)
+                val intent = Intent(this, DetalleSocioActivity::class.java)
                 intent.putExtra("INTENT_NOMBRE", "$nom $ape")
                 intent.putExtra("INTENT_DNI", dni)
                 intent.putExtra("INTENT_VENCE", fechaVence)

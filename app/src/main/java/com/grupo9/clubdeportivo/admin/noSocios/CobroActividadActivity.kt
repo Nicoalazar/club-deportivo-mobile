@@ -1,8 +1,9 @@
-package com.grupo9.clubdeportivo
+package com.grupo9.clubdeportivo.admin.noSocios
 
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.grupo9.clubdeportivo.R
 
 class CobroActividadActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

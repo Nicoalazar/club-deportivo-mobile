@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.grupo9.clubdeportivo.R
 
-class DetalleSocioMainActivity : AppCompatActivity() {
+class DetalleSocioActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
