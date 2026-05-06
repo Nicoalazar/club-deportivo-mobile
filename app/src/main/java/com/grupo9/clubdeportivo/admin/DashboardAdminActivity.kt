@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.grupo9.clubdeportivo.admin.socios.ListaSociosActivity
 import com.grupo9.clubdeportivo.R
+import com.grupo9.clubdeportivo.admin.noSocios.ListaNoSociosActivity
 
 class DashboardAdminActivity : AppCompatActivity() {
 
@@ -27,7 +28,8 @@ class DashboardAdminActivity : AppCompatActivity() {
         }
 
         cardNoSocios.setOnClickListener {
-            Toast.makeText(this, "Módulo No Socios — próximamente", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, ListaNoSociosActivity::class.java)
+            startActivity(intent)
         }
 
         cardPagos.setOnClickListener {

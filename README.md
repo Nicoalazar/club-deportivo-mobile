@@ -200,12 +200,25 @@ Desarrollado en C# / .NET / WinForms con base de datos MySQL.
 
 ---
 
+## 🔒 Credenciales
+
+En etapa de desarrollo se ingresa con:
+- Usuario: **admin**
+- Password: **admin123**
+
+El botón **¿Olvidaste tu contraseña?** muestra un Toast con las credenciales.
+
+**⚠️ SOLO PARA DESARROLLO ⚠️**
+
+---
+
 ## 📌 Estado del proyecto
 
-| Etapa | Estado |
-|---|---|
-| Análisis | ✅ Completo |
-| Diseño (Figma) | ✅ Completo |
-| Entorno Android Studio | 🔄 En progreso |
-| Codificación | ⏳ Pendiente |
-| Distribución | ⏳ Pendiente |
+| Etapa                      | Estado |
+|----------------------------|---|
+| Análisis                   | ✅ Completo |
+| Diseño (Figma)             | ✅ Completo |
+| Entorno Android Studio     | 🔄 En progreso |
+| Codificación               | ⏳ Pendiente |
+| Conexion con base de datos | ⏳ Pendiente |
+| Presentación               | ⏳ Pendiente |
