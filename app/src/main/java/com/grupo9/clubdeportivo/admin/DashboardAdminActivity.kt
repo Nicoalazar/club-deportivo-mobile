@@ -14,12 +14,12 @@ class DashboardAdminActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard_admin)
 
-        val cardSocios      = findViewById<LinearLayout>(R.id.cardSocios)
-        val cardNoSocios    = findViewById<LinearLayout>(R.id.cardNoSocios)
-        val cardPagos       = findViewById<LinearLayout>(R.id.cardPagos)
+        val cardSocios       = findViewById<LinearLayout>(R.id.cardSocios)
+        val cardNoSocios     = findViewById<LinearLayout>(R.id.cardNoSocios)
+        val cardPagos        = findViewById<LinearLayout>(R.id.cardPagos)
         val cardVencimientos = findViewById<LinearLayout>(R.id.cardVencimientos)
-        val cardActividades = findViewById<LinearLayout>(R.id.cardActividades)
-        val cardAptoFisico  = findViewById<LinearLayout>(R.id.cardAptoFisico)
+        val cardActividades  = findViewById<LinearLayout>(R.id.cardActividades)
+        val cardAptoFisico   = findViewById<LinearLayout>(R.id.cardAptoFisico)
 
         cardSocios.setOnClickListener {
             val intent = Intent(this, ListaSociosActivity::class.java)
@@ -30,12 +30,12 @@ class DashboardAdminActivity : AppCompatActivity() {
             Toast.makeText(this, "Módulo No Socios — próximamente", Toast.LENGTH_SHORT).show()
         }
 
-        cardPagos.setOnClickListener {
-            Toast.makeText(this, "Módulo Pagos — próximamente", Toast.LENGTH_SHORT).show()
-        }
-
         cardVencimientos.setOnClickListener {
-            Toast.makeText(this, "Módulo Vencimientos — próximamente", Toast.LENGTH_SHORT).show()
+            // 1. Creamos el Intent (el pase) hacia tu nueva pantalla
+            val intent = Intent(this, com.grupo9.clubdeportivo.admin.vencimientos.VencimientosActivity::class.java)
+
+            // 2. Le decimos a Android que inicie la actividad
+            startActivity(intent)
         }
 
         cardActividades.setOnClickListener {
