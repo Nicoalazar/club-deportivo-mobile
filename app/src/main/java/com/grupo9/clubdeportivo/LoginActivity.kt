@@ -19,7 +19,7 @@ class LoginActivity : AppCompatActivity() {
         val etUsuario  = findViewById<EditText>(R.id.etUsuario)
         val etPassword = findViewById<EditText>(R.id.etPassword)
         val btnIngresar = findViewById<Button>(R.id.btnIngresar)
-        val btnRecuperarPassword = findViewById<TextView>(R.id.btnRecuperarPassword)
+        val btnRecuperarPassword = findViewById<Button>(R.id.btnRecuperarPassword)
         val tvError    = findViewById<TextView>(R.id.tvError)
 
         btnIngresar.setOnClickListener {
@@ -44,10 +44,10 @@ class LoginActivity : AppCompatActivity() {
                 tvError.text = "Usuario o contraseña incorrectos"
                 tvError.visibility = View.VISIBLE
             }
+        }
 
-            btnRecuperarPassword.setOnClickListener {
-                Toast.makeText(this,"Usuario: admin - Password: admin123",Toast.LENGTH_SHORT).show()
-            }
+        btnRecuperarPassword.setOnClickListener {
+            Toast.makeText(this, "Usuario: admin\nPassword: admin123", Toast.LENGTH_LONG).show()
         }
     }
 }
