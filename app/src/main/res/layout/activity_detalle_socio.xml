@@ -85,11 +85,14 @@
                 android:layout_marginTop="20dp"
                 android:text="DNI: 38.123.456" />
 
-            <TextView
-                android:id="@+id/tvEmailDetalle"
-                android:layout_width="match_parent"
+
+            <TextView    android:id="@+id/tvEmailDetalle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Email: juan@mail.com" />
+                android:text="Email: ---"
+                android:textSize="16sp"
+                android:textColor="#666666"
+                android:layout_marginTop="8dp" />
 
             <Button
                 android:id="@+id/btnRegistrarPago"

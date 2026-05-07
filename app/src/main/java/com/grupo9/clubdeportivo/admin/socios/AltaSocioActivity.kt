@@ -21,7 +21,7 @@ class AltaSocioActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_alta_socio_main)
+        setContentView(R.layout.activity_alta_socio)
 
         // 1. Referencias del XML
         val btnVolver = findViewById<ImageButton>(R.id.btnVolver)
