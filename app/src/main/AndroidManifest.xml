@@ -18,42 +18,41 @@
         <activity
             android:name=".admin.socios.AltaSocioActivity"
             android:exported="false" />
-
         <activity
             android:name=".admin.noSocios.ListaNoSociosActivity"
             android:exported="false" />
-
         <activity
             android:name=".admin.vencimientos.VencimientosActivity"
             android:exported="false" />
         <activity
             android:name=".admin.socios.ListaSociosActivity"
             android:exported="false" />
-
         <activity
             android:name=".admin.socios.DetalleSocioActivity"
-            android:exported="false" /> <!-- 2. OTRAS ACTIVIDADES -->
+            android:exported="false" />
         <activity
             android:name=".admin.DashboardAdminActivity"
             android:exported="false" />
-
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
-
+        <activity
+            android:name=".admin.socios.BuscarSociosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".admin.pagos.RegistrarPagoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".admin.noSocios.CobroActividadActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".admin.noSocios.CobroActividadActivity"
-            android:exported="false" />
 
     </application>
 

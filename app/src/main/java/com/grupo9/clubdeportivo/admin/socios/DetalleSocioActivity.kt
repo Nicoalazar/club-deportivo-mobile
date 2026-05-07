@@ -1,17 +1,19 @@
 package com.grupo9.clubdeportivo.admin.socios
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.grupo9.clubdeportivo.R
+import com.grupo9.clubdeportivo.admin.pagos.RegistrarPagoActivity
 
 class DetalleSocioActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detalle_socio_main)
+        setContentView(R.layout.activity_detalle_socio)
 
         // Referencias del XML
         val btnVolver = findViewById<ImageButton>(R.id.btnVolverDetalle)
@@ -37,5 +39,9 @@ class DetalleSocioActivity : AppCompatActivity() {
         }
 
         btnVolver.setOnClickListener { finish() }
+
+        btnPago.setOnClickListener {
+            startActivity(Intent(this, RegistrarPagoActivity::class.java))
+        }
     }
 }

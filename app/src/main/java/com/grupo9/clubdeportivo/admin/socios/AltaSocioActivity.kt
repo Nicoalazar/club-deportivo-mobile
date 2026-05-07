@@ -16,7 +16,7 @@ class AltaSocioActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_alta_socio_main)
+        setContentView(R.layout.activity_alta_socio)
 
         // Referencias del XML
         val btnVolver = findViewById<ImageButton>(R.id.btnVolver)
@@ -48,7 +48,7 @@ class AltaSocioActivity : AppCompatActivity() {
                 intent.putExtra("INTENT_VENCE", fechaVence)
 
                 startActivity(intent)
-                finish() // Cerramos el alta
+                finish()
             }
         }
     }
