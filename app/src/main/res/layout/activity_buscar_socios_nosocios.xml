@@ -70,13 +70,16 @@
 
             <!-- No Socio 1 -->
             <LinearLayout
+                android:id="@+id/cardNoSocio1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:background="#FFFFFF"
                 android:padding="14dp"
                 android:elevation="3dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="10dp"
+                android:clickable="true"
+                android:focusable="true">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -111,13 +114,16 @@
 
             <!-- No Socio 2 -->
             <LinearLayout
+                android:id="@+id/cardNoSocio2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:background="#FFFFFF"
                 android:padding="14dp"
                 android:elevation="3dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="10dp"
+                android:clickable="true"
+                android:focusable="true">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -152,13 +158,16 @@
 
             <!-- No Socio 3 -->
             <LinearLayout
+                android:id="@+id/cardNoSocio3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:background="#FFFFFF"
                 android:padding="14dp"
                 android:elevation="3dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="10dp"
+                android:clickable="true"
+                android:focusable="true">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -193,13 +202,16 @@
 
             <!-- No Socio 4 -->
             <LinearLayout
+                android:id="@+id/cardNoSocio4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:background="#FFFFFF"
                 android:padding="14dp"
                 android:elevation="3dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="10dp"
+                android:clickable="true"
+                android:focusable="true">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -234,13 +246,16 @@
 
             <!-- Socio 1 - Al día -->
             <LinearLayout
+                android:id="@+id/cardSocio1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:background="#FFFFFF"
                 android:padding="14dp"
                 android:elevation="3dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="10dp"
+                android:clickable="true"
+                android:focusable="true">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -281,13 +296,16 @@
 
             <!-- Socio 2 - Vencida -->
             <LinearLayout
+                android:id="@+id/cardSocio2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:background="#FFFFFF"
                 android:padding="14dp"
                 android:elevation="3dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="10dp"
+                android:clickable="true"
+                android:focusable="true">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -328,13 +346,16 @@
 
             <!-- Socio 3 - Al día -->
             <LinearLayout
+                android:id="@+id/cardSocio3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:background="#FFFFFF"
                 android:padding="14dp"
                 android:elevation="3dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="10dp"
+                android:clickable="true"
+                android:focusable="true">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -375,13 +396,16 @@
 
             <!-- Socio 4 - Al día -->
             <LinearLayout
+                android:id="@+id/cardSocio4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:background="#FFFFFF"
                 android:padding="14dp"
                 android:elevation="3dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="10dp"
+                android:clickable="true"
+                android:focusable="true">
 
                 <LinearLayout
                     android:layout_width="0dp"

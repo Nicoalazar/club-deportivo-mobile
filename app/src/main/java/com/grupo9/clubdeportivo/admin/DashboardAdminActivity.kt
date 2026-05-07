@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.grupo9.clubdeportivo.admin.socios.ListaSociosActivity
 import com.grupo9.clubdeportivo.R
 import com.grupo9.clubdeportivo.admin.noSocios.ListaNoSociosActivity
+import com.grupo9.clubdeportivo.admin.socios.BuscarSociosActivity
 
 class DashboardAdminActivity : AppCompatActivity() {
 
@@ -32,11 +33,13 @@ class DashboardAdminActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        cardVencimientos.setOnClickListener {
-            // 1. Creamos el Intent (el pase) hacia tu nueva pantalla
-            val intent = Intent(this, com.grupo9.clubdeportivo.admin.vencimientos.VencimientosActivity::class.java)
+        cardPagos.setOnClickListener {
+            val intent = Intent(this, BuscarSociosActivity::class.java)
+            startActivity(intent)
+        }
 
-            // 2. Le decimos a Android que inicie la actividad
+        cardVencimientos.setOnClickListener {
+            val intent = Intent(this, com.grupo9.clubdeportivo.admin.vencimientos.VencimientosActivity::class.java)
             startActivity(intent)
         }
 
