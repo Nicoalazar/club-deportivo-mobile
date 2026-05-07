@@ -55,9 +55,7 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".admin.noSocios.CobroActividadActivity"
-            android:exported="false" />
+
 
     </application>
 
