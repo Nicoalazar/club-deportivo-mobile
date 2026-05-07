@@ -8,6 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.grupo9.clubdeportivo.R
+import com.grupo9.clubdeportivo.admin.socios.AltaSocioActivity
 
 class ListaNoSociosActivity : AppCompatActivity() {
 
@@ -27,7 +28,8 @@ class ListaNoSociosActivity : AppCompatActivity() {
         }
 
         btnNuevoNoSocio.setOnClickListener {
-            Toast.makeText(this, "Alta de no socio — próximamente", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, AltaSocioActivity::class.java)
+            startActivity(intent)
         }
 
         // Al tocar cualquier card muestra un Toast con el nombre del socio
