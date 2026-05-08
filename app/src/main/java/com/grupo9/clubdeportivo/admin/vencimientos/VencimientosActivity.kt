@@ -22,7 +22,7 @@ class VencimientosActivity : AppCompatActivity() {
 
         // Inicialización de vistas
         contenedor = findViewById(R.id.contenedorSocios)
-        val btnVolver = findViewById<ImageButton>(R.id.btnVolverVencimientos)
+        val btnVolver = findViewById<TextView>(R.id.btnVolverVencimientos)
         val btnHoy = findViewById<Button>(R.id.btnHoy)
         val btn7Dias = findViewById<Button>(R.id.btn7Dias)
         val btnTodos = findViewById<Button>(R.id.btnTodos)
