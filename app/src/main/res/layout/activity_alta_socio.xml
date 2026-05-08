@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F5F8FC">
+    android:background="@color/colorBackground">
 
     <!-- Header Azul -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="#1B4F8A"
+        android:background="@color/colorPrimary"
         android:padding="16dp">
 
         <ImageButton
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nuevo Socio/No Socio"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_centerVertical="true"
@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Completá los datos del nuevo integrante"
-                android:textColor="#9E9E9E"
+                android:textColor="@color/colorTextHint"
                 android:layout_marginBottom="20dp"/>
 
             <EditText android:id="@+id/etNombre" android:layout_width="match_parent" android:layout_height="55dp"
@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:text="Tipo de inscripción"
                 android:textStyle="bold"
-                android:textColor="#1B4F8A"
+                android:textColor="@color/colorPrimary"
                 android:layout_marginBottom="10dp"/>
 
             <LinearLayout
@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Socio"
-                    android:backgroundTint="#1B4F8A"
+                    android:backgroundTint="@color/colorPrimary"
                     android:textColor="@color/white"
                     android:layout_marginEnd="5dp"/>
 
@@ -94,8 +94,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="No Socio"
-                    android:backgroundTint="#FFFFFF"
-                    android:textColor="#1B4F8A" />
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/colorPrimary" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
@@ -105,7 +105,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:text="GUARDAR"
-        android:backgroundTint="#1B4F8A"
+        android:backgroundTint="@color/colorPrimary"
         android:layout_margin="20dp"/>
 
 </LinearLayout>

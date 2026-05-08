@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F0F0F0">
+    android:background="@color/colorBackgroundGray">
 
     <!-- HEADER -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="#1A3A5C"
+        android:background="@color/colorPrimaryDark"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:paddingStart="12dp"
@@ -23,13 +23,13 @@
             android:src="@android:drawable/ic_media_previous"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Volver"
-            app:tint="#FFFFFF"/>
+            app:tint="@color/white"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Registrar Pago"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginStart="8dp"/>
@@ -66,14 +66,14 @@
                         android:text="Juan Pérez"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        android:textColor="#1A3A5C"/>
+                        android:textColor="@color/colorPrimaryDark"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="DNI: 38.123.456  •  Carnet N° 00042"
                         android:textSize="13sp"
-                        android:textColor="#888888"/>
+                        android:textColor="@color/colorTextMuted"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:text="Monto a cobrar"
                 android:textSize="14sp"
-                android:textColor="#1A3A5C"
+                android:textColor="@color/colorPrimaryDark"
                 android:textStyle="bold"
                 android:layout_marginBottom="6dp"/>
 
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:text="$3.500"
                 android:textSize="20sp"
-                android:textColor="#1A3A5C"
+                android:textColor="@color/colorPrimaryDark"
                 android:background="@android:drawable/edit_text"
                 android:padding="12dp"
                 android:layout_marginBottom="16dp"
@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:text="Método de pago"
                 android:textSize="14sp"
-                android:textColor="#1A3A5C"
+                android:textColor="@color/colorPrimaryDark"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp"/>
 
@@ -123,8 +123,8 @@
                     android:text="Efectivo"
                     android:textAllCaps="false"
                     android:textSize="12sp"
-                    android:backgroundTint="#1A3A5C"
-                    android:textColor="#FFFFFF"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:textColor="@color/white"
                     android:layout_marginEnd="4dp"/>
 
                 <Button
@@ -135,8 +135,8 @@
                     android:text="Transferencia"
                     android:textAllCaps="false"
                     android:textSize="12sp"
-                    android:backgroundTint="#FFFFFF"
-                    android:textColor="#1A3A5C"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/colorPrimaryDark"
                     android:layout_marginEnd="4dp"/>
 
                 <Button
@@ -147,8 +147,8 @@
                     android:text="Débito"
                     android:textAllCaps="false"
                     android:textSize="12sp"
-                    android:backgroundTint="#FFFFFF"
-                    android:textColor="#1A3A5C"/>
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/colorPrimaryDark"/>
             </LinearLayout>
 
             <!-- FECHA VENCIMIENTO -->
@@ -157,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
                 app:cardCornerRadius="8dp"
-                app:cardBackgroundColor="#E8F5E9">
+                app:cardBackgroundColor="@color/colorStatusOkLight">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -177,7 +177,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="10 de mayo de 2026"
-                        android:textColor="#2E7D32"
+                        android:textColor="@color/colorStatusOk"
                         android:textStyle="bold"
                         android:textSize="14sp"/>
                 </LinearLayout>
@@ -198,8 +198,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="CONFIRMAR PAGO"
-            android:backgroundTint="#1A3A5C"
-            android:textColor="#FFFFFF"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:textColor="@color/white"
             android:layout_marginBottom="8dp"/>
 
         <Button
@@ -207,8 +207,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="CANCELAR"
-            android:backgroundTint="#FFFFFF"
-            android:textColor="#1A3A5C"/>
+            android:backgroundTint="@color/white"
+            android:textColor="@color/colorPrimaryDark"/>
 
     </LinearLayout>
 
