@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F4F7F9">
+    android:background="@color/colorBackground">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -57,7 +57,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 app:cardCornerRadius="50dp"
-                app:cardBackgroundColor="#7FB3D5">
+                app:cardBackgroundColor="@color/colorSecondary">
                 <TextView
                     android:id="@+id/tvAvatar"
                     android:layout_width="match_parent"
@@ -76,14 +76,14 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
                 android:text="Carnet N° 00042"
-                android:textColor="#999999" />
+                android:textColor="@color/colorTextMuted" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="#E8F5E9">
+                app:cardBackgroundColor="@color/colorStatusOkLight">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -93,14 +93,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="✓  Cuota al día"
-                        android:textColor="#2E7D32"
+                        android:textColor="@color/colorStatusOk"
                         android:textStyle="bold" />
                     <TextView
                         android:id="@+id/tvVencimientoCuota"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Vence el 10 de mayo de 2026"
-                        android:textColor="#333333" />
+                        android:textColor="@color/colorTextPrimary" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -122,19 +122,19 @@
                     android:layout_height="wrap_content"
                     android:padding="16dp">
                     <TableRow android:paddingBottom="8dp">
-                        <TextView android:text="DNI:" android:textColor="#999999" android:layout_width="100dp" />
+                        <TextView android:text="DNI:" android:textColor="@color/colorTextMuted" android:layout_width="100dp" />
                         <TextView android:id="@+id/tvDniDetalle" android:text="38.123.456" android:textStyle="bold" />
                     </TableRow>
                     <TableRow android:paddingBottom="8dp">
-                        <TextView android:text="Email:" android:textColor="#999999" />
+                        <TextView android:text="Email:" android:textColor="@color/colorTextMuted" />
                         <TextView android:id="@+id/tvEmailDetalle" android:text="juan@mail.com" android:textStyle="bold" />
                     </TableRow>
                     <TableRow android:paddingBottom="8dp">
-                        <TextView android:text="Teléfono:" android:textColor="#999999" />
+                        <TextView android:text="Teléfono:" android:textColor="@color/colorTextMuted" />
                         <TextView android:text="11-4567-8901" android:textStyle="bold" />
                     </TableRow>
                     <TableRow>
-                        <TextView android:text="Apto físico:" android:textColor="#999999" />
+                        <TextView android:text="Apto físico:" android:textColor="@color/colorTextMuted" />
                         <TextView android:text="Vence: 01/09/2026" android:textStyle="bold" />
                     </TableRow>
                 </TableLayout>
@@ -154,9 +154,9 @@
                 android:layout_marginTop="8dp"
                 app:cardCornerRadius="6dp">
                 <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="12dp">
-                    <TextView android:id="@+id/txtF1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="10/04/2026" android:textColor="#999999" />
-                    <TextView android:layout_below="@id/txtF1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Efectivo" android:textColor="#BBBBBB" android:textSize="11sp" />
-                    <TextView android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="$3.500" android:textColor="#2E7D32" android:textStyle="bold" />
+                    <TextView android:id="@+id/txtF1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="10/04/2026" android:textColor="@color/colorTextMuted" />
+                    <TextView android:layout_below="@id/txtF1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Efectivo" android:textColor="@color/colorTextHint" android:textSize="11sp" />
+                    <TextView android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="$3.500" android:textColor="@color/colorStatusOk" android:textStyle="bold" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
@@ -166,9 +166,9 @@
                 android:layout_marginTop="8dp"
                 app:cardCornerRadius="6dp">
                 <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="12dp">
-                    <TextView android:id="@+id/txtF2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="10/03/2026" android:textColor="#999999" />
-                    <TextView android:layout_below="@id/txtF2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Transferencia" android:textColor="#BBBBBB" android:textSize="11sp" />
-                    <TextView android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="$3.500" android:textColor="#2E7D32" android:textStyle="bold" />
+                    <TextView android:id="@+id/txtF2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="10/03/2026" android:textColor="@color/colorTextMuted" />
+                    <TextView android:layout_below="@id/txtF2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Transferencia" android:textColor="@color/colorTextHint" android:textSize="11sp" />
+                    <TextView android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="$3.500" android:textColor="@color/colorStatusOk" android:textStyle="bold" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
@@ -179,9 +179,9 @@
                 android:layout_marginBottom="20dp"
                 app:cardCornerRadius="6dp">
                 <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="12dp">
-                    <TextView android:id="@+id/txtF3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="10/02/2026" android:textColor="#999999" />
-                    <TextView android:layout_below="@id/txtF3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Efectivo" android:textColor="#BBBBBB" android:textSize="11sp" />
-                    <TextView android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="$3.200" android:textColor="#2E7D32" android:textStyle="bold" />
+                    <TextView android:id="@+id/txtF3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="10/02/2026" android:textColor="@color/colorTextMuted" />
+                    <TextView android:layout_below="@id/txtF3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Efectivo" android:textColor="@color/colorTextHint" android:textSize="11sp" />
+                    <TextView android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="$3.200" android:textColor="@color/colorStatusOk" android:textStyle="bold" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 

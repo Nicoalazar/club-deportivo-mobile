@@ -1,8 +1,9 @@
 package com.grupo9.clubdeportivo.admin.pagos
 
-import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import com.grupo9.clubdeportivo.R
 import com.grupo9.clubdeportivo.databinding.ActivityRegistrarPagoBinding
 
 class RegistrarPagoActivity : AppCompatActivity() {
@@ -34,9 +35,9 @@ class RegistrarPagoActivity : AppCompatActivity() {
 
     private fun seleccionarMetodo(metodo: String) {
         // Colores que vamos a usar
-        val azulOscuro = Color.parseColor("#1A3A5C")
-        val blanco = Color.WHITE
-        val grisClaro = Color.parseColor("#F0F0F0")
+        val azulOscuro = ContextCompat.getColor(this, R.color.colorPrimaryDark)
+        val blanco = ContextCompat.getColor(this, R.color.white)
+        val grisClaro = ContextCompat.getColor(this, R.color.colorBackgroundGray)
 
         // Primero ponemos los tres botones en "Modo Desactivado" (Gris con letra Azul)
         val botones = listOf(binding.btnEfectivo, binding.btnTransferencia, binding.btnDebito)
