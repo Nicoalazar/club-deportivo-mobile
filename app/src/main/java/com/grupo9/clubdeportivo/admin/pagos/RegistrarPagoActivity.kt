@@ -14,40 +14,52 @@ class RegistrarPagoActivity : AppCompatActivity() {
         binding = ActivityRegistrarPagoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // "Efectivo" apenas abre la pantalla
+        seleccionarMetodo("Efectivo")
+
         // Volver atrás
         binding.btnVolver.setOnClickListener { finish() }
 
         // Método de pago
-        binding.btnEfectivo.setOnClickListener {
-            seleccionarMetodo("Efectivo")
-        }
-        binding.btnTransferencia.setOnClickListener {
-            seleccionarMetodo("Transferencia")
-        }
-        binding.btnDebito.setOnClickListener {
-            seleccionarMetodo("Débito")
-        }
+        binding.btnEfectivo.setOnClickListener { seleccionarMetodo("Efectivo") }
+        binding.btnTransferencia.setOnClickListener { seleccionarMetodo("Transferencia") }
+        binding.btnDebito.setOnClickListener { seleccionarMetodo("Débito") }
 
         // Confirmar pago
-        binding.btnConfirmarPago.setOnClickListener {
-            finish()
-        }
+        binding.btnConfirmarPago.setOnClickListener { finish() }
 
         // Cancelar
-        binding.btnCancelar.setOnClickListener {
-            finish()
-        }
+        binding.btnCancelar.setOnClickListener { finish() }
     }
 
     private fun seleccionarMetodo(metodo: String) {
-        binding.btnEfectivo.setBackgroundColor(Color.parseColor("#F0F0F0"))
-        binding.btnTransferencia.setBackgroundColor(Color.parseColor("#F0F0F0"))
-        binding.btnDebito.setBackgroundColor(Color.parseColor("#F0F0F0"))
+        // Colores que vamos a usar
+        val azulOscuro = Color.parseColor("#1A3A5C")
+        val blanco = Color.WHITE
+        val grisClaro = Color.parseColor("#F0F0F0")
 
+        // Primero ponemos los tres botones en "Modo Desactivado" (Gris con letra Azul)
+        val botones = listOf(binding.btnEfectivo, binding.btnTransferencia, binding.btnDebito)
+
+        for (boton in botones) {
+            boton.setBackgroundColor(grisClaro)
+            boton.setTextColor(azulOscuro)
+        }
+
+        // Ahora pintamos de "Activado" solo al que elijamos (Azul con letra Blanca)
         when (metodo) {
-            "Efectivo" -> binding.btnEfectivo.setBackgroundColor(Color.parseColor("#1A3A5C"))
-            "Transferencia" -> binding.btnTransferencia.setBackgroundColor(Color.parseColor("#1A3A5C"))
-            "Débito" -> binding.btnDebito.setBackgroundColor(Color.parseColor("#1A3A5C"))
+            "Efectivo" -> {
+                binding.btnEfectivo.setBackgroundColor(azulOscuro)
+                binding.btnEfectivo.setTextColor(blanco)
+            }
+            "Transferencia" -> {
+                binding.btnTransferencia.setBackgroundColor(azulOscuro)
+                binding.btnTransferencia.setTextColor(blanco)
+            }
+            "Débito" -> {
+                binding.btnDebito.setBackgroundColor(azulOscuro)
+                binding.btnDebito.setTextColor(blanco)
+            }
         }
     }
 }
