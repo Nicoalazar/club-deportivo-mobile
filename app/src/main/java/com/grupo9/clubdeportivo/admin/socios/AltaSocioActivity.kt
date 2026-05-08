@@ -24,7 +24,7 @@ class AltaSocioActivity : AppCompatActivity() {
         setContentView(R.layout.activity_alta_socio)
 
         // 1. Referencias del XML
-        val btnVolver = findViewById<ImageButton>(R.id.btnVolver)
+        val btnVolver = findViewById<TextView>(R.id.btnVolver)
         val btnGuardar = findViewById<Button>(R.id.btnGuardar)
         val btnTipoSocio = findViewById<Button>(R.id.btnTipoSocio)
         val btnTipoNoSocio = findViewById<Button>(R.id.btnTipoNoSocio)

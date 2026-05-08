@@ -16,7 +16,7 @@ class DetalleSocioActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detalle_socio)
 
         // Referencias del XML
-        val btnVolver = findViewById<ImageButton>(R.id.btnVolverDetalle)
+        val btnVolver = findViewById<TextView>(R.id.btnVolverDetalle)
         val btnPago = findViewById<Button>(R.id.btnRegistrarPago)
         val tvNombre = findViewById<TextView>(R.id.tvNombreTitulo)
         val tvDni = findViewById<TextView>(R.id.tvDniDetalle)
