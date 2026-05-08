@@ -22,16 +22,19 @@ class DetalleSocioActivity : AppCompatActivity() {
         val tvDni = findViewById<TextView>(R.id.tvDniDetalle)
         val tvVence = findViewById<TextView>(R.id.tvVencimientoCuota)
         val tvAvatar = findViewById<TextView>(R.id.tvAvatar)
+        val tvEmail = findViewById<TextView>(R.id.tvEmailDetalle)
 
         // Recepción de datos
         val nombre = intent.getStringExtra("INTENT_NOMBRE") ?: "Socio Sin Nombre"
         val dni = intent.getStringExtra("INTENT_DNI") ?: "---"
         val vence = intent.getStringExtra("INTENT_VENCE") ?: "--/--/----"
+        val emailRecibido = intent.getStringExtra("INTENT_EMAIL") ?: "sin mail"
 
         // Actualizar Interfaz
         tvNombre.text = nombre
         tvDni.text = "DNI: $dni"
         tvVence.text = "✓ Cuota al día - Vence $vence"
+        tvEmail.text = "Email: $emailRecibido"
 
         // Poner iniciales en el avatar
         if (nombre.isNotEmpty()) {
