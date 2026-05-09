@@ -38,7 +38,7 @@ Este proyecto es la migración del sistema de escritorio desarrollado en C#/.NET
 | UI | Empty Views Activity + LinearLayout |
 | Base de datos | SQLite (Room) |
 | Min SDK | API 24 (Android 7.0) |
-| Target SDK | API 34 (Android 14) |
+| Target SDK | API 36 (Android 16) |
 
 ---
 
@@ -64,27 +64,28 @@ app/
         │   │   ├── DashboardAdminActivity.kt
         │   │   ├── socios/
         │   │   │   ├── ListaSociosActivity.kt
+        │   │   │   ├── BuscarSociosActivity.kt
         │   │   │   ├── DetalleSocioActivity.kt
         │   │   │   └── AltaSocioActivity.kt
-        │   │   ├── nosocios/
+        │   │   ├── noSocios/
         │   │   │   ├── ListaNoSociosActivity.kt
-        │   │   │   └── CobroNoSocioActivity.kt
+        │   │   │   └── CobroActividadActivity.kt
         │   │   ├── pagos/
         │   │   │   └── RegistrarPagoActivity.kt
         │   │   └── vencimientos/
         │   │       └── VencimientosActivity.kt
         │   │
-        │   ├── socio/
+        │   ├── socio/                   # (pendiente)
         │   │   ├── DashboardSocioActivity.kt
         │   │   ├── PerfilSocioActivity.kt
         │   │   └── ActividadesActivity.kt
         │   │
-        │   ├── db/
-        │   │   ├── AppDatabase.kt       # Configuración Room
-        │   │   ├── dao/                 # Data Access Objects
-        │   │   └── entities/            # Entidades (Socio, Pago, Actividad...)
+        │   ├── db/                      # (pendiente — Room)
+        │   │   ├── AppDatabase.kt
+        │   │   ├── dao/
+        │   │   └── entities/
         │   │
-        │   └── model/
+        │   └── model/                   # (pendiente)
         │       ├── Socio.kt
         │       ├── NoSocio.kt
         │       ├── Pago.kt
@@ -109,29 +110,39 @@ app/
 | 2 | Login | Todos |
 | 3 | Dashboard Admin | Administrador |
 | 4 | Listado de Socios | Administrador |
-| 5 | Detalle de Socio | Administrador |
-| 6 | Alta de Socio / No Socio | Administrador |
-| 7 | Vencimientos | Administrador |
-| 8 | Registrar Pago | Administrador |
-| 9 | Listado de No Socios | Administrador |
-| 10 | Cobro de Actividad (No Socio) | Administrador |
-| 11 | Dashboard Socio | Socio |
-| 12 | Perfil Socio | Socio |
-| 13 | Actividades | Socio / Admin |
+| 5 | Búsqueda de Socios | Administrador |
+| 6 | Detalle de Socio | Administrador |
+| 7 | Alta de Socio / No Socio | Administrador |
+| 8 | Vencimientos | Administrador |
+| 9 | Registrar Pago | Administrador |
+| 10 | Listado de No Socios | Administrador |
+| 11 | Cobro de Actividad (No Socio) | Administrador |
+| 12 | Dashboard Socio | Socio |
+| 13 | Perfil Socio | Socio |
+| 14 | Actividades | Socio / Admin |
 
 ---
 
 ## 🎨 Identidad visual
 
-| Token | Valor |
-|---|---|
-| Azul oscuro (primario) | `#1B4F8A` |
-| Azul claro (secundario) | `#6AA8D0` |
-| Fondo | `#F5F8FC` |
-| Texto principal | `#1A1A1A` |
-| Estado al día | `#2E7D32` |
-| Estado vencido | `#C62828` |
-| Tipografía | Roboto |
+| Nombre | Hex | Uso |
+|---|---|---|
+| `colorPrimary` | `#1B4F8A` | Header, íconos, texto primario |
+| `colorSecondary` | `#6AA8D0` | Avatar, acentos secundarios |
+| `colorPrimaryDark` | `#1A3A5C` | Botones activos, selección |
+| `colorPrimaryLight` | `#CCE4F7` | Subtítulos sobre fondo primario |
+| `colorBackground` | `#F5F8FC` | Fondo de pantallas |
+| `colorBackgroundGray` | `#F0F0F0` | Botones desactivados |
+| `colorTextPrimary` | `#1A1A1A` | Texto principal |
+| `colorTextMuted` | `#888888` | Texto secundario / hint |
+| `colorTextHint` | `#9E9E9E` | Texto muy tenue |
+| `colorStatusOk` | `#2E7D32` | Texto "Al día" |
+| `colorStatusOkLight` | `#E0F4E3` | Fondo badge "Al día" |
+| `colorError` | `#C62828` | Texto "Vencida" |
+| `colorErrorLight` | `#FDDEDE` | Fondo badge "Vencida" |
+| `colorSuccess` | `#34C759` | Íconos de éxito |
+| `colorWarning` | `#FF8D28` | Íconos de advertencia |
+| Tipografía | Roboto | — |
 
 ---
 
@@ -200,12 +211,25 @@ Desarrollado en C# / .NET / WinForms con base de datos MySQL.
 
 ---
 
+## 🔒 Credenciales
+
+En etapa de desarrollo se ingresa con:
+- Usuario: **admin**
+- Password: **admin123**
+
+El botón **¿Olvidaste tu contraseña?** muestra un Toast con las credenciales.
+
+**⚠️ SOLO PARA DESARROLLO ⚠️**
+
+---
+
 ## 📌 Estado del proyecto
 
-| Etapa | Estado |
-|---|---|
-| Análisis | ✅ Completo |
-| Diseño (Figma) | ✅ Completo |
-| Entorno Android Studio | 🔄 En progreso |
-| Codificación | ⏳ Pendiente |
-| Distribución | ⏳ Pendiente |
+| Etapa                      | Estado |
+|----------------------------|---|
+| Análisis                   | ✅ Completo |
+| Diseño (Figma)             | ✅ Completo |
+| Entorno Android Studio     | 🔄 En progreso |
+| Codificación               | 🔄 En progreso |
+| Conexion con base de datos | ⏳ Pendiente |
+| Presentación               | ⏳ Pendiente |

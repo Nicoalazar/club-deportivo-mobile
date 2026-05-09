@@ -29,7 +29,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Socios"
+            android:text="No Socios"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/white" />
@@ -70,9 +70,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Socio 1 -->
+            <!-- No Socio 1 -->
             <LinearLayout
-                android:id="@+id/cardSocio1"
+                android:id="@+id/cardNoSocio1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -92,7 +92,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Juan Pérez"
+                        android:text="Pedro Alvarez"
                         android:textSize="15sp"
                         android:textStyle="bold"
                         android:textColor="@color/colorTextPrimary" />
@@ -100,7 +100,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="DNI: 38.123.456"
+                        android:text="DNI: 40.111.222"
                         android:textSize="13sp"
                         android:textColor="@color/colorTextMuted"
                         android:layout_marginTop="4dp" />
@@ -110,11 +110,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Al día"
+                    android:text="Musculación"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    android:textColor="@color/colorStatusOk"
-                    android:background="@color/colorStatusOkLight"
+                    android:textColor="@color/colorPrimary"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:paddingTop="4dp"
@@ -122,9 +121,9 @@
 
             </LinearLayout>
 
-            <!-- Socio 2 -->
+            <!-- No Socio 2 -->
             <LinearLayout
-                android:id="@+id/cardSocio2"
+                android:id="@+id/cardNoSocio2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -144,7 +143,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="María González"
+                        android:text="Florencia Paz"
                         android:textSize="15sp"
                         android:textStyle="bold"
                         android:textColor="@color/colorTextPrimary" />
@@ -152,7 +151,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="DNI: 29.876.543"
+                        android:text="DNI: 33.444.555"
                         android:textSize="13sp"
                         android:textColor="@color/colorTextMuted"
                         android:layout_marginTop="4dp" />
@@ -162,11 +161,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Vencida"
+                    android:text="Pilates"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    android:textColor="@color/colorError"
-                    android:background="@color/colorErrorLight"
+                    android:textColor="@color/colorPrimary"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:paddingTop="4dp"
@@ -174,9 +172,9 @@
 
             </LinearLayout>
 
-            <!-- Socio 3 -->
+            <!-- No Socio 3 -->
             <LinearLayout
-                android:id="@+id/cardSocio3"
+                android:id="@+id/cardNoSocio3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -196,7 +194,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Carlos Ramírez"
+                        android:text="Tomás Vera"
                         android:textSize="15sp"
                         android:textStyle="bold"
                         android:textColor="@color/colorTextPrimary" />
@@ -204,7 +202,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="DNI: 41.222.111"
+                        android:text="DNI: 46.777.888"
                         android:textSize="13sp"
                         android:textColor="@color/colorTextMuted"
                         android:layout_marginTop="4dp" />
@@ -214,11 +212,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Al día"
+                    android:text="Zumba"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    android:textColor="@color/colorStatusOk"
-                    android:background="@color/colorStatusOkLight"
+                    android:textColor="@color/colorPrimary"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:paddingTop="4dp"
@@ -226,9 +223,9 @@
 
             </LinearLayout>
 
-            <!-- Socio 4 -->
+            <!-- No Socio 4 -->
             <LinearLayout
-                android:id="@+id/cardSocio4"
+                android:id="@+id/cardNoSocio4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -248,7 +245,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Laura Méndez"
+                        android:text="Cecilia Font"
                         android:textSize="15sp"
                         android:textStyle="bold"
                         android:textColor="@color/colorTextPrimary" />
@@ -256,7 +253,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="DNI: 35.654.321"
+                        android:text="DNI: 38.999.000"
                         android:textSize="13sp"
                         android:textColor="@color/colorTextMuted"
                         android:layout_marginTop="4dp" />
@@ -266,63 +263,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Al día"
+                    android:text="Spinning"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    android:textColor="@color/colorStatusOk"
-                    android:background="@color/colorStatusOkLight"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:paddingTop="4dp"
-                    android:paddingBottom="4dp" />
-
-            </LinearLayout>
-
-            <!-- Socio 5 -->
-            <LinearLayout
-                android:id="@+id/cardSocio5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@color/white"
-                android:padding="14dp"
-                android:elevation="3dp"
-                android:layout_marginBottom="10dp"
-                android:clickable="true"
-                android:focusable="true">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Diego Sosa"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorTextPrimary" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="DNI: 44.001.002"
-                        android:textSize="13sp"
-                        android:textColor="@color/colorTextMuted"
-                        android:layout_marginTop="4dp" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Vencida"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorError"
-                    android:background="@color/colorErrorLight"
+                    android:textColor="@color/colorPrimary"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:paddingTop="4dp"
@@ -334,18 +278,16 @@
 
     </ScrollView>
 
-    <!-- Botón Nuevo Socio (fijo abajo) -->
+    <!-- Botón Nuevo No Socio (fijo abajo) -->
     <Button
-        android:id="@+id/btnNuevoSocio"
+        android:id="@+id/btnNuevoNoSocio"
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        android:text="+ NUEVO SOCIO"
+        android:text="+ NUEVO NO SOCIO"
         android:textSize="15sp"
         android:textStyle="bold"
         android:textColor="@color/white"
         android:backgroundTint="@color/colorPrimary"
         android:layout_margin="16dp" />
-
-
 
 </LinearLayout>

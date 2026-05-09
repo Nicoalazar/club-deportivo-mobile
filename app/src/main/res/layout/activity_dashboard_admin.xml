@@ -100,7 +100,7 @@
                             android:layout_height="20dp"
                             android:src="@drawable/check"
                             android:layout_marginEnd="6dp"
-                            android:tint="@color/colorSuccess"/>
+                            app:tint="@color/colorSuccess"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -124,7 +124,7 @@
                             android:layout_height="20dp"
                             android:src="@drawable/warning"
                             android:layout_marginEnd="6dp"
-                            android:tint="@color/colorWarning"/>
+                            app:tint="@color/colorWarning"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -150,7 +150,7 @@
                         android:layout_height="20dp"
                         android:src="@drawable/cash"
                         android:layout_marginEnd="6dp"
-                        android:tint="@color/colorSuccess"/>
+                        app:tint="@color/colorSuccess"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -291,10 +291,12 @@
                     android:clickable="true"
                     android:focusable="true">
 
+                    <!-- ICONO EN NEGRO MODIFICADO AQUI -->
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/calendar" />
+                        android:src="@drawable/calendar"
+                        app:tint="@color/black" />
 
                     <TextView
                         android:layout_width="wrap_content"

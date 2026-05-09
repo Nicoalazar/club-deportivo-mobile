@@ -7,6 +7,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.grupo9.clubdeportivo.admin.socios.ListaSociosActivity
 import com.grupo9.clubdeportivo.R
+import com.grupo9.clubdeportivo.admin.noSocios.ListaNoSociosActivity
+import com.grupo9.clubdeportivo.admin.socios.BuscarSociosActivity
 
 class DashboardAdminActivity : AppCompatActivity() {
 
@@ -14,12 +16,12 @@ class DashboardAdminActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard_admin)
 
-        val cardSocios      = findViewById<LinearLayout>(R.id.cardSocios)
-        val cardNoSocios    = findViewById<LinearLayout>(R.id.cardNoSocios)
-        val cardPagos       = findViewById<LinearLayout>(R.id.cardPagos)
+        val cardSocios       = findViewById<LinearLayout>(R.id.cardSocios)
+        val cardNoSocios     = findViewById<LinearLayout>(R.id.cardNoSocios)
+        val cardPagos        = findViewById<LinearLayout>(R.id.cardPagos)
         val cardVencimientos = findViewById<LinearLayout>(R.id.cardVencimientos)
-        val cardActividades = findViewById<LinearLayout>(R.id.cardActividades)
-        val cardAptoFisico  = findViewById<LinearLayout>(R.id.cardAptoFisico)
+        val cardActividades  = findViewById<LinearLayout>(R.id.cardActividades)
+        val cardAptoFisico   = findViewById<LinearLayout>(R.id.cardAptoFisico)
 
         cardSocios.setOnClickListener {
             val intent = Intent(this, ListaSociosActivity::class.java)
@@ -27,15 +29,18 @@ class DashboardAdminActivity : AppCompatActivity() {
         }
 
         cardNoSocios.setOnClickListener {
-            Toast.makeText(this, "Módulo No Socios — próximamente", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, ListaNoSociosActivity::class.java)
+            startActivity(intent)
         }
 
         cardPagos.setOnClickListener {
-            Toast.makeText(this, "Módulo Pagos — próximamente", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, BuscarSociosActivity::class.java)
+            startActivity(intent)
         }
 
         cardVencimientos.setOnClickListener {
-            Toast.makeText(this, "Módulo Vencimientos — próximamente", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, com.grupo9.clubdeportivo.admin.vencimientos.VencimientosActivity::class.java)
+            startActivity(intent)
         }
 
         cardActividades.setOnClickListener {
