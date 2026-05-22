@@ -36,19 +36,24 @@ class ListaSociosActivity : AppCompatActivity() {
         }
 
         // 4. Lógica de las Cards (para enviar datos)
-        val socios = listOf("Juan Pérez", "María González", "Carlos Ramírez", "Laura Méndez", "Diego Sosa")
-        val dnis   = listOf("38.123.456", "40.987.654", "35.456.789", "42.123.000", "39.888.777")
-        val cards  = listOf(cardSocio1, cardSocio2, cardSocio3, cardSocio4, cardSocio5)
+        val socios    = listOf("Juan Pérez", "María González", "Carlos Ramírez", "Laura Méndez", "Diego Sosa")
+        val dnis      = listOf("38.123.456", "40.987.654", "35.456.789", "42.123.000", "39.888.777")
+        val carnets   = listOf("00042", "00017", "00031", "00055", "00008")
+        val estados   = listOf("Al dia", "Vencida", "Al dia", "Al dia", "Vencida")
+        val telefonos = listOf("11-4567-8901", "11-2345-6789", "11-9876-5432", "11-1111-2222", "11-3333-4444")
+        val cards     = listOf(cardSocio1, cardSocio2, cardSocio3, cardSocio4, cardSocio5)
 
         cards.forEachIndexed { index, card ->
             card.setOnClickListener {
                 val intent = Intent(this, DetalleSocioActivity::class.java)
 
-                // CARGAMOS LA DATA EN EL INTENT
                 intent.putExtra("INTENT_NOMBRE", socios[index])
                 intent.putExtra("INTENT_DNI", dnis[index])
                 intent.putExtra("INTENT_VENCE", "10/05/2026")
                 intent.putExtra("INTENT_EMAIL", "socio${index + 1}@mail.com")
+                intent.putExtra("INTENT_CARNET", carnets[index])
+                intent.putExtra("INTENT_ESTADO", estados[index])
+                intent.putExtra("INTENT_TELEFONO", telefonos[index])
 
                 startActivity(intent)
 

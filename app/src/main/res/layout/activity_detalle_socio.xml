@@ -79,6 +79,7 @@
                 android:textColor="@color/colorTextMuted" />
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardBadgeEstado"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -90,6 +91,7 @@
                     android:orientation="vertical"
                     android:padding="16dp">
                     <TextView
+                        android:id="@+id/tvBadgeEstado"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="✓  Cuota al día"
@@ -131,7 +133,7 @@
                     </TableRow>
                     <TableRow android:paddingBottom="8dp">
                         <TextView android:text="Teléfono:" android:textColor="@color/colorTextMuted" />
-                        <TextView android:text="11-4567-8901" android:textStyle="bold" />
+                        <TextView android:id="@+id/tvTelefonoDetalle" android:text="11-4567-8901" android:textStyle="bold" />
                     </TableRow>
                     <TableRow>
                         <TextView android:text="Apto físico:" android:textColor="@color/colorTextMuted" />

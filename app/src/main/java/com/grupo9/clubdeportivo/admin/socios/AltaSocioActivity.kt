@@ -77,7 +77,10 @@ class AltaSocioActivity : AppCompatActivity() {
                 intent.putExtra("INTENT_DNI", dni)
                 intent.putExtra("INTENT_VENCE", fechaVence)
                 intent.putExtra("INTENT_TIPO", if (esSocio) "Socio" else "No Socio")
-                intent.putExtra("INTENT_EMAIL", mail) // <--- MAIL AGREGADO
+                intent.putExtra("INTENT_EMAIL", mail)
+                intent.putExtra("INTENT_CARNET", "")
+                intent.putExtra("INTENT_ESTADO", "Al dia")
+                intent.putExtra("INTENT_TELEFONO", tel)
 
                 startActivity(intent)
                 finish()
