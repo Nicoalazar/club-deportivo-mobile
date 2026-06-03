@@ -1,8 +1,12 @@
 package com.grupo9.clubdeportivo.db
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 /**
  * Helper de base de datos SQLite del Club Deportivo.
@@ -37,6 +41,60 @@ class DBHelper(context: Context) :
         db.execSQL(CREATE_CUOTAS_SOCIOS)
         db.execSQL(CREATE_PASES_DIARIOS)
         db.execSQL(CREATE_VIEW_PERSONAS_DATA)
+
+        // Datos iniciales (issue #3).
+        seedInitialData(db)
+    }
+
+    /**
+     * Inserta los datos mínimos para que la app sea usable en el primer arranque:
+     * roles, usuarios y la configuración de cuotas vigente.
+     * Se ejecuta dentro de la transacción de onCreate, después de crear las tablas.
+     */
+    private fun seedInitialData(db: SQLiteDatabase) {
+        // Roles (RolUsu explícito: 1 = Administrador, 2 = Empleado)
+        db.insert(TABLE_ROLES, null, ContentValues().apply {
+            put("RolUsu", 1)
+            put("NomRol", "Administrador")
+        })
+        db.insert(TABLE_ROLES, null, ContentValues().apply {
+            put("RolUsu", 2)
+            put("NomRol", "Empleado")
+        })
+
+        // Usuarios. El password se guarda en texto plano, igual que en el
+        // sistema C# original (simplificación del TP; en producción iría hasheado).
+        db.insert(TABLE_USUARIO, null, ContentValues().apply {
+            put("NombreUsu", "Admin")
+            put("PassUsu", "admin")
+            put("RolUsu", 1)
+            put("Activo", 1)
+        })
+        db.insert(TABLE_USUARIO, null, ContentValues().apply {
+            put("NombreUsu", "nzalazar")
+            put("PassUsu", "1234")
+            put("RolUsu", 2)
+            put("Activo", 1)
+        })
+        db.insert(TABLE_USUARIO, null, ContentValues().apply {
+            put("NombreUsu", "profe")
+            put("PassUsu", "1234")
+            put("RolUsu", 1)
+            put("Activo", 1)
+        })
+
+        // Configuración de cuotas vigente desde hoy.
+        val hoy = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
+        db.insert(TABLE_CONFIGURACION_CUOTAS, null, ContentValues().apply {
+            put("tipo_cuota", "Mensual")
+            put("importe_actual", CUOTA_MENSUAL_INICIAL)
+            put("vigente_desde", hoy)
+        })
+        db.insert(TABLE_CONFIGURACION_CUOTAS, null, ContentValues().apply {
+            put("tipo_cuota", "Diaria")
+            put("importe_actual", CUOTA_DIARIA_INICIAL)
+            put("vigente_desde", hoy)
+        })
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -56,6 +114,10 @@ class DBHelper(context: Context) :
     companion object {
         const val DB_NAME = "club_deportivo.db"
         const val DB_VERSION = 1
+
+        // Montos iniciales de cuota.
+        private const val CUOTA_MENSUAL_INICIAL = 15000.0
+        private const val CUOTA_DIARIA_INICIAL = 3000.0
 
         // Nombres de tablas y vista
         const val TABLE_ROLES = "roles"
