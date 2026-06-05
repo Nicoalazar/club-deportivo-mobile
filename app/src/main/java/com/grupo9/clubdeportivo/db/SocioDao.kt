@@ -1,15 +1,14 @@
 package com.grupo9.clubdeportivo.db
 
 import android.content.ContentValues
-import android.content.Context
 import com.grupo9.clubdeportivo.model.Socio
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class SocioDao(context: Context) {
+class SocioDao(private val dbHelper: DBHelper) {
 
-    private val db = DBHelper(context).writableDatabase
+    private val db = dbHelper.writableDatabase
     private val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
 
     // Verifica si ya existe un socio
