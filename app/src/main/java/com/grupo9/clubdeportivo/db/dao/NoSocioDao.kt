@@ -1,6 +1,7 @@
-package com.grupo9.clubdeportivo.db
+package com.grupo9.clubdeportivo.db.dao
 
 import android.content.ContentValues
+import com.grupo9.clubdeportivo.db.DBHelper
 import com.grupo9.clubdeportivo.model.NoSocio
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -33,7 +34,7 @@ class NoSocioDao(private val dbHelper: DBHelper) {
             if (aptoVencimiento != null) put("apto_fisico_vencimiento", aptoVencimiento)
             if (motivo != null) put("motivo", motivo)
         }
-        return db.insert(DBHelper.TABLE_NO_SOCIOS, null, values)
+        return db.insert(DBHelper.Companion.TABLE_NO_SOCIOS, null, values)
     }
 
     // Editar no socio
@@ -43,7 +44,7 @@ class NoSocioDao(private val dbHelper: DBHelper) {
             if (aptoVencimiento != null) put("apto_fisico_vencimiento", aptoVencimiento)
             if (motivo != null) put("motivo", motivo)
         }
-        return db.update(DBHelper.TABLE_NO_SOCIOS, values, "id_no_socio = ?", arrayOf(idNoSocio.toString()))
+        return db.update(DBHelper.Companion.TABLE_NO_SOCIOS, values, "id_no_socio = ?", arrayOf(idNoSocio.toString()))
     }
 
     // Cambiar estado — Baja Administrativa / Baja Voluntaria
@@ -53,7 +54,7 @@ class NoSocioDao(private val dbHelper: DBHelper) {
             put("fecha_actualizacion", sdf.format(Date()))
             if (motivo != null) put("motivo", motivo)
         }
-        return db.update(DBHelper.TABLE_NO_SOCIOS, values, "id_no_socio = ?", arrayOf(idNoSocio.toString()))
+        return db.update(DBHelper.Companion.TABLE_NO_SOCIOS, values, "id_no_socio = ?", arrayOf(idNoSocio.toString()))
     }
 
     // Obtener por id

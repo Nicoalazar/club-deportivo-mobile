@@ -1,6 +1,7 @@
-package com.grupo9.clubdeportivo.db
+package com.grupo9.clubdeportivo.db.dao
 
 import android.content.ContentValues
+import com.grupo9.clubdeportivo.db.DBHelper
 import com.grupo9.clubdeportivo.model.Socio
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -31,7 +32,7 @@ class SocioDao(private val dbHelper: DBHelper) {
             put("fecha_alta", sdf.format(Date()))
             if (aptoVencimiento != null) put("apto_fisico_vencimiento", aptoVencimiento)
         }
-        return db.insert(DBHelper.TABLE_SOCIOS, null, values)
+        return db.insert(DBHelper.Companion.TABLE_SOCIOS, null, values)
     }
 
     // Editar socio
@@ -40,7 +41,7 @@ class SocioDao(private val dbHelper: DBHelper) {
             if (aptoVencimiento != null) put("apto_fisico_vencimiento", aptoVencimiento)
             if (observaciones != null) put("observaciones", observaciones)
         }
-        return db.update(DBHelper.TABLE_SOCIOS, values, "id_socio = ?", arrayOf(idSocio.toString()))
+        return db.update(DBHelper.Companion.TABLE_SOCIOS, values, "id_socio = ?", arrayOf(idSocio.toString()))
     }
 
     // Baja lógica — setea fecha_baja
@@ -48,7 +49,7 @@ class SocioDao(private val dbHelper: DBHelper) {
         val values = ContentValues().apply {
             put("fecha_baja", sdf.format(Date()))
         }
-        return db.update(DBHelper.TABLE_SOCIOS, values, "id_socio = ?", arrayOf(idSocio.toString()))
+        return db.update(DBHelper.Companion.TABLE_SOCIOS, values, "id_socio = ?", arrayOf(idSocio.toString()))
     }
 
     // Obtener por id
