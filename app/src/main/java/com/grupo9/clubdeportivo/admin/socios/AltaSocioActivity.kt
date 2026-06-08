@@ -13,8 +13,8 @@ import androidx.core.content.ContextCompat
 import com.grupo9.clubdeportivo.R
 import com.grupo9.clubdeportivo.db.DBHelper
 import com.grupo9.clubdeportivo.db.dao.PersonaDao
-import com.grupo9.clubdeportivo.db.SocioDao
-import com.grupo9.clubdeportivo.db.NoSocioDao
+import com.grupo9.clubdeportivo.db.dao.SocioDao
+import com.grupo9.clubdeportivo.db.dao.NoSocioDao
 import com.grupo9.clubdeportivo.model.Persona
 
 class AltaSocioActivity : AppCompatActivity() {
@@ -213,7 +213,7 @@ class AltaSocioActivity : AppCompatActivity() {
                 val observaciones = if (etObservaciones.text.toString().isNotEmpty()) {
                     etObservaciones.text.toString()
                 } else null
-                socioDao.insertarSocio(idPersona, vencimientoApto)
+                socioDao.insertarSocio(idPersona, vencimientoApto, observaciones)
                 Toast.makeText(this, "Socio registrado exitosamente", Toast.LENGTH_SHORT).show()
             } else {
                 val estado = spEstado.selectedItem.toString()
