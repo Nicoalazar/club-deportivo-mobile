@@ -24,7 +24,7 @@ class SocioDao(private val dbHelper: DBHelper) {
     }
 
     // Alta de socio
-    fun insertarSocio(idPersona: Int, aptoVencimiento: String?): Long {
+    fun insertarSocio(idPersona: Int, aptoVencimiento: String?, observaciones: String? = null): Long {
         if (existeSocioActivo(idPersona)) return -1L
 
         val db = dbHelper.writableDatabase
@@ -32,6 +32,7 @@ class SocioDao(private val dbHelper: DBHelper) {
             put("id_persona", idPersona)
             put("fecha_alta", sdf.format(Date()))
             if (aptoVencimiento != null) put("apto_fisico_vencimiento", aptoVencimiento)
+            if (observaciones != null) put("observaciones", observaciones)
         }
         return db.insert(DBHelper.TABLE_SOCIOS, null, values)
     }
