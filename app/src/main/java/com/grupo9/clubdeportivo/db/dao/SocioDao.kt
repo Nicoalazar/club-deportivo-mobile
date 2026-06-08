@@ -1,6 +1,7 @@
-package com.grupo9.clubdeportivo.db
+package com.grupo9.clubdeportivo.db.dao
 
 import android.content.ContentValues
+import com.grupo9.clubdeportivo.db.DBHelper
 import com.grupo9.clubdeportivo.model.Socio
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -8,11 +9,11 @@ import java.util.Locale
 
 class SocioDao(private val dbHelper: DBHelper) {
 
-    private val db = dbHelper.writableDatabase
     private val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
 
     // Verifica si ya existe un socio
     private fun existeSocioActivo(idPersona: Int): Boolean {
+        val db = dbHelper.readableDatabase
         val cursor = db.rawQuery(
             "SELECT id_socio FROM socios WHERE id_persona = ? AND fecha_baja IS NULL",
             arrayOf(idPersona.toString())
@@ -26,6 +27,7 @@ class SocioDao(private val dbHelper: DBHelper) {
     fun insertarSocio(idPersona: Int, aptoVencimiento: String?): Long {
         if (existeSocioActivo(idPersona)) return -1L
 
+        val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
             put("id_persona", idPersona)
             put("fecha_alta", sdf.format(Date()))
@@ -36,6 +38,7 @@ class SocioDao(private val dbHelper: DBHelper) {
 
     // Editar socio
     fun editarSocio(idSocio: Int, aptoVencimiento: String?, observaciones: String?): Int {
+        val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
             if (aptoVencimiento != null) put("apto_fisico_vencimiento", aptoVencimiento)
             if (observaciones != null) put("observaciones", observaciones)
@@ -45,6 +48,7 @@ class SocioDao(private val dbHelper: DBHelper) {
 
     // Baja lógica — setea fecha_baja
     fun darDeBaja(idSocio: Int): Int {
+        val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
             put("fecha_baja", sdf.format(Date()))
         }
@@ -53,6 +57,7 @@ class SocioDao(private val dbHelper: DBHelper) {
 
     // Obtener por id
     fun obtenerPorId(idSocio: Int): Socio? {
+        val db = dbHelper.readableDatabase
         val cursor = db.rawQuery(
             "SELECT * FROM socios WHERE id_socio = ?",
             arrayOf(idSocio.toString())

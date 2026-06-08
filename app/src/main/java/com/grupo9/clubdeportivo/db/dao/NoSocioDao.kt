@@ -1,6 +1,7 @@
-package com.grupo9.clubdeportivo.db
+package com.grupo9.clubdeportivo.db.dao
 
 import android.content.ContentValues
+import com.grupo9.clubdeportivo.db.DBHelper
 import com.grupo9.clubdeportivo.model.NoSocio
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -8,11 +9,11 @@ import java.util.Locale
 
 class NoSocioDao(private val dbHelper: DBHelper) {
 
-    private val db = dbHelper.writableDatabase
     private val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
 
     // Verifica si ya existe un no socio para esa persona
     private fun existeNoSocio(idPersona: Int): Boolean {
+        val db = dbHelper.readableDatabase
         val cursor = db.rawQuery(
             "SELECT id_no_socio FROM no_socios WHERE id_persona = ?",
             arrayOf(idPersona.toString())
@@ -26,6 +27,7 @@ class NoSocioDao(private val dbHelper: DBHelper) {
     fun insertarNoSocio(idPersona: Int, estado: String, aptoVencimiento: String?, motivo: String?): Long {
         if (existeNoSocio(idPersona)) return -1L
 
+        val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
             put("id_persona", idPersona)
             put("estado", estado)
@@ -38,6 +40,7 @@ class NoSocioDao(private val dbHelper: DBHelper) {
 
     // Editar no socio
     fun editarNoSocio(idNoSocio: Int, aptoVencimiento: String?, motivo: String?): Int {
+        val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
             put("fecha_actualizacion", sdf.format(Date()))
             if (aptoVencimiento != null) put("apto_fisico_vencimiento", aptoVencimiento)
@@ -48,6 +51,7 @@ class NoSocioDao(private val dbHelper: DBHelper) {
 
     // Cambiar estado — Baja Administrativa / Baja Voluntaria
     fun cambiarEstado(idNoSocio: Int, estado: String, motivo: String?): Int {
+        val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
             put("estado", estado)
             put("fecha_actualizacion", sdf.format(Date()))
@@ -58,6 +62,7 @@ class NoSocioDao(private val dbHelper: DBHelper) {
 
     // Obtener por id
     fun obtenerPorId(idNoSocio: Int): NoSocio? {
+        val db = dbHelper.readableDatabase
         val cursor = db.rawQuery(
             "SELECT * FROM no_socios WHERE id_no_socio = ?",
             arrayOf(idNoSocio.toString())
