@@ -1,27 +1,27 @@
-package com.grupo9.clubdeportivo.db
+package com.grupo9.clubdeportivo.db.dao
 
 import android.content.ContentValues
+import com.grupo9.clubdeportivo.db.DBHelper
 import com.grupo9.clubdeportivo.model.PaseDiario
-
 
 class PaseDiarioDao(private val dbHelper: DBHelper) {
 
+    private val db = dbHelper.writableDatabase
 
-    fun registrarPase(pase: PaseDiario): Long {
-        val db = dbHelper.writableDatabase
+    // Registra un nuevo pase diario (pago de actividad)
+    fun registrarPase(idNoSocio: Int, fecha: String, monto: Double, medio: String, usuario: String?): Long {
         val values = ContentValues().apply {
-            put("id_no_socio", pase.idNoSocio)
-            put("fecha", pase.fecha)
-            put("monto", pase.monto)
-            put("medio", pase.medio)
-            put("usuario_registro", pase.usuarioRegistro)
+            put("id_no_socio", idNoSocio)
+            put("fecha", fecha)
+            put("monto", monto)
+            put("medio", medio)
+            put("usuario_registro", usuario)
         }
         return db.insert(DBHelper.TABLE_PASES_DIARIOS, null, values)
     }
 
-
+    // Cuenta cuántos pases tiene un no socio en una fecha específica
     fun tienePaseEnFecha(idNoSocio: Int, fecha: String): Boolean {
-        val db = dbHelper.readableDatabase
         val cursor = db.rawQuery(
             "SELECT COUNT(*) FROM ${DBHelper.TABLE_PASES_DIARIOS} WHERE id_no_socio = ? AND fecha = ?",
             arrayOf(idNoSocio.toString(), fecha)
@@ -35,11 +35,9 @@ class PaseDiarioDao(private val dbHelper: DBHelper) {
         return existe
     }
 
-
-
+    // Historial de pases de un No Socio
     fun pasesDeNoSocio(idNoSocio: Int): List<PaseDiario> {
         val pases = mutableListOf<PaseDiario>()
-        val db = dbHelper.readableDatabase
         
         val cursor = db.query(
             DBHelper.TABLE_PASES_DIARIOS,

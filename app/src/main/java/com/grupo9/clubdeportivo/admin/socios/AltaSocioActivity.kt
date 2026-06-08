@@ -1,19 +1,20 @@
 package com.grupo9.clubdeportivo.admin.socios
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
-import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.grupo9.clubdeportivo.R
-import java.text.SimpleDateFormat
-import java.util.*
-import java.util.Calendar
-import java.util.Locale
+import com.grupo9.clubdeportivo.admin.noSocios.CobroActividadActivity
+import com.grupo9.clubdeportivo.db.DBHelper
+import com.grupo9.clubdeportivo.db.dao.NoSocioDao
+import com.grupo9.clubdeportivo.db.dao.PersonaDao
+import com.grupo9.clubdeportivo.db.dao.SocioDao
+import com.grupo9.clubdeportivo.model.Persona
 
 class AltaSocioActivity : AppCompatActivity() {
 
@@ -40,18 +41,12 @@ class AltaSocioActivity : AppCompatActivity() {
         // 2. Lógica de selección Socio/No Socio
         btnTipoSocio.setOnClickListener {
             esSocio = true
-            btnTipoSocio.setBackgroundColor(Color.parseColor("#1B4F8A"))
-            btnTipoSocio.setTextColor(Color.WHITE)
-            btnTipoNoSocio.setBackgroundColor(Color.WHITE)
-            btnTipoNoSocio.setTextColor(Color.parseColor("#1B4F8A"))
+            actualizarEstiloBotones(btnTipoSocio, btnTipoNoSocio)
         }
 
         btnTipoNoSocio.setOnClickListener {
             esSocio = false
-            btnTipoNoSocio.setBackgroundColor(Color.parseColor("#1B4F8A"))
-            btnTipoNoSocio.setTextColor(Color.WHITE)
-            btnTipoSocio.setBackgroundColor(Color.WHITE)
-            btnTipoSocio.setTextColor(Color.parseColor("#1B4F8A"))
+            actualizarEstiloBotones(btnTipoNoSocio, btnTipoSocio)
         }
 
         // 3. Botón Guardar y envío de datos
@@ -64,27 +59,77 @@ class AltaSocioActivity : AppCompatActivity() {
 
             if (nom.isEmpty() || ape.isEmpty() || dni.isEmpty() || mail.isEmpty() || tel.isEmpty()) {
                 Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // --- LÓGICA DE PERSISTENCIA REAL ---
+            val dbHelper = DBHelper(this)
+            val personaDao = PersonaDao(dbHelper)
+            val socioDao = SocioDao(dbHelper)
+            val noSocioDao = NoSocioDao(dbHelper)
+
+            // 1. Verificar si la persona ya existe por DNI
+            var idPersona = personaDao.obtenerPorDni(dni).toLong()
+
+            if (idPersona <= 0) {
+                // No existe, la creamos
+                val nuevaPersona = Persona(
+                    nombres = nom,
+                    apellidos = ape,
+                    sexo = "Otros",
+                    tipoDocumento = "DNI",
+                    nroDocumento = dni,
+                    email = mail,
+                    telefono = tel
+                )
+                idPersona = personaDao.insertarPersona(nuevaPersona)
+            }
+
+            if (idPersona > 0) {
+                if (esSocio) {
+                    // 2a. Guardar en tabla Socios (el DAO ya chequea si es socio activo)
+                    val idSocio = socioDao.insertarSocio(idPersona.toInt(), null)
+                    
+                    if (idSocio > 0) {
+                        Toast.makeText(this, "Socio registrado con éxito", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, DetalleSocioActivity::class.java)
+                        intent.putExtra("INTENT_NOMBRE", "$nom $ape")
+                        intent.putExtra("INTENT_DNI", dni)
+                        intent.putExtra("INTENT_TIPO", "Socio")
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        Toast.makeText(this, "Esta persona ya es un Socio activo", Toast.LENGTH_LONG).show()
+                    }
+                } else {
+                    // 2b. Guardar en tabla No Socios
+                    val idNoSocio = noSocioDao.insertarNoSocio(idPersona.toInt(), "Adherente", null, null)
+                    
+                    if (idNoSocio > 0) {
+                        Toast.makeText(this, "¡No Socio registrado!", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, CobroActividadActivity::class.java)
+                        intent.putExtra("INTENT_ID", idNoSocio.toInt())
+                        intent.putExtra("INTENT_NOMBRE", "$nom $ape")
+                        intent.putExtra("INTENT_DNI", dni)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        Toast.makeText(this, "Esta persona ya está registrada como No Socio", Toast.LENGTH_LONG).show()
+                    }
+                }
             } else {
-                // Algoritmo de Fecha: 1 mes adelante
-                val cal = Calendar.getInstance()
-                cal.add(Calendar.MONTH, 1)
-                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                val fechaVence = sdf.format(cal.time)
-
-                // Enviar datos a DetalleSocioActivity
-                val intent = Intent(this, DetalleSocioActivity::class.java)
-                intent.putExtra("INTENT_NOMBRE", "$nom $ape")
-                intent.putExtra("INTENT_DNI", dni)
-                intent.putExtra("INTENT_VENCE", fechaVence)
-                intent.putExtra("INTENT_TIPO", if (esSocio) "Socio" else "No Socio")
-                intent.putExtra("INTENT_EMAIL", mail)
-                intent.putExtra("INTENT_CARNET", "")
-                intent.putExtra("INTENT_ESTADO", "Al dia")
-                intent.putExtra("INTENT_TELEFONO", tel)
-
-                startActivity(intent)
-                finish()
+                Toast.makeText(this, "Error al procesar la persona", Toast.LENGTH_SHORT).show()
             }
         }
-    } // Cierra onCreate
+    }
+
+    private fun actualizarEstiloBotones(seleccionado: Button, deseleccionado: Button) {
+        val colorPrimario = ContextCompat.getColor(this, R.color.colorPrimary)
+        val colorBlanco = ContextCompat.getColor(this, R.color.white)
+
+        seleccionado.setBackgroundColor(colorPrimario)
+        seleccionado.setTextColor(colorBlanco)
+        deseleccionado.setBackgroundColor(colorBlanco)
+        deseleccionado.setTextColor(colorPrimario)
+    }
 }

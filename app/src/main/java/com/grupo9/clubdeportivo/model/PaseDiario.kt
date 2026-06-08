@@ -2,7 +2,7 @@ package com.grupo9.clubdeportivo.model
 
 /**
  * Representa un cobro diario a un No Socio.
- * Este modelo coincide con las columnas de la tabla 'pases_diarios' en la BD.
+
  */
 data class PaseDiario(
     val idPase: Int? = null,        // El ID es autoincremental en la BD, por eso es opcional al crear uno nuevo
