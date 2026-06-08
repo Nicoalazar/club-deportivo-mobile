@@ -19,12 +19,23 @@ import com.grupo9.clubdeportivo.model.Persona
 class AltaSocioActivity : AppCompatActivity() {
 
     private var esSocio: Boolean = true
+    
+    // Inicialización de DAOs a nivel de clase
+    private lateinit var personaDao: PersonaDao
+    private lateinit var socioDao: SocioDao
+    private lateinit var noSocioDao: NoSocioDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alta_socio)
 
-        // 1. Referencias del XML
+        // 1. Inicializar componentes de datos una sola vez
+        val dbHelper = DBHelper(this)
+        personaDao = PersonaDao(dbHelper)
+        socioDao = SocioDao(dbHelper)
+        noSocioDao = NoSocioDao(dbHelper)
+
+        // 2. Referencias del XML
         val btnVolver = findViewById<TextView>(R.id.btnVolver)
         val btnGuardar = findViewById<Button>(R.id.btnGuardar)
         val btnTipoSocio = findViewById<Button>(R.id.btnTipoSocio)
@@ -38,7 +49,6 @@ class AltaSocioActivity : AppCompatActivity() {
 
         btnVolver.setOnClickListener { finish() }
 
-        // 2. Lógica de selección Socio/No Socio
         btnTipoSocio.setOnClickListener {
             esSocio = true
             actualizarEstiloBotones(btnTipoSocio, btnTipoNoSocio)
@@ -49,7 +59,6 @@ class AltaSocioActivity : AppCompatActivity() {
             actualizarEstiloBotones(btnTipoNoSocio, btnTipoSocio)
         }
 
-        // 3. Botón Guardar y envío de datos
         btnGuardar.setOnClickListener {
             val nom = etNombre.text.toString().trim()
             val ape = etApellido.text.toString().trim()
@@ -61,12 +70,6 @@ class AltaSocioActivity : AppCompatActivity() {
                 Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
-            // --- LÓGICA DE PERSISTENCIA REAL ---
-            val dbHelper = DBHelper(this)
-            val personaDao = PersonaDao(dbHelper)
-            val socioDao = SocioDao(dbHelper)
-            val noSocioDao = NoSocioDao(dbHelper)
 
             // 1. Verificar si la persona ya existe por DNI
             var idPersona = personaDao.obtenerPorDni(dni).toLong()
@@ -87,7 +90,6 @@ class AltaSocioActivity : AppCompatActivity() {
 
             if (idPersona > 0) {
                 if (esSocio) {
-                    // 2a. Guardar en tabla Socios (el DAO ya chequea si es socio activo)
                     val idSocio = socioDao.insertarSocio(idPersona.toInt(), null)
                     
                     if (idSocio > 0) {
@@ -102,7 +104,6 @@ class AltaSocioActivity : AppCompatActivity() {
                         Toast.makeText(this, "Esta persona ya es un Socio activo", Toast.LENGTH_LONG).show()
                     }
                 } else {
-                    // 2b. Guardar en tabla No Socios
                     val idNoSocio = noSocioDao.insertarNoSocio(idPersona.toInt(), "Adherente", null, null)
                     
                     if (idNoSocio > 0) {

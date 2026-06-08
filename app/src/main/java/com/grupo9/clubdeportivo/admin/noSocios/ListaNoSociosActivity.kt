@@ -12,7 +12,6 @@ import com.grupo9.clubdeportivo.R
 import com.grupo9.clubdeportivo.admin.socios.AltaSocioActivity
 import com.grupo9.clubdeportivo.db.DBHelper
 import com.grupo9.clubdeportivo.db.dao.PersonaDao
-import com.grupo9.clubdeportivo.model.PersonaData
 
 class ListaNoSociosActivity : AppCompatActivity() {
 
@@ -22,12 +21,10 @@ class ListaNoSociosActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_no_socios)
 
-        // 1. Inicializamos el DAO
         personaDao = PersonaDao(DBHelper(this))
 
         val btnVolver = findViewById<TextView>(R.id.btnVolver)
         val btnNuevoNoSocio = findViewById<Button>(R.id.btnNuevoNoSocio)
-        val container = findViewById<LinearLayout>(R.id.containerNoSocios)
 
         btnVolver.setOnClickListener { finish() }
 
@@ -35,20 +32,17 @@ class ListaNoSociosActivity : AppCompatActivity() {
             val intent = Intent(this, AltaSocioActivity::class.java)
             startActivity(intent)
         }
-
-        // 2. Cargamos los datos reales de la BD
-        cargarNoSocios(container)
+        
+        // No llamamos a cargarNoSocios aquí porque onResume se encarga
+        // de la carga inicial y de las recargas al volver de otras pantallas.
     }
 
     private fun cargarNoSocios(container: LinearLayout) {
-        // Limpiamos el contenedor por si hay algo previo
         container.removeAllViews()
 
-        // Obtenemos todos de la BD y filtramos los que son "No Socio"
         val listaCompleta = personaDao.listarTodos()
         val listaNoSocios = listaCompleta.filter { it.categoria == "No Socio" }
 
-        // Si no hay ninguno, podríamos mostrar un mensaje (opcional)
         if (listaNoSocios.isEmpty()) {
             val tvVacio = TextView(this)
             tvVacio.text = "No hay No Socios registrados."
@@ -58,11 +52,9 @@ class ListaNoSociosActivity : AppCompatActivity() {
             return
         }
 
-        // 3. Inflamos un "item" por cada No Socio real
         val inflater = LayoutInflater.from(this)
 
         for (persona in listaNoSocios) {
-            // Usamos un layout pequeño (item_lista_personas) para cada renglón
             val itemView = inflater.inflate(R.layout.item_lista_personas, container, false)
             
             val tvNombre = itemView.findViewById<TextView>(R.id.tvNombre)
@@ -71,9 +63,8 @@ class ListaNoSociosActivity : AppCompatActivity() {
 
             tvNombre.text = "${persona.nombres} ${persona.apellidos}"
             tvDni.text = "DNI: ${persona.nroDocumento}"
-            tvCat.text = persona.estado // Mostramos el estado (Adherente, etc.)
+            tvCat.text = persona.estado 
 
-            // 4. Al tocar, pasamos el ID REAL a la pantalla de cobro
             itemView.setOnClickListener {
                 val intent = Intent(this, CobroActividadActivity::class.java)
                 intent.putExtra("INTENT_ID", persona.id)
@@ -86,7 +77,6 @@ class ListaNoSociosActivity : AppCompatActivity() {
         }
     }
     
-    // Recargar la lista al volver a la pantalla (por si se agregó uno nuevo)
     override fun onResume() {
         super.onResume()
         val container = findViewById<LinearLayout>(R.id.containerNoSocios)

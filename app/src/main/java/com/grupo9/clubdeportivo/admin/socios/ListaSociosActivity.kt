@@ -1,64 +1,95 @@
 package com.grupo9.clubdeportivo.admin.socios
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.grupo9.clubdeportivo.R
-import android.content.Intent // Import correcto arriba
+import com.grupo9.clubdeportivo.db.DBHelper
+import com.grupo9.clubdeportivo.db.dao.PersonaDao
 
 class ListaSociosActivity : AppCompatActivity() {
+
+    private lateinit var personaDao: PersonaDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_socios)
 
-        // 1. Referencias a la interfaz
-        val btnVolver     = findViewById<TextView>(R.id.btnVolver)
+        personaDao = PersonaDao(DBHelper(this))
+
+        val btnVolver = findViewById<TextView>(R.id.btnVolver)
         val btnNuevoSocio = findViewById<Button>(R.id.btnNuevoSocio)
-        val cardSocio1    = findViewById<LinearLayout>(R.id.cardSocio1)
-        val cardSocio2    = findViewById<LinearLayout>(R.id.cardSocio2)
-        val cardSocio3    = findViewById<LinearLayout>(R.id.cardSocio3)
-        val cardSocio4    = findViewById<LinearLayout>(R.id.cardSocio4)
-        val cardSocio5    = findViewById<LinearLayout>(R.id.cardSocio5)
 
-        // 2. Botón Volver
-        btnVolver.setOnClickListener {
-            finish()
-        }
+        btnVolver.setOnClickListener { finish() }
 
-        // 3. Botón Nuevo Socio (Lógica corregida)
         btnNuevoSocio.setOnClickListener {
             val intent = Intent(this, AltaSocioActivity::class.java)
             startActivity(intent)
         }
+    }
 
-        // 4. Lógica de las Cards (para enviar datos)
-        val socios    = listOf("Juan Pérez", "María González", "Carlos Ramírez", "Laura Méndez", "Diego Sosa")
-        val dnis      = listOf("38.123.456", "40.987.654", "35.456.789", "42.123.000", "39.888.777")
-        val carnets   = listOf("00042", "00017", "00031", "00055", "00008")
-        val estados   = listOf("Al dia", "Vencida", "Al dia", "Al dia", "Vencida")
-        val telefonos = listOf("11-4567-8901", "11-2345-6789", "11-9876-5432", "11-1111-2222", "11-3333-4444")
-        val cards     = listOf(cardSocio1, cardSocio2, cardSocio3, cardSocio4, cardSocio5)
+    private fun cargarSocios(container: LinearLayout) {
+        container.removeAllViews()
 
-        cards.forEachIndexed { index, card ->
-            card.setOnClickListener {
-                val intent = Intent(this, DetalleSocioActivity::class.java)
+        val listaCompleta = personaDao.listarTodos()
+        val listaSocios = listaCompleta.filter { it.categoria == "Socio" }
 
-                intent.putExtra("INTENT_NOMBRE", socios[index])
-                intent.putExtra("INTENT_DNI", dnis[index])
-                intent.putExtra("INTENT_VENCE", "10/05/2026")
-                intent.putExtra("INTENT_EMAIL", "socio${index + 1}@mail.com")
-                intent.putExtra("INTENT_CARNET", carnets[index])
-                intent.putExtra("INTENT_ESTADO", estados[index])
-                intent.putExtra("INTENT_TELEFONO", telefonos[index])
+        if (listaSocios.isEmpty()) {
+            val tvVacio = TextView(this)
+            tvVacio.text = "No hay Socios registrados."
+            tvVacio.textAlignment = View.TEXT_ALIGNMENT_CENTER
+            tvVacio.setPadding(0, 50, 0, 0)
+            container.addView(tvVacio)
+            return
+        }
 
-                startActivity(intent)
+        val inflater = LayoutInflater.from(this)
 
-                Toast.makeText(this, "Cargando detalle de: ${socios[index]}", Toast.LENGTH_SHORT).show()
+        for (persona in listaSocios) {
+            val itemView = inflater.inflate(R.layout.item_lista_personas, container, false)
+            
+            val tvNombre = itemView.findViewById<TextView>(R.id.tvNombre)
+            val tvDni = itemView.findViewById<TextView>(R.id.tvDocumento)
+            val tvCat = itemView.findViewById<TextView>(R.id.tvCategoria)
+
+            tvNombre.text = "${persona.nombres} ${persona.apellidos}"
+            tvDni.text = "DNI: ${persona.nroDocumento}"
+            
+            // Lógica de color para estado
+            if (persona.estado == "Activo") {
+                tvCat.text = "Al día"
+                tvCat.setTextColor(ContextCompat.getColor(this, R.color.colorStatusOk))
+                tvCat.setBackgroundColor(ContextCompat.getColor(this, R.color.colorStatusOkLight))
+            } else {
+                tvCat.text = persona.estado
+                tvCat.setTextColor(ContextCompat.getColor(this, R.color.colorError))
+                tvCat.setBackgroundColor(ContextCompat.getColor(this, R.color.colorErrorLight))
             }
+
+            itemView.setOnClickListener {
+                val intent = Intent(this, DetalleSocioActivity::class.java)
+                intent.putExtra("INTENT_ID", persona.id)
+                intent.putExtra("INTENT_NOMBRE", "${persona.nombres} ${persona.apellidos}")
+                intent.putExtra("INTENT_DNI", persona.nroDocumento)
+                intent.putExtra("INTENT_ESTADO", persona.estado)
+                startActivity(intent)
+            }
+
+            container.addView(itemView)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val container = findViewById<LinearLayout>(R.id.containerSocios)
+        if (container != null) {
+            cargarSocios(container)
         }
     }
 }

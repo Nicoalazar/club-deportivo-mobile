@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import com.grupo9.clubdeportivo.R
 import com.grupo9.clubdeportivo.db.DBHelper
 import com.grupo9.clubdeportivo.db.dao.PaseDiarioDao
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -74,8 +75,9 @@ class CobroActividadActivity : AppCompatActivity() {
         }
 
         btnConfirmar.setOnClickListener {
-            val montoText = etMonto.text.toString()
-            val monto = montoText.toDoubleOrNull() ?: 0.0
+            // Normalizar entrada de texto para soportar coma como decimal
+            val montoRaw = etMonto.text.toString().replace(",", ".")
+            val monto = montoRaw.toDoubleOrNull() ?: 0.0
             
             if (idNoSocio == -1) {
                 Toast.makeText(this, "Error: ID de No Socio no válido", Toast.LENGTH_SHORT).show()
@@ -130,6 +132,10 @@ class CobroActividadActivity : AppCompatActivity() {
     }
 
     private fun mostrarComprobante(idTicket: Long, nombre: String, monto: Double, fecha: String) {
+        // Formatear monto como moneda local
+        val currencyFormat = NumberFormat.getCurrencyInstance(Locale("es", "AR"))
+        val montoFormateado = currencyFormat.format(monto)
+
         val builder = AlertDialog.Builder(this)
         builder.setTitle("¡Pago Exitoso!")
         builder.setMessage(
@@ -137,7 +143,7 @@ class CobroActividadActivity : AppCompatActivity() {
             "Ticket Nro: #$idTicket\n" +
             "Cliente: $nombre\n" +
             "Actividad: $actividadSeleccionada\n" +
-            "Importe: $$monto\n" +
+            "Importe: $montoFormateado\n" +
             "Fecha: $fecha\n" +
             "Medio: $medioPago\n\n" +
             "El pase diario ha sido registrado correctamente."
