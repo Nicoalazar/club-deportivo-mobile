@@ -111,6 +111,7 @@ class CobroActividadActivity : AppCompatActivity() {
 
         if (paseDao.tienePaseEnFecha(idNoSocio, fechaHoy)) {
             Toast.makeText(this, "Esta persona ya registró un pago hoy", Toast.LENGTH_LONG).show()
+            return
         }
 
         val idGenerado = paseDao.registrarPase(
