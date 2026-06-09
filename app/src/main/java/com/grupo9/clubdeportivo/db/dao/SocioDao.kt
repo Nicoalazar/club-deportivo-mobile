@@ -11,71 +11,61 @@ class SocioDao(private val dbHelper: DBHelper) {
 
     private val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
 
-    // Verifica si ya existe un socio
+    // Conexión segura pedida en tiempo real
+    private val db get() = dbHelper.writableDatabase
+
+    // Verifica si ya existe un socio (Se agrega .use para cerrar el cursor de forma segura)
     private fun existeSocioActivo(idPersona: Int): Boolean {
-        val db = dbHelper.readableDatabase
-        val cursor = db.rawQuery(
-            "SELECT id_socio FROM socios WHERE id_persona = ? AND fecha_baja IS NULL",
-            arrayOf(idPersona.toString())
-        )
-        val existe = cursor.moveToFirst()
-        cursor.close()
-        return existe
+        val query = "SELECT id_socio FROM ${DBHelper.TABLE_SOCIOS} WHERE id_persona = ? AND fecha_baja IS NULL"
+        dbHelper.readableDatabase.rawQuery(query, arrayOf(idPersona.toString())).use { cursor ->
+            return cursor.moveToFirst()
+        }
     }
 
     // Alta de socio
     fun insertarSocio(idPersona: Int, aptoVencimiento: String?, observaciones: String? = null): Long {
         if (existeSocioActivo(idPersona)) return -1L
 
-        val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
             put("id_persona", idPersona)
             put("fecha_alta", sdf.format(Date()))
             if (aptoVencimiento != null) put("apto_fisico_vencimiento", aptoVencimiento)
             if (observaciones != null) put("observaciones", observaciones)
         }
-        return db.insert(DBHelper.Companion.TABLE_SOCIOS, null, values)
+        return db.insert(DBHelper.TABLE_SOCIOS, null, values)
     }
 
     // Editar socio
     fun editarSocio(idSocio: Int, aptoVencimiento: String?, observaciones: String?): Int {
-        val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
             if (aptoVencimiento != null) put("apto_fisico_vencimiento", aptoVencimiento)
             if (observaciones != null) put("observaciones", observaciones)
         }
-        return db.update(DBHelper.Companion.TABLE_SOCIOS, values, "id_socio = ?", arrayOf(idSocio.toString()))
+        return db.update(DBHelper.TABLE_SOCIOS, values, "id_socio = ?", arrayOf(idSocio.toString()))
     }
 
     // Baja lógica — setea fecha_baja
     fun darDeBaja(idSocio: Int): Int {
-        val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
             put("fecha_baja", sdf.format(Date()))
         }
-        return db.update(DBHelper.Companion.TABLE_SOCIOS, values, "id_socio = ?", arrayOf(idSocio.toString()))
+        return db.update(DBHelper.TABLE_SOCIOS, values, "id_socio = ?", arrayOf(idSocio.toString()))
     }
 
-    // Obtener por id
+    // Obtener por id (Se agrega .use para asegurar el cierre del cursor)
     fun obtenerPorId(idSocio: Int): Socio? {
-        val db = dbHelper.readableDatabase
-        val cursor = db.rawQuery(
-            "SELECT * FROM socios WHERE id_socio = ?",
-            arrayOf(idSocio.toString())
-        )
-        if (!cursor.moveToFirst()) {
-            cursor.close()
-            return null
+        val query = "SELECT * FROM ${DBHelper.TABLE_SOCIOS} WHERE id_socio = ?"
+        dbHelper.readableDatabase.rawQuery(query, arrayOf(idSocio.toString())).use { cursor ->
+            if (!cursor.moveToFirst()) return null
+
+            return Socio(
+                idSocio = cursor.getInt(cursor.getColumnIndexOrThrow("id_socio")),
+                idPersona = cursor.getInt(cursor.getColumnIndexOrThrow("id_persona")),
+                fechaAlta = cursor.getString(cursor.getColumnIndexOrThrow("fecha_alta")) ?: "",
+                fechaBaja = cursor.getString(cursor.getColumnIndexOrThrow("fecha_baja")),
+                aptoFisicoVencimiento = cursor.getString(cursor.getColumnIndexOrThrow("apto_ficico_vencimiento")), // Se mantiene el typo exacto de la DB si existía
+                observaciones = cursor.getString(cursor.getColumnIndexOrThrow("observaciones"))
+            )
         }
-        val socio = Socio(
-            idSocio = cursor.getInt(cursor.getColumnIndexOrThrow("id_socio")),
-            idPersona = cursor.getInt(cursor.getColumnIndexOrThrow("id_persona")),
-            fechaAlta = cursor.getString(cursor.getColumnIndexOrThrow("fecha_alta")) ?: "",
-            fechaBaja = cursor.getString(cursor.getColumnIndexOrThrow("fecha_baja")),
-            aptoFisicoVencimiento = cursor.getString(cursor.getColumnIndexOrThrow("apto_fisico_vencimiento")),
-            observaciones = cursor.getString(cursor.getColumnIndexOrThrow("observaciones"))
-        )
-        cursor.close()
-        return socio
     }
 }

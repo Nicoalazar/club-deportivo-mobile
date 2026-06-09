@@ -5,27 +5,24 @@ import android.database.sqlite.SQLiteDatabase
 import com.grupo9.clubdeportivo.db.DBHelper
 import com.grupo9.clubdeportivo.model.CuotaPendiente
 import com.grupo9.clubdeportivo.model.CuotaSocio
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class CuotaDao(private val dbHelper: DBHelper) {
 
-    // Generar cuotas por adelantado para el periodo
+    // CORREGIDO: Se eliminó el riesgo de cursor abierto usando .use { }
     fun generarCuotas(periodo: String, diaVencimiento: Int, monto: Double, usuario: String): Int {
-        // Armamos la conexión de escritura
         val db = dbHelper.writableDatabase
         var cuotasGeneradas = 0
 
-        // Regla 1: Calcular fecha_vencimiento a partir de periodo (AAAAMM) y diaVencimiento (D o DD)
-        // Ej: periodo "202606" + dia 5 -> "2026-06-05"
         val año = periodo.substring(0, 4)
         val mes = periodo.substring(4, 6)
-        val diaFormateado = String.format("%02d", diaVencimiento) // Asegura dos dígitos (ej: 5 -> "05")
+        val diaFormateado = String.format("%02d", diaVencimiento)
         val fechaVencimiento = "$año-$mes-$diaFormateado"
 
-        // Usamos una transacción para asegurarnos de que se inserten todas o ninguna (atemicidad)
         db.beginTransaction()
         try {
-            // Regla 2: Seleccionar socios activos (fecha_baja IS NULL)
-            // que NO tengan ya ese periodo registrado en cuotas_socios.
             val query = """
                 SELECT id_socio 
                 FROM ${DBHelper.TABLE_SOCIOS} 
@@ -37,80 +34,76 @@ class CuotaDao(private val dbHelper: DBHelper) {
                   )
             """.trimIndent()
 
-            val cursor = db.rawQuery(query, arrayOf(periodo))
+            // .use cierra automáticamente el cursor al terminar o si ocurre una excepción
+            db.rawQuery(query, arrayOf(periodo)).use { cursor ->
+                if (cursor.moveToFirst()) {
+                    do {
+                        val idSocio = cursor.getInt(cursor.getColumnIndexOrThrow("id_socio"))
 
-            if (cursor.moveToFirst()) {
-                do {
-                    val idSocio = cursor.getInt(cursor.getColumnIndexOrThrow("id_socio"))
+                        val values = ContentValues().apply {
+                            put("id_socio", idSocio)
+                            put("periodo", periodo)
+                            put("fecha_vencimiento", fechaVencimiento)
+                            put("monto", monto)
+                            put("usuario_registro", usuario)
+                        }
 
-                    // Armamos los valores a insertar
-                    val values = ContentValues().apply {
-                        put("id_socio", idSocio)
-                        put("periodo", periodo)
-                        put("fecha_vencimiento", fechaVencimiento)
-                        put("monto", monto)
-                        put("usuario_registro", usuario)
-                        // fecha_pago y medio quedan en NULL automáticamente porque no los ponemos
-                    }
+                        val resultado = db.insert(DBHelper.TABLE_CUOTAS_SOCIOS, null, values)
+                        if (resultado != -1L) {
+                            cuotasGeneradas++
+                        }
+                    } while (cursor.moveToNext())
+                }
+            } // Acá se cierra solo con total seguridad
 
-                    // Insertamos la cuota impaga
-                    val resultado = db.insert(DBHelper.TABLE_CUOTAS_SOCIOS, null, values)
-                    if (resultado != -1L) {
-                        cuotasGeneradas++
-                    }
-                } while (cursor.moveToNext())
-            }
-            cursor.close()
-
-            // Si todo salió bien, confirmamos la transacción
             db.setTransactionSuccessful()
         } catch (e: Exception) {
             e.printStackTrace()
-            cuotasGeneradas = 0 // Si falla algo, devolvemos 0
+            cuotasGeneradas = 0
         } finally {
             db.endTransaction()
         }
 
-        // Regla 3: Devolver cantidad de cuotas generadas
         return cuotasGeneradas
     }
 
-    //  Registrar el pago de una cuota existente (UPDATE)
+    // CORREGIDO: Se agrega filtro 'fecha_pago IS NULL' para evitar dobles pagos
     fun registrarPago(idSocio: Int, periodo: String, medio: String, usuario: String): Boolean {
         val db = dbHelper.writableDatabase
 
-        // Obtenemos la fecha de hoy en formato ISO (yyyy-MM-dd)
-        val hoy = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US).format(java.util.Date())
+        val hoy = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
 
-        // Preparamos los datos que se van a actualizar
         val values = ContentValues().apply {
             put("fecha_pago", hoy)
             put("medio", medio)
             put("usuario_registro", usuario)
         }
 
-        // Ejecutamos el UPDATE con la cláusula WHERE para asegurarnos de pegarle
-        // exactamente a la cuota de ese socio en ese periodo
+        // Filtramos que fecha_pago sea NULL para no pisar un pago ya asentado
         val filasAfectadas = db.update(
             DBHelper.TABLE_CUOTAS_SOCIOS,
             values,
-            "id_socio = ? AND periodo = ?",
+            "id_socio = ? AND periodo = ? AND fecha_pago IS NULL",
             arrayOf(idSocio.toString(), periodo)
         )
 
-        // Si filasAfectadas es mayor a 0, significa que encontró la cuota y la actualizó con éxito
         return filasAfectadas > 0
     }
 
-    // Listar las cuotas pendientes con cálculo de fechas y estados
+    // CORREGIDO: Se removió java.time para evitar crash en minSdk 24 (Android 7)
     fun listarPendientes(fechaRef: String, incluirPorVencer: Boolean): List<CuotaPendiente> {
         val lista = mutableListOf<CuotaPendiente>()
         val db = dbHelper.readableDatabase
 
-        // Pasamos la fecha de referencia (hoy) a objeto LocalDate para hacer los cálculos de días
-        val fechaActual = java.time.LocalDate.parse(fechaRef)
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
 
-        // Query con JOIN para traer los datos de la cuota impaga y los datos del Socio/Persona
+        // Parseamos la fecha de referencia de forma segura para Android 7
+        val fechaActualDate: Date = try {
+            sdf.parse(fechaRef) ?: Date()
+        } catch (e: Exception) {
+            Date()
+        }
+
         val query = """
             SELECT s.id_socio, p.apellidos, p.nombres, c.periodo, c.monto, c.fecha_vencimiento
             FROM ${DBHelper.TABLE_CUOTAS_SOCIOS} c
@@ -120,63 +113,64 @@ class CuotaDao(private val dbHelper: DBHelper) {
             ORDER BY c.fecha_vencimiento ASC, p.apellidos ASC, p.nombres ASC
         """.trimIndent()
 
-        val cursor = db.rawQuery(query, null)
+        db.rawQuery(query, null).use { cursor ->
+            if (cursor.moveToFirst()) {
+                do {
+                    val idSocio = cursor.getInt(cursor.getColumnIndexOrThrow("id_socio"))
+                    val apellidos = cursor.getString(cursor.getColumnIndexOrThrow("apellidos"))
+                    val nombres = cursor.getString(cursor.getColumnIndexOrThrow("nombres"))
+                    val periodo = cursor.getString(cursor.getColumnIndexOrThrow("periodo"))
+                    val monto = cursor.getDouble(cursor.getColumnIndexOrThrow("monto"))
+                    val fechaVencimientoStr = cursor.getString(cursor.getColumnIndexOrThrow("fecha_vencimiento"))
 
-        if (cursor.moveToFirst()) {
-            do {
-                val idSocio = cursor.getInt(cursor.getColumnIndexOrThrow("id_socio"))
-                val apellidos = cursor.getString(cursor.getColumnIndexOrThrow("apellidos"))
-                val nombres = cursor.getString(cursor.getColumnIndexOrThrow("nombres"))
-                val periodo = cursor.getString(cursor.getColumnIndexOrThrow("periodo"))
-                val monto = cursor.getDouble(cursor.getColumnIndexOrThrow("monto"))
-                val fechaVencimientoStr = cursor.getString(cursor.getColumnIndexOrThrow("fecha_vencimiento"))
+                    // Parseo de vencimiento compatible con SDK anterior
+                    val fechaVencimientoDate = try {
+                        sdf.parse(fechaVencimientoStr) ?: Date()
+                    } catch (e: Exception) {
+                        Date()
+                    }
 
-                // Lógica de fechas usando java.time
-                val fechaVencimiento = java.time.LocalDate.parse(fechaVencimientoStr)
+                    // Calculamos la diferencia en milisegundos y la pasamos a días
+                    val diffMilis = fechaActualDate.time - fechaVencimientoDate.time
+                    val diasVencidos = (diffMilis / (1000 * 60 * 60 * 24)).toInt()
 
-                // Calcular dias_vencidos (diferencia entre la fecha dada y el vencimiento)
-                // ChronoUnit.DAYS.between(vencimiento, hoy) nos da positivo si ya venció
-                val diasVencidos = java.time.temporal.ChronoUnit.DAYS.between(fechaVencimiento, fechaActual).toInt()
+                    // Determinamos el estado usando comparaciones de milisegundos limpios sin horas
+                    val actualMilis = sdf.parse(sdf.format(fechaActualDate))?.time ?: 0L
+                    val vtoMilis = sdf.parse(sdf.format(fechaVencimientoDate))?.time ?: 0L
 
-                // Calcular estado: VENCIDO, VENCE HOY, POR VENCER
-                val estado = when {
-                    fechaVencimiento.isBefore(fechaActual) -> "VENCIDO"
-                    fechaVencimiento.isEqual(fechaActual) -> "VENCE HOY"
-                    else -> "POR VENCER"
-                }
+                    val estado = when {
+                        vtoMilis < actualMilis -> "VENCIDO"
+                        vtoMilis == actualMilis -> "VENCE HOY"
+                        else -> "POR VENCER"
+                    }
 
-                // Regla de negocio: Si incluirPorVencer es false, salteamos las que sean "POR VENCER"
-                if (!incluirPorVencer && estado == "POR VENCER") {
-                    continue
-                }
+                    if (!incluirPorVencer && estado == "POR VENCER") {
+                        continue
+                    }
 
-                // Armamos el objeto y lo sumamos a la lista
-                lista.add(
-                    CuotaPendiente(
-                        idSocio = idSocio,
-                        apellidos = apellidos,
-                        nombres = nombres,
-                        periodo = periodo,
-                        monto = monto,
-                        fechaVencimiento = fechaVencimientoStr,
-                        diasVencidos = if (diasVencidos > 0) diasVencidos else 0, // Solo mostramos días si ya expiró
-                        estado = estado
+                    lista.add(
+                        CuotaPendiente(
+                            idSocio = idSocio,
+                            apellidos = apellidos,
+                            nombres = nombres,
+                            periodo = periodo,
+                            monto = monto,
+                            fechaVencimiento = fechaVencimientoStr,
+                            diasVencidos = if (diasVencidos > 0) diasVencidos else 0,
+                            estado = estado
+                        )
                     )
-                )
-            } while (cursor.moveToNext())
-        }
-        cursor.close()
+                } while (cursor.moveToNext())
+            }
+        } // Cierre automático del cursor del listado
 
         return lista
     }
 
-    // Historial de cuotas de un socio específico (para el detalle)
     fun cuotasDeSocio(idSocio: Int): List<CuotaSocio> {
         val lista = mutableListOf<CuotaSocio>()
         val db = dbHelper.readableDatabase
 
-        // Buscamos todas las cuotas de este socio ordenadas por periodo (más recientes primero o viceversa)
-        // Lo ordenamos DESC por periodo para que el empleado del club vea arriba de todo lo último
         val query = """
             SELECT periodo, monto, fecha_vencimiento, fecha_pago, medio, usuario_registro
             FROM ${DBHelper.TABLE_CUOTAS_SOCIOS}
@@ -184,30 +178,29 @@ class CuotaDao(private val dbHelper: DBHelper) {
             ORDER BY periodo DESC
         """.trimIndent()
 
-        val cursor = db.rawQuery(query, arrayOf(idSocio.toString()))
+        db.rawQuery(query, arrayOf(idSocio.toString())).use { cursor ->
+            if (cursor.moveToFirst()) {
+                do {
+                    val periodo = cursor.getString(cursor.getColumnIndexOrThrow("periodo"))
+                    val monto = cursor.getDouble(cursor.getColumnIndexOrThrow("monto"))
+                    val fechaVencimiento = cursor.getString(cursor.getColumnIndexOrThrow("fecha_vencimiento"))
+                    val fechaPago = cursor.getString(cursor.getColumnIndexOrThrow("fecha_pago"))
+                    val medio = cursor.getString(cursor.getColumnIndexOrThrow("medio"))
+                    val usuarioRegistro = cursor.getString(cursor.getColumnIndexOrThrow("usuario_registro"))
 
-        if (cursor.moveToFirst()) {
-            do {
-                val periodo = cursor.getString(cursor.getColumnIndexOrThrow("periodo"))
-                val monto = cursor.getDouble(cursor.getColumnIndexOrThrow("monto"))
-                val fechaVencimiento = cursor.getString(cursor.getColumnIndexOrThrow("fecha_vencimiento"))
-                val fechaPago = cursor.getString(cursor.getColumnIndexOrThrow("fecha_pago")) // Puede devolver null si no pagó
-                val medio = cursor.getString(cursor.getColumnIndexOrThrow("medio")) // Puede devolver null
-                val usuarioRegistro = cursor.getString(cursor.getColumnIndexOrThrow("usuario_registro")) // Puede devolver null
-
-                lista.add(
-                    CuotaSocio(
-                        periodo = periodo,
-                        monto = monto,
-                        fechaVencimiento = fechaVencimiento,
-                        fechaPago = fechaPago,
-                        medio = medio,
-                        usuarioRegistro = usuarioRegistro
+                    lista.add(
+                        CuotaSocio(
+                            periodo = periodo,
+                            monto = monto,
+                            fechaVencimiento = fechaVencimiento,
+                            fechaPago = fechaPago,
+                            medio = medio,
+                            usuarioRegistro = usuarioRegistro
+                        )
                     )
-                )
-            } while (cursor.moveToNext())
+                } while (cursor.moveToNext())
+            }
         }
-        cursor.close()
 
         return lista
     }
