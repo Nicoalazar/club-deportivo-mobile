@@ -8,6 +8,20 @@ import com.grupo9.clubdeportivo.model.PersonaData
 
 class PersonaDao(private val dbHelper: DBHelper) {
 
+    fun obtenerPorDni(dni: String): Int {
+        val db = dbHelper.readableDatabase
+        val cursor = db.rawQuery(
+            "SELECT id_persona FROM ${DBHelper.TABLE_PERSONAS} WHERE nro_documento = ?",
+            arrayOf(dni)
+        )
+        var id = -1
+        if (cursor.moveToFirst()) {
+            id = cursor.getInt(0)
+        }
+        cursor.close()
+        return id
+    }
+
     fun insertarPersona(persona: Persona): Long {
         val db = dbHelper.writableDatabase
         val values = ContentValues().apply {

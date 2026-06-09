@@ -51,21 +51,126 @@
                 android:textColor="@color/colorTextHint"
                 android:layout_marginBottom="20dp"/>
 
-            <EditText android:id="@+id/etNombre" android:layout_width="match_parent" android:layout_height="55dp"
-                android:hint="Nombre" android:background="@android:drawable/editbox_background" android:padding="12dp" android:layout_marginBottom="12dp"/>
+            <!-- Datos personales -->
+            <EditText
+                android:id="@+id/etNombre"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Nombre"
+                android:background="@android:drawable/editbox_background"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp"/>
 
-            <EditText android:id="@+id/etApellido" android:layout_width="match_parent" android:layout_height="55dp"
-                android:hint="Apellido" android:background="@android:drawable/editbox_background" android:padding="12dp" android:layout_marginBottom="12dp"/>
+            <EditText
+                android:id="@+id/etApellido"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Apellido"
+                android:background="@android:drawable/editbox_background"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp"/>
 
-            <EditText android:id="@+id/etDni" android:layout_width="match_parent" android:layout_height="55dp"
-                android:hint="DNI" android:inputType="number" android:background="@android:drawable/editbox_background" android:padding="12dp" android:layout_marginBottom="12dp"/>
+            <Spinner
+                android:id="@+id/spSexo"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="@android:drawable/editbox_background"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp"/>
 
-            <EditText android:id="@+id/etEmail" android:layout_width="match_parent" android:layout_height="55dp"
-                android:hint="Email" android:inputType="textEmailAddress" android:background="@android:drawable/editbox_background" android:padding="12dp" android:layout_marginBottom="12dp"/>
+            <Spinner
+                android:id="@+id/spTipoDocumento"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="@android:drawable/editbox_background"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp"/>
 
-            <EditText android:id="@+id/etTelefono" android:layout_width="match_parent" android:layout_height="55dp"
-                android:hint="Teléfono" android:inputType="phone" android:background="@android:drawable/editbox_background" android:padding="12dp" android:layout_marginBottom="20dp"/>
+            <EditText
+                android:id="@+id/etNroDocumento"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Número de documento"
+                android:inputType="text"
+                android:background="@android:drawable/editbox_background"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp"/>
 
+            <EditText
+                android:id="@+id/etFechaNacimiento"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Fecha de nacimiento (dd/MM/yyyy)"
+                android:inputType="date"
+                android:background="@android:drawable/editbox_background"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp"/>
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:background="@android:drawable/editbox_background"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp"/>
+
+            <EditText
+                android:id="@+id/etTelefono"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Teléfono"
+                android:inputType="phone"
+                android:background="@android:drawable/editbox_background"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp"/>
+
+            <EditText
+                android:id="@+id/etDomicilio"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Domicilio"
+                android:background="@android:drawable/editbox_background"
+                android:padding="12dp"
+                android:layout_marginBottom="20dp"/>
+
+            <!-- Apto físico -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Apto físico"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginBottom="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <CheckBox
+                    android:id="@+id/cbAptoFisico"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tiene apto físico"
+                    android:textColor="@color/colorTextPrimary"/>
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/etVencimientoApto"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Vencimiento apto (dd/MM/yyyy)"
+                android:inputType="date"
+                android:background="@android:drawable/editbox_background"
+                android:padding="12dp"
+                android:layout_marginBottom="20dp"
+                android:enabled="false"/>
+
+            <!-- Tipo de inscripción -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -96,7 +201,73 @@
                     android:layout_weight="1"
                     android:text="No Socio"
                     android:backgroundTint="@color/white"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="@color/colorPrimary"/>
+            </LinearLayout>
+
+            <!-- Campos específicos SOCIO -->
+            <LinearLayout
+                android:id="@+id/llCamposSocio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Datos del socio"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginBottom="10dp"/>
+
+                <EditText
+                    android:id="@+id/etObservaciones"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:hint="Observaciones (opcional)"
+                    android:background="@android:drawable/editbox_background"
+                    android:padding="12dp"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:layout_marginBottom="20dp"/>
+            </LinearLayout>
+
+            <!-- Campos específicos NO SOCIO -->
+            <LinearLayout
+                android:id="@+id/llCamposNoSocio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Datos del no socio"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginBottom="10dp"/>
+
+                <Spinner
+                    android:id="@+id/spEstado"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:background="@android:drawable/editbox_background"
+                    android:padding="12dp"
+                    android:layout_marginBottom="12dp"/>
+
+                <EditText
+                    android:id="@+id/etMotivo"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:hint="Motivo (opcional)"
+                    android:background="@android:drawable/editbox_background"
+                    android:padding="12dp"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:layout_marginBottom="20dp"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
