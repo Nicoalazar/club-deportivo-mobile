@@ -57,6 +57,14 @@ class PersonaDao(private val dbHelper: DBHelper) {
                     arrayOf(nroDocumento)
                 )
             }
+            // Caso: Búsqueda por una sola palabra (nombre O apellido)
+            nombres.isNotBlank() && apellidos.isBlank() -> {
+                db.rawQuery(
+                    "SELECT * FROM ${DBHelper.VIEW_PERSONAS_DATA} WHERE Nombres LIKE ? OR Apellidos LIKE ? LIMIT 10",
+                    arrayOf("%$nombres%", "%$nombres%")
+                )
+            }
+            // Caso: Búsqueda por ambos campos
             nombres.length >= 3 && apellidos.length >= 3 -> {
                 db.rawQuery(
                     "SELECT * FROM ${DBHelper.VIEW_PERSONAS_DATA} WHERE Nombres LIKE ? AND Apellidos LIKE ? LIMIT 10",
@@ -101,6 +109,7 @@ class PersonaDao(private val dbHelper: DBHelper) {
             nroDocumento = cursor.getString(cursor.getColumnIndexOrThrow("NroDocumento")),
             nacimiento   = cursor.getString(cursor.getColumnIndexOrThrow("Nacimiento")),
             email        = cursor.getString(cursor.getColumnIndexOrThrow("Email")),
+            telefono     = cursor.getString(cursor.getColumnIndexOrThrow("Telefono")),
             vtoAptoFisico = cursor.getString(cursor.getColumnIndexOrThrow("VtoAptoFisico")),
             estado       = cursor.getString(cursor.getColumnIndexOrThrow("Estado")),
             fechaAlta    = cursor.getString(cursor.getColumnIndexOrThrow("FechaAlta"))
