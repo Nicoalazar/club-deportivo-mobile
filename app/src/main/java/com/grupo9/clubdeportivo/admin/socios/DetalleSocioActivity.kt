@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.grupo9.clubdeportivo.R
+import com.grupo9.clubdeportivo.admin.noSocios.CobroActividadActivity
 import com.grupo9.clubdeportivo.admin.pagos.RegistrarPagoActivity
 import com.grupo9.clubdeportivo.db.DBHelper
 import com.grupo9.clubdeportivo.db.dao.CuotaDao
@@ -49,6 +50,7 @@ class DetalleSocioActivity : AppCompatActivity() {
         // 2. RECEPCIÓN DE DATOS DEL INTENT
         val personaId = intent.getIntExtra("INTENT_ID", -1)
         val categoria = intent.getStringExtra("INTENT_CATEGORIA") ?: "Socio"
+        val usuario = intent.getStringExtra("USUARIO") ?: "Admin"
 
         // 3. CARGA DE DATOS DESDE LA BASE DE DATOS
         val personaDao = PersonaDao(dbHelper)
@@ -113,8 +115,12 @@ class DetalleSocioActivity : AppCompatActivity() {
                 intentPago.putExtra("SOCI_ID", personaId)
                 startActivity(intentPago)
             } else {
-                // Navega a Cobrar Actividad (Vínculo con Issue #13)
-                Toast.makeText(this, "Abriendo Cobrar Actividad (Issue #13)...", Toast.LENGTH_SHORT).show()
+                val intentCobro = Intent(this, CobroActividadActivity::class.java)
+                intentCobro.putExtra("INTENT_ID", personaId)
+                intentCobro.putExtra("INTENT_NOMBRE", "${personaData?.nombres} ${personaData?.apellidos}")
+                intentCobro.putExtra("INTENT_DNI", personaData?.nroDocumento ?: "")
+                intentCobro.putExtra("USUARIO", usuario)
+                startActivity(intentCobro)
             }
         }
 

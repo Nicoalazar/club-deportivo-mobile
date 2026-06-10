@@ -16,12 +16,14 @@ import com.grupo9.clubdeportivo.db.dao.PersonaDao
 class ListaNoSociosActivity : AppCompatActivity() {
 
     private lateinit var personaDao: PersonaDao
+    private var usuario: String = "Admin"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_no_socios)
 
         personaDao = PersonaDao(DBHelper(this))
+        usuario = intent.getStringExtra("USUARIO") ?: "Admin"
 
         val btnVolver = findViewById<TextView>(R.id.btnVolver)
         val btnNuevoNoSocio = findViewById<Button>(R.id.btnNuevoNoSocio)
@@ -70,6 +72,7 @@ class ListaNoSociosActivity : AppCompatActivity() {
                 intent.putExtra("INTENT_ID", persona.id)
                 intent.putExtra("INTENT_NOMBRE", "${persona.nombres} ${persona.apellidos}")
                 intent.putExtra("INTENT_DNI", persona.nroDocumento)
+                intent.putExtra("USUARIO", usuario)
                 startActivity(intent)
             }
 
