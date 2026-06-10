@@ -10,6 +10,7 @@ data class PersonaData(
     val nroDocumento: String,
     val nacimiento: String?,
     val email: String?,
+    val telefono: String?,
     val vtoAptoFisico: String?,
     val estado: String,             // "Activo" para socios, o el estado del no socio
     val fechaAlta: String

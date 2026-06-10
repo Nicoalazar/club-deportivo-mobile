@@ -52,57 +52,94 @@
             android:padding="16dp">
 
             <androidx.cardview.widget.CardView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                app:cardCornerRadius="50dp"
-                app:cardBackgroundColor="@color/colorSecondary">
-                <TextView
-                    android:id="@+id/tvAvatar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="JP"
-                    android:textColor="@color/white"
-                    android:textSize="28sp"
-                    android:textStyle="bold" />
-            </androidx.cardview.widget.CardView>
-
-            <TextView
-                android:id="@+id/tvNumCarnet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:text="Carnet N° 00042"
-                android:textColor="@color/colorTextMuted" />
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardBadgeEstado"
+                android:id="@+id/cardCarnet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="@color/colorStatusOkLight">
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="#1B4F8A"
+                app:cardElevation="4dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:padding="16dp">
-                    <TextView
-                        android:id="@+id/tvBadgeEstado"
-                        android:layout_width="wrap_content"
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center_vertical"
+                        app:cardCornerRadius="40dp"
+                        app:cardBackgroundColor="@color/colorSecondary">
+                        <TextView
+                            android:id="@+id/tvAvatar"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="JP"
+                            android:textColor="@color/white"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+                    </androidx.cardview.widget.CardView>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="✓  Cuota al día"
-                        android:textColor="@color/colorStatusOk"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:id="@+id/tvVencimientoCuota"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Vence el 10 de mayo de 2026"
-                        android:textColor="@color/colorTextPrimary" />
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="16dp">
+
+                        <TextView
+                            android:id="@+id/tvCarnetNombre"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="JUAN PÉREZ"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvCarnetDni"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="DNI: 38.123.456"
+                            android:textColor="#E0E0E0"
+                            android:textSize="14sp"
+                            android:layout_marginTop="2dp" />
+
+                        <TextView
+                            android:id="@+id/tvCarnetCategoria"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Categoría: Socio"
+                            android:textColor="#E0E0E0"
+                            android:textSize="14sp"
+                            android:layout_marginTop="2dp" />
+
+                        <TextView
+                            android:id="@+id/tvNumCarnet"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Carnet N° 00042"
+                            android:textColor="#E0E0E0"
+                            android:textSize="14sp"
+                            android:layout_marginTop="2dp" />
+
+                        <TextView
+                            android:id="@+id/tvBadgeEstado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="✓ Cuota al día"
+                            android:textColor="#00FF00"
+                            android:textStyle="bold"
+                            android:textSize="14sp"
+                            android:background="#22000000"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="2dp" />
+                    </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -190,14 +227,49 @@
         </LinearLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/btnRegistrarPago"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_margin="16dp"
-        android:text="REGISTRAR PAGO"
-        android:backgroundTint="@color/colorPrimary"
-        android:textColor="@color/white"
-        android:textStyle="bold" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="16dp">
+
+        <Button
+            android:id="@+id/btnAccionPrincipal"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="REGISTRAR PAGO"
+            android:backgroundTint="@color/colorPrimary"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnEditar"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_weight="1"
+                android:text="EDITAR"
+                android:backgroundTint="#ECEFF1"
+                android:textColor="#37474F"
+                android:textStyle="bold"
+                android:layout_marginEnd="4dp" />
+
+            <Button
+                android:id="@+id/btnDarDeBaja"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_weight="1"
+                android:text="DAR DE BAJA"
+                android:backgroundTint="#D32F2F"
+                android:textColor="@color/white"
+                android:layout_marginStart="4dp" />
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
