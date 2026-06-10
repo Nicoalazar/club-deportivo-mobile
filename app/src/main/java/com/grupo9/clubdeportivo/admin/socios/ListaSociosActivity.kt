@@ -85,9 +85,11 @@ class ListaSociosActivity : AppCompatActivity() {
             val tvNombre = itemView.findViewById<TextView>(R.id.tvNombre)
             val tvDni = itemView.findViewById<TextView>(R.id.tvDocumento)
             val tvCat = itemView.findViewById<TextView>(R.id.tvCategoria)
+            val tvEstado = itemView.findViewById<TextView>(R.id.tvEstado)
 
             tvNombre.text = "${persona.nombres} ${persona.apellidos}"
             tvDni.text = "DNI: ${persona.nroDocumento}"
+            tvEstado.text = "Estado: ${persona.estado}"
 
             if (persona.categoria == "Socio") {
                 tvCat.text = "SOCIO"
