@@ -1,0 +1,78 @@
+name: Claude Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review, reopened]
+    # Optional: Only run on specific file changes
+    # paths:
+    #   - "src/**/*.ts"
+    #   - "src/**/*.tsx"
+    #   - "src/**/*.js"
+    #   - "src/**/*.jsx"
+
+jobs:
+  claude-review:
+    # Optional: Filter by PR author
+    # if: |
+    #   github.event.pull_request.user.login == 'external-contributor' ||
+    #   github.event.pull_request.user.login == 'new-developer' ||
+    #   github.event.pull_request.author_association == 'FIRST_TIME_CONTRIBUTOR'
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: read
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Run Claude Code Review
+        id: claude-review
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          plugin_marketplaces: 'https://github.com/anthropics/claude-code.git'
+          plugins: 'code-review@claude-code-plugins'
+          prompt: 'Revisá el pull request #{{pr_number}} del repo Nicoalazar/club-deportivo-mobile.
+                  Contexto del proyecto: app Android/Kotlin (paquete com.grupo9.clubdeportivo),
+                    minSdk 24 (Android 7.0), sin core library desugaring habilitado, con DAOs
+                    hechos a mano sobre SQLiteOpenHelper (DBHelper).
+                  
+                  Pasos:
+                    1. Obtené el diff completo del PR (archivos modificados/agregados).
+                    2. Si el PR ya tiene una revisión mía anterior con comentarios sin resolver,
+                    verificá si los commits nuevos los resuelven antes de buscar issues nuevos.
+                  3. Revisá especialmente:
+                    - Errores de compilación: marcadores de merge sin resolver
+                      (<<<<<<<, =======, >>>>>>>), referencias a campos/funciones que no
+                      existen en los modelos/DAOs, imports rotos.
+                    - Manejo de recursos: cursores sin `.use { }` o sin `close()`, conexiones
+                      SQLiteDatabase/DBHelper que no se cierran, riesgo de fugas.
+                    - Fechas: uso de java.time.* / ChronoUnit (rompe en minSdk 24-25);
+                      preferir SimpleDateFormat("yyyy-MM-dd", Locale.US). Validar que las
+                      fechas armadas a mano (ej. "$anio-$mes-$dia") sean válidas para el
+                      mes/año correspondiente.
+                    - Validaciones de entrada (campos vacíos, rangos, tipos).
+                    - Cambios fuera de alcance no relacionados con el propósito del PR
+                      (ej. gradle-wrapper.properties, AGP/versiones) que puedan romper el
+                      build para el resto del equipo.
+                    - Consistencia con patrones ya establecidos en el repo (ej. `private val
+                      db get() = dbHelper.writableDatabase`, uso de constantes DBHelper.TABLE_*).
+                  
+                  4. Publicá un review en GitHub:
+                    - Comentarios inline en las líneas exactas con la explicación del
+                      problema y una sugerencia concreta de fix, en español, con el mismo
+                      tono que reviews anteriores (directo, con ejemplos de código).
+                    - Un resumen general al final.
+                    - Si hay algo que rompe la compilación o introduce un bug crítico, usá
+                      event: REQUEST_CHANGES. Si solo hay observaciones menores, usá COMMENT.
+                      Si está todo bien, usá APPROVE.
+                    
+                    No hagas merge ni cierres el PR. Solo dejá la revisión.'
+
