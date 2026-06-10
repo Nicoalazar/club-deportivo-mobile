@@ -6,27 +6,25 @@ import com.grupo9.clubdeportivo.model.SesionUsuario
 
 class UsuarioDao(context: Context) {
 
-    private val db = DBHelper(context).readableDatabase
+    private val dbHelper = DBHelper(context)
 
     fun login(usuario: String, pass: String): SesionUsuario? {
-        val cursor = db.rawQuery(
-            """
-            SELECT u.NombreUsu, r.NomRol 
-            FROM usuario u
-            JOIN roles r ON u.RolUsu = r.RolUsu
-            WHERE u.NombreUsu = ? AND u.PassUsu = ? AND u.Activo = 1
-            """.trimIndent(),
-            arrayOf(usuario, pass)
-        )
-        if (!cursor.moveToFirst()) {
-            cursor.close()
-            return null
+        return dbHelper.readableDatabase.use { db ->
+            db.rawQuery(
+                """
+                SELECT u.NombreUsu, r.NomRol 
+                FROM usuario u
+                JOIN roles r ON u.RolUsu = r.RolUsu
+                WHERE u.NombreUsu = ? AND u.PassUsu = ? AND u.Activo = 1
+                """.trimIndent(),
+                arrayOf(usuario, pass)
+            ).use { cursor ->
+                if (!cursor.moveToFirst()) return@use null
+                SesionUsuario(
+                    nombreUsuario = cursor.getString(cursor.getColumnIndexOrThrow("NombreUsu")),
+                    rol = cursor.getString(cursor.getColumnIndexOrThrow("NomRol"))
+                )
+            }
         }
-        val sesion = SesionUsuario(
-            nombreUsuario = cursor.getString(cursor.getColumnIndexOrThrow("NombreUsu")),
-            rol = cursor.getString(cursor.getColumnIndexOrThrow("NomRol"))
-        )
-        cursor.close()
-        return sesion
     }
 }
