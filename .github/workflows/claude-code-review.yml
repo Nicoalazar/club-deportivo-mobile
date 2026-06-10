@@ -37,8 +37,8 @@ jobs:
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          show_full_output: 'true'
-          claude_args: '--allowedTools "Bash(gh pr view:*),Bash(gh pr diff:*),WebFetch"'
+          show_full_output: 'false'
+          claude_args: '--allowedTools "Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh api repos/Nicoalazar/club-deportivo-mobile/pulls/${{ github.event.pull_request.number }}/reviews:*),WebFetch"'
           plugin_marketplaces: 'https://github.com/anthropics/claude-code.git'
           plugins: 'code-review@claude-code-plugins'
           prompt: 'Revisá el pull request #${{ github.event.pull_request.number }} del repo Nicoalazar/club-deportivo-mobile.
