@@ -28,8 +28,11 @@ class DashboardAdminActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val usuario = intent.getStringExtra("USUARIO") ?: "Admin"
+
         cardNoSocios.setOnClickListener {
             val intent = Intent(this, ListaNoSociosActivity::class.java)
+            intent.putExtra("USUARIO", usuario)
             startActivity(intent)
         }
 
