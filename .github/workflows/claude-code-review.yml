@@ -40,7 +40,7 @@ jobs:
           show_full_output: 'true'
           plugin_marketplaces: 'https://github.com/anthropics/claude-code.git'
           plugins: 'code-review@claude-code-plugins'
-          prompt: 'Revisá el pull request #{{pr_number}} del repo Nicoalazar/club-deportivo-mobile.
+          prompt: 'Revisá el pull request #${{ github.event.pull_request.number }} del repo Nicoalazar/club-deportivo-mobile.
                   Contexto del proyecto: app Android/Kotlin (paquete com.grupo9.clubdeportivo),
                     minSdk 24 (Android 7.0), sin core library desugaring habilitado, con DAOs
                     hechos a mano sobre SQLiteOpenHelper (DBHelper).
