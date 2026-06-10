@@ -18,6 +18,7 @@ class GenerarCuotasActivity : AppCompatActivity() {
 
     private lateinit var dbHelper: DBHelper
     private lateinit var cuotaDao: CuotaDao
+    private var usuarioActual: String = "Admin"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +26,9 @@ class GenerarCuotasActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Generar Cuotas"
+
+        // Obtener usuario de DashboardAdminActivity
+        usuarioActual = intent.getStringExtra("USUARIO") ?: "Admin"
 
         dbHelper = DBHelper(this)
         cuotaDao = CuotaDao(dbHelper)
@@ -46,7 +50,7 @@ class GenerarCuotasActivity : AppCompatActivity() {
             val diaVencimiento = etDiaVencimiento.text.toString()
             val monto = etMonto.text.toString()
 
-            if (validarEntradas(periodo, diaVencimiento, monto)) {
+            if (validarEntradas(periodo, diaVencimiento, monto, spinnerPeriodo)) {
                 generarCuotas(
                     periodo,
                     diaVencimiento.toInt(),
@@ -77,14 +81,32 @@ class GenerarCuotasActivity : AppCompatActivity() {
         spinner.adapter = adapter
     }
 
-    private fun validarEntradas(periodo: String, diaVencimiento: String, monto: String): Boolean {
+    private fun validarEntradas(
+        periodo: String,
+        diaVencimiento: String,
+        monto: String,
+        spinnerPeriodo: Spinner
+    ): Boolean {
         return when {
             diaVencimiento.isBlank() -> {
                 Toast.makeText(this, "Ingresa el día de vencimiento", Toast.LENGTH_SHORT).show()
                 false
             }
-            diaVencimiento.toIntOrNull() == null || diaVencimiento.toInt() !in 1..31 -> {
-                Toast.makeText(this, "El día debe estar entre 1 y 31", Toast.LENGTH_SHORT).show()
+            diaVencimiento.toIntOrNull() == null -> {
+                Toast.makeText(this, "El día debe ser un número", Toast.LENGTH_SHORT).show()
+                false
+            }
+            diaVencimiento.toInt() < 1 -> {
+                Toast.makeText(this, "El día debe ser mayor a 0", Toast.LENGTH_SHORT).show()
+                false
+            }
+            !esValido(periodo, diaVencimiento.toInt()) -> {
+                val maxDia = obtenerMaximoDiaDelMes(periodo)
+                Toast.makeText(
+                    this,
+                    "El mes $periodo tiene máximo $maxDia días",
+                    Toast.LENGTH_SHORT
+                ).show()
                 false
             }
             monto.isBlank() -> {
@@ -99,10 +121,22 @@ class GenerarCuotasActivity : AppCompatActivity() {
         }
     }
 
-    private fun generarCuotas(periodo: String, diaVencimiento: Int, monto: Double) {
-        val usuario = obtenerUsuarioLogueado()
+    private fun obtenerMaximoDiaDelMes(periodo: String): Int {
+        val año = periodo.substring(0, 4).toInt()
+        val mes = periodo.substring(4, 6).toInt()
+        val calendario = Calendar.getInstance().apply {
+            set(Calendar.YEAR, año)
+            set(Calendar.MONTH, mes - 1)
+        }
+        return calendario.getActualMaximum(Calendar.DAY_OF_MONTH)
+    }
 
-        val cuotasGeneradas = cuotaDao.generarCuotas(periodo, diaVencimiento, monto, usuario)
+    private fun esValido(periodo: String, dia: Int): Boolean {
+        return dia <= obtenerMaximoDiaDelMes(periodo)
+    }
+
+    private fun generarCuotas(periodo: String, diaVencimiento: Int, monto: Double) {
+        val cuotasGeneradas = cuotaDao.generarCuotas(periodo, diaVencimiento, monto, usuarioActual)
 
         if (cuotasGeneradas > 0) {
             mostrarConfirmacion(cuotasGeneradas, periodo, diaVencimiento, monto)
@@ -163,11 +197,6 @@ class GenerarCuotasActivity : AppCompatActivity() {
             12 -> "Diciembre"
             else -> ""
         }
-    }
-
-    private fun obtenerUsuarioLogueado(): String {
-        val sharedPref = getSharedPreferences("sesion", MODE_PRIVATE)
-        return sharedPref.getString("usuario", "Admin") ?: "Admin"
     }
 
     override fun onDestroy() {
