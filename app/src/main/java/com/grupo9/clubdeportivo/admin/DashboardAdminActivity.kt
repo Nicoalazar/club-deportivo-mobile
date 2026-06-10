@@ -9,6 +9,8 @@ import com.grupo9.clubdeportivo.admin.socios.ListaSociosActivity
 import com.grupo9.clubdeportivo.R
 import com.grupo9.clubdeportivo.admin.noSocios.ListaNoSociosActivity
 import com.grupo9.clubdeportivo.admin.socios.BuscarSociosActivity
+import com.grupo9.clubdeportivo.admin.cuotas.GenerarCuotasActivity
+import com.grupo9.clubdeportivo.admin.vencimientos.VencimientosActivity
 
 class DashboardAdminActivity : AppCompatActivity() {
 
@@ -39,12 +41,13 @@ class DashboardAdminActivity : AppCompatActivity() {
         }
 
         cardVencimientos.setOnClickListener {
-            val intent = Intent(this, com.grupo9.clubdeportivo.admin.vencimientos.VencimientosActivity::class.java)
+            val intent = Intent(this, VencimientosActivity::class.java)
             startActivity(intent)
         }
 
         cardActividades.setOnClickListener {
-            Toast.makeText(this, "Módulo Actividades — próximamente", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, GenerarCuotasActivity::class.java)
+            startActivity(intent)
         }
 
         cardAptoFisico.setOnClickListener {
