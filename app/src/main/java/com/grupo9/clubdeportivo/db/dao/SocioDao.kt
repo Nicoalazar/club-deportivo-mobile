@@ -63,7 +63,7 @@ class SocioDao(private val dbHelper: DBHelper) {
                 idPersona = cursor.getInt(cursor.getColumnIndexOrThrow("id_persona")),
                 fechaAlta = cursor.getString(cursor.getColumnIndexOrThrow("fecha_alta")) ?: "",
                 fechaBaja = cursor.getString(cursor.getColumnIndexOrThrow("fecha_baja")),
-                aptoFisicoVencimiento = cursor.getString(cursor.getColumnIndexOrThrow("apto_ficico_vencimiento")), // Se mantiene el typo exacto de la DB si existía
+                aptoFisicoVencimiento = cursor.getString(cursor.getColumnIndexOrThrow("apto_fisico_vencimiento")),
                 observaciones = cursor.getString(cursor.getColumnIndexOrThrow("observaciones"))
             )
         }
