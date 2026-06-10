@@ -35,6 +35,7 @@ class DetalleSocioActivity : AppCompatActivity() {
         val carnet   = intent.getStringExtra("INTENT_CARNET") ?: ""
         val estado   = intent.getStringExtra("INTENT_ESTADO") ?: "Al dia"
         val telefono = intent.getStringExtra("INTENT_TELEFONO") ?: "---"
+        val idSocio = intent.getIntExtra("INTENT_ID", -1)
 
         tvNombre.text  = nombre
         tvDni.text     = "DNI: $dni"
@@ -59,7 +60,12 @@ class DetalleSocioActivity : AppCompatActivity() {
 
         btnVolver.setOnClickListener { finish() }
         btnPago.setOnClickListener {
-            startActivity(Intent(this, RegistrarPagoActivity::class.java))
+            val intent = Intent(this, RegistrarPagoActivity::class.java)
+            intent.putExtra("ID_SOCIO", idSocio)
+            intent.putExtra("NOMBRE_SOCIO", nombre)
+            intent.putExtra("DNI_SOCIO", dni)
+            intent.putExtra("USUARIO", "Admin")
+            startActivity(intent)
         }
     }
 }
