@@ -32,11 +32,7 @@ class AltaSocioActivity : AppCompatActivity() {
         socioDao = SocioDao(dbHelper)
         noSocioDao = NoSocioDao(dbHelper)
 
-<<<<<<< HEAD
-        // 2. Referencias del layout
-=======
         // Referencias del layout
->>>>>>> 54518671d750ab64098dca594612cf46e23df701
         val btnVolver = findViewById<TextView>(R.id.btnVolver)
         val btnGuardar = findViewById<Button>(R.id.btnGuardar)
         val btnTipoSocio = findViewById<Button>(R.id.btnTipoSocio)
@@ -73,8 +69,6 @@ class AltaSocioActivity : AppCompatActivity() {
         // Volver
         btnVolver.setOnClickListener { finish() }
 
-        btnVolver.setOnClickListener { finish() }
-
         btnTipoSocio.setOnClickListener {
             esSocio = true
             actualizarEstiloBotones(btnTipoSocio, btnTipoNoSocio)
@@ -100,7 +94,6 @@ class AltaSocioActivity : AppCompatActivity() {
         }
     }
 
-<<<<<<< HEAD
     private fun configurarCalendario(editText: EditText) {
         editText.isFocusable = false
         editText.isClickable = true
@@ -120,14 +113,14 @@ class AltaSocioActivity : AppCompatActivity() {
         }
     }
 
-    private fun configurarSpinners(spSexo: Spinner, spTipoDoc: Spinner, spEstado: Spinner) {
-        val adapterSexo = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, arrayOf("Masculino", "Femenino", "Otros"))
-        val adapterTipo = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, arrayOf("DNI", "Pasaporte"))
-        val adapterEstado = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, arrayOf("Adherente", "Baja Administrativa", "Baja Voluntaria"))
+    private fun configurarSpinners(spSexo: Spinner, spTipoDocumento: Spinner, spEstado: Spinner) {
+        val sexoArray = arrayOf("Seleccionar", "Masculino", "Femenino", "Otros")
+        val tipoDocArray = arrayOf("Seleccionar", "DNI", "Pasaporte")
+        val estadoArray = arrayOf("Adherente", "Baja Administrativa", "Baja Voluntaria")
 
-        spSexo.adapter = adapterSexo
-        spTipoDoc.adapter = adapterTipo
-        spEstado.adapter = adapterEstado
+        spSexo.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sexoArray)
+        spTipoDocumento.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, tipoDocArray)
+        spEstado.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, estadoArray)
     }
 
     private fun actualizarEstiloBotones(seleccionado: Button, deseleccionado: Button) {
@@ -138,38 +131,6 @@ class AltaSocioActivity : AppCompatActivity() {
         seleccionado.setTextColor(colorBlanco)
         deseleccionado.setBackgroundColor(colorBlanco)
         deseleccionado.setTextColor(colorPrimario)
-    }
-
-    private fun validarCampos(nom: EditText, ape: EditText, dni: EditText, mail: EditText): Boolean {
-        if (nom.text.isEmpty() || ape.text.isEmpty() || dni.text.isEmpty() || mail.text.isEmpty()) {
-            Toast.makeText(this, "Completá los campos obligatorios", Toast.LENGTH_SHORT).show()
-            return false
-=======
-    private fun configurarSpinners(spSexo: Spinner, spTipoDocumento: Spinner, spEstado: Spinner) {
-        val sexoArray = arrayOf("Seleccionar", "Masculino", "Femenino", "Otros")
-        val tipoDocArray = arrayOf("Seleccionar", "DNI", "Pasaporte")
-        val estadoArray = arrayOf("Adherente", "Baja Administrativa", "Baja Voluntaria")
-
-        spSexo.adapter = android.widget.ArrayAdapter(this, android.R.layout.simple_spinner_item, sexoArray)
-        spTipoDocumento.adapter = android.widget.ArrayAdapter(this, android.R.layout.simple_spinner_item, tipoDocArray)
-        spEstado.adapter = android.widget.ArrayAdapter(this, android.R.layout.simple_spinner_item, estadoArray)
-    }
-
-    private fun actualizarBotonTipo(btnSocio: Button, btnNoSocio: Button, esSocio: Boolean) {
-        val colorPrimary = ContextCompat.getColor(this, R.color.colorPrimary)
-        val colorWhite = ContextCompat.getColor(this, R.color.white)
-
-        if (esSocio) {
-            btnSocio.setBackgroundColor(colorPrimary)
-            btnSocio.setTextColor(colorWhite)
-            btnNoSocio.setBackgroundColor(colorWhite)
-            btnNoSocio.setTextColor(colorPrimary)
-        } else {
-            btnNoSocio.setBackgroundColor(colorPrimary)
-            btnNoSocio.setTextColor(colorWhite)
-            btnSocio.setBackgroundColor(colorWhite)
-            btnSocio.setTextColor(colorPrimary)
-        }
     }
 
     private fun validarCampos(
@@ -217,12 +178,10 @@ class AltaSocioActivity : AppCompatActivity() {
                 Toast.makeText(this, "El teléfono es obligatorio", Toast.LENGTH_SHORT).show()
                 return false
             }
->>>>>>> 54518671d750ab64098dca594612cf46e23df701
         }
         return true
     }
 
-<<<<<<< HEAD
     private fun procesarAlta(
         etNombre: EditText, etApellido: EditText, spSexo: Spinner, spTipoDocumento: Spinner,
         etNroDocumento: EditText, etFechaNacimiento: EditText, etEmail: EditText, etTelefono: EditText,

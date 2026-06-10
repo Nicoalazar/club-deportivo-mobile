@@ -101,6 +101,7 @@ class PersonaDao(private val dbHelper: DBHelper) {
             nroDocumento = cursor.getString(cursor.getColumnIndexOrThrow("NroDocumento")),
             nacimiento   = cursor.getString(cursor.getColumnIndexOrThrow("Nacimiento")),
             email        = cursor.getString(cursor.getColumnIndexOrThrow("Email")),
+            telefono     = cursor.getString(cursor.getColumnIndexOrThrow("Telefono")),
             vtoAptoFisico = cursor.getString(cursor.getColumnIndexOrThrow("VtoAptoFisico")),
             estado       = cursor.getString(cursor.getColumnIndexOrThrow("Estado")),
             fechaAlta    = cursor.getString(cursor.getColumnIndexOrThrow("FechaAlta"))

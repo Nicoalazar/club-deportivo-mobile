@@ -113,7 +113,7 @@ class DBHelper(context: Context) :
 
     companion object {
         const val DB_NAME = "club_deportivo.db"
-        const val DB_VERSION = 1
+        const val DB_VERSION = 2
 
         // Montos iniciales de cuota.
         private const val CUOTA_MENSUAL_INICIAL = 15000.0
@@ -269,6 +269,7 @@ class DBHelper(context: Context) :
                    p.nro_documento            AS NroDocumento,
                    p.fecha_nacimiento         AS Nacimiento,
                    p.email                    AS Email,
+                   p.telefono                 AS Telefono,
                    s.apto_fisico_vencimiento  AS VtoAptoFisico,
                    'Activo'                   AS Estado,
                    s.fecha_alta               AS FechaAlta
@@ -285,6 +286,7 @@ class DBHelper(context: Context) :
                    p1.nro_documento           AS NroDocumento,
                    p1.fecha_nacimiento        AS Nacimiento,
                    p1.email                   AS Email,
+                   p1.telefono                AS Telefono,
                    n.apto_fisico_vencimiento  AS VtoAptoFisico,
                    n.estado                   AS Estado,
                    n.fecha_registro           AS FechaAlta

@@ -11,17 +11,14 @@ class NoSocioDao(private val dbHelper: DBHelper) {
 
     private val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
 
-    // Patrón unificado: Acceso seguro y dinámico a la base de datos
-    private val db get() = dbHelper.writableDatabase
-
     private fun existeNoSocio(idPersona: Int): Boolean {
+        val db = dbHelper.readableDatabase
         val query = "SELECT id_no_socio FROM ${DBHelper.TABLE_NO_SOCIOS} WHERE id_persona = ?"
-        dbHelper.readableDatabase.rawQuery(query, arrayOf(idPersona.toString())).use { cursor ->
+        db.rawQuery(query, arrayOf(idPersona.toString())).use { cursor ->
             return cursor.moveToFirst()
         }
     }
 
-    // Alta de no socio
     fun insertarNoSocio(idPersona: Int, estado: String, aptoVencimiento: String?, motivo: String?): Long {
         if (existeNoSocio(idPersona)) return -1L
 
@@ -36,7 +33,6 @@ class NoSocioDao(private val dbHelper: DBHelper) {
         return db.insert(DBHelper.TABLE_NO_SOCIOS, null, values)
     }
 
-    // Editar no socio
     fun editarNoSocio(idNoSocio: Int, aptoVencimiento: String?, motivo: String?): Int {
         val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
@@ -47,7 +43,6 @@ class NoSocioDao(private val dbHelper: DBHelper) {
         return db.update(DBHelper.TABLE_NO_SOCIOS, values, "id_no_socio = ?", arrayOf(idNoSocio.toString()))
     }
 
-    // Cambiar estado — Baja Administrativa / Baja Voluntaria
     fun cambiarEstado(idNoSocio: Int, estado: String, motivo: String?): Int {
         val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
@@ -59,8 +54,9 @@ class NoSocioDao(private val dbHelper: DBHelper) {
     }
 
     fun obtenerPorId(idNoSocio: Int): NoSocio? {
+        val db = dbHelper.readableDatabase
         val query = "SELECT * FROM ${DBHelper.TABLE_NO_SOCIOS} WHERE id_no_socio = ?"
-        dbHelper.readableDatabase.rawQuery(query, arrayOf(idNoSocio.toString())).use { cursor ->
+        db.rawQuery(query, arrayOf(idNoSocio.toString())).use { cursor ->
             if (!cursor.moveToFirst()) return null
 
             return NoSocio(

@@ -10,11 +10,11 @@ import java.util.Locale
 class SocioDao(private val dbHelper: DBHelper) {
 
     private val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-    private val db get() = dbHelper.writableDatabase
 
     private fun existeSocioActivo(idPersona: Int): Boolean {
+        val db = dbHelper.readableDatabase
         val query = "SELECT id_socio FROM ${DBHelper.TABLE_SOCIOS} WHERE id_persona = ? AND fecha_baja IS NULL"
-        dbHelper.readableDatabase.rawQuery(query, arrayOf(idPersona.toString())).use { cursor ->
+        db.rawQuery(query, arrayOf(idPersona.toString())).use { cursor ->
             return cursor.moveToFirst()
         }
     }
@@ -22,6 +22,7 @@ class SocioDao(private val dbHelper: DBHelper) {
     fun insertarSocio(idPersona: Int, aptoVencimiento: String?, observaciones: String? = null): Long {
         if (existeSocioActivo(idPersona)) return -1L
 
+        val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
             put("id_persona", idPersona)
             put("fecha_alta", sdf.format(Date()))
@@ -32,6 +33,7 @@ class SocioDao(private val dbHelper: DBHelper) {
     }
 
     fun editarSocio(idSocio: Int, aptoVencimiento: String?, observaciones: String?): Int {
+        val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
             if (aptoVencimiento != null) put("apto_fisico_vencimiento", aptoVencimiento)
             if (observaciones != null) put("observaciones", observaciones)
@@ -40,6 +42,7 @@ class SocioDao(private val dbHelper: DBHelper) {
     }
 
     fun darDeBaja(idSocio: Int): Int {
+        val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
             put("fecha_baja", sdf.format(Date()))
         }
@@ -47,8 +50,9 @@ class SocioDao(private val dbHelper: DBHelper) {
     }
 
     fun obtenerPorId(idSocio: Int): Socio? {
+        val db = dbHelper.readableDatabase
         val query = "SELECT * FROM ${DBHelper.TABLE_SOCIOS} WHERE id_socio = ?"
-        dbHelper.readableDatabase.rawQuery(query, arrayOf(idSocio.toString())).use { cursor ->
+        db.rawQuery(query, arrayOf(idSocio.toString())).use { cursor ->
             if (!cursor.moveToFirst()) return null
 
             return Socio(
