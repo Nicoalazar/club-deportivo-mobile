@@ -6,7 +6,6 @@
     android:orientation="vertical"
     android:background="@color/colorBackground">
 
-    <!-- BARRA SUPERIOR CON BOTÓN VOLVER -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -41,7 +40,6 @@
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- CONTENIDO SCROLLABLE -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -53,8 +51,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-
-            <!-- CARNET FÍSICO   -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardCarnet"
                 android:layout_width="match_parent"
@@ -71,7 +67,6 @@
                     android:orientation="horizontal"
                     android:padding="16dp">
 
-                    <!-- Avatar Redondo (Placeholder de foto) -->
                     <androidx.cardview.widget.CardView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
@@ -89,7 +84,6 @@
                             android:textStyle="bold" />
                     </androidx.cardview.widget.CardView>
 
-                    <!-- Datos internos del Carnet -->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -133,7 +127,6 @@
                             android:textSize="14sp"
                             android:layout_marginTop="2dp" />
 
-                        <!-- Estado Al día / Vencido -->
                         <TextView
                             android:id="@+id/tvBadgeEstado"
                             android:layout_width="wrap_content"
@@ -150,7 +143,6 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- DATOS PERSONALES -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -187,7 +179,6 @@
                 </TableLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- HISTORIAL DE PAGOS -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -236,8 +227,6 @@
         </LinearLayout>
     </ScrollView>
 
-
-    <!-- SECCIÓN DE ACCIONES (BOTONES) -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -245,7 +234,6 @@
         android:paddingHorizontal="16dp"
         android:paddingBottom="16dp">
 
-        <!-- Botón Principal: Registrar Pago o Cobrar Actividad -->
         <Button
             android:id="@+id/btnAccionPrincipal"
             android:layout_width="match_parent"
@@ -256,24 +244,22 @@
             android:textStyle="bold"
             android:layout_marginBottom="8dp" />
 
-        <!-- Fila Horizontal para Editar y Dar de Baja -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <!-- Botón Editar Datos -->
             <Button
                 android:id="@+id/btnEditar"
                 android:layout_width="0dp"
                 android:layout_height="52dp"
                 android:layout_weight="1"
                 android:text="EDITAR"
-                style="?android:attr/buttonStyleToggle"
-                android:textColor="@color/colorPrimary"
+                android:backgroundTint="#ECEFF1"
+                android:textColor="#37474F"
+                android:textStyle="bold"
                 android:layout_marginEnd="4dp" />
 
-            <!-- Botón Dar de Baja (En Rojo para alertar peligro) -->
             <Button
                 android:id="@+id/btnDarDeBaja"
                 android:layout_width="0dp"
@@ -283,6 +269,7 @@
                 android:backgroundTint="#D32F2F"
                 android:textColor="@color/white"
                 android:layout_marginStart="4dp" />
-
         </LinearLayout>
     </LinearLayout>
+
+</LinearLayout>
