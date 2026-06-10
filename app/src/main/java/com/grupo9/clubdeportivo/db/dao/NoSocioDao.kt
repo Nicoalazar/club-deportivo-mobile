@@ -11,16 +11,14 @@ class NoSocioDao(private val dbHelper: DBHelper) {
 
     private val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
 
-    // Verifica si ya existe un no socio para esa persona
+    // Patrón unificado: Acceso seguro y dinámico a la base de datos
+    private val db get() = dbHelper.writableDatabase
+
     private fun existeNoSocio(idPersona: Int): Boolean {
-        val db = dbHelper.readableDatabase
-        val cursor = db.rawQuery(
-            "SELECT id_no_socio FROM no_socios WHERE id_persona = ?",
-            arrayOf(idPersona.toString())
-        )
-        val existe = cursor.moveToFirst()
-        cursor.close()
-        return existe
+        val query = "SELECT id_no_socio FROM ${DBHelper.TABLE_NO_SOCIOS} WHERE id_persona = ?"
+        dbHelper.readableDatabase.rawQuery(query, arrayOf(idPersona.toString())).use { cursor ->
+            return cursor.moveToFirst()
+        }
     }
 
     // Alta de no socio
@@ -60,27 +58,20 @@ class NoSocioDao(private val dbHelper: DBHelper) {
         return db.update(DBHelper.TABLE_NO_SOCIOS, values, "id_no_socio = ?", arrayOf(idNoSocio.toString()))
     }
 
-    // Obtener por id
     fun obtenerPorId(idNoSocio: Int): NoSocio? {
-        val db = dbHelper.readableDatabase
-        val cursor = db.rawQuery(
-            "SELECT * FROM no_socios WHERE id_no_socio = ?",
-            arrayOf(idNoSocio.toString())
-        )
-        if (!cursor.moveToFirst()) {
-            cursor.close()
-            return null
+        val query = "SELECT * FROM ${DBHelper.TABLE_NO_SOCIOS} WHERE id_no_socio = ?"
+        dbHelper.readableDatabase.rawQuery(query, arrayOf(idNoSocio.toString())).use { cursor ->
+            if (!cursor.moveToFirst()) return null
+
+            return NoSocio(
+                idNoSocio = cursor.getInt(cursor.getColumnIndexOrThrow("id_no_socio")),
+                idPersona = cursor.getInt(cursor.getColumnIndexOrThrow("id_persona")),
+                estado = cursor.getString(cursor.getColumnIndexOrThrow("estado")) ?: "Adherente",
+                aptoFisicoVencimiento = cursor.getString(cursor.getColumnIndexOrThrow("apto_fisico_vencimiento")),
+                motivo = cursor.getString(cursor.getColumnIndexOrThrow("motivo")),
+                fechaRegistro = cursor.getString(cursor.getColumnIndexOrThrow("fecha_registro")) ?: "",
+                fechaActualizacion = cursor.getString(cursor.getColumnIndexOrThrow("fecha_actualizacion"))
+            )
         }
-        val noSocio = NoSocio(
-            idNoSocio = cursor.getInt(cursor.getColumnIndexOrThrow("id_no_socio")),
-            idPersona = cursor.getInt(cursor.getColumnIndexOrThrow("id_persona")),
-            estado = cursor.getString(cursor.getColumnIndexOrThrow("estado")) ?: "Adherente",
-            aptoFisicoVencimiento = cursor.getString(cursor.getColumnIndexOrThrow("apto_fisico_vencimiento")),
-            motivo = cursor.getString(cursor.getColumnIndexOrThrow("motivo")),
-            fechaRegistro = cursor.getString(cursor.getColumnIndexOrThrow("fecha_registro")) ?: "",
-            fechaActualizacion = cursor.getString(cursor.getColumnIndexOrThrow("fecha_actualizacion"))
-        )
-        cursor.close()
-        return noSocio
     }
 }

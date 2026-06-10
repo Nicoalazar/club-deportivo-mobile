@@ -27,13 +27,16 @@ class AltaSocioActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alta_socio)
 
-        // 1. Inicializar DAOs (Buena práctica: una sola vez en el onCreate)
         val dbHelper = DBHelper(this)
         personaDao = PersonaDao(dbHelper)
         socioDao = SocioDao(dbHelper)
         noSocioDao = NoSocioDao(dbHelper)
 
+<<<<<<< HEAD
         // 2. Referencias del layout
+=======
+        // Referencias del layout
+>>>>>>> 54518671d750ab64098dca594612cf46e23df701
         val btnVolver = findViewById<TextView>(R.id.btnVolver)
         val btnGuardar = findViewById<Button>(R.id.btnGuardar)
         val btnTipoSocio = findViewById<Button>(R.id.btnTipoSocio)
@@ -57,22 +60,21 @@ class AltaSocioActivity : AppCompatActivity() {
         val spEstado = findViewById<Spinner>(R.id.spEstado)
         val etMotivo = findViewById<EditText>(R.id.etMotivo)
 
-        // 3. Configurar Spinners con estilo profesional
         configurarSpinners(spSexo, spTipoDocumento, spEstado)
 
-        // 4. Configurar Calendarios (DatePicker)
         configurarCalendario(etFechaNacimiento)
         configurarCalendario(etVencimientoApto)
 
-        // Lógica de habilitar campo vencimiento
         cbAptoFisico.setOnCheckedChangeListener { _, isChecked ->
             etVencimientoApto.isEnabled = isChecked
             if (!isChecked) etVencimientoApto.setText("")
         }
 
+        // Volver
         btnVolver.setOnClickListener { finish() }
 
-        // Selección Socio/No Socio
+        btnVolver.setOnClickListener { finish() }
+
         btnTipoSocio.setOnClickListener {
             esSocio = true
             actualizarEstiloBotones(btnTipoSocio, btnTipoNoSocio)
@@ -87,9 +89,8 @@ class AltaSocioActivity : AppCompatActivity() {
             llCamposNoSocio.visibility = View.VISIBLE
         }
 
-        // 5. Botón Guardar con validaciones y navegación real
         btnGuardar.setOnClickListener {
-            if (validarCampos(etNombre, etApellido, etNroDocumento, etEmail)) {
+            if (validarCampos(etNombre, etApellido, spSexo, spTipoDocumento, etNroDocumento, etEmail, etTelefono)) {
                 procesarAlta(
                     etNombre, etApellido, spSexo, spTipoDocumento, etNroDocumento,
                     etFechaNacimiento, etEmail, etTelefono, etDomicilio, cbAptoFisico, etVencimientoApto,
@@ -99,6 +100,7 @@ class AltaSocioActivity : AppCompatActivity() {
         }
     }
 
+<<<<<<< HEAD
     private fun configurarCalendario(editText: EditText) {
         editText.isFocusable = false
         editText.isClickable = true
@@ -142,55 +144,132 @@ class AltaSocioActivity : AppCompatActivity() {
         if (nom.text.isEmpty() || ape.text.isEmpty() || dni.text.isEmpty() || mail.text.isEmpty()) {
             Toast.makeText(this, "Completá los campos obligatorios", Toast.LENGTH_SHORT).show()
             return false
+=======
+    private fun configurarSpinners(spSexo: Spinner, spTipoDocumento: Spinner, spEstado: Spinner) {
+        val sexoArray = arrayOf("Seleccionar", "Masculino", "Femenino", "Otros")
+        val tipoDocArray = arrayOf("Seleccionar", "DNI", "Pasaporte")
+        val estadoArray = arrayOf("Adherente", "Baja Administrativa", "Baja Voluntaria")
+
+        spSexo.adapter = android.widget.ArrayAdapter(this, android.R.layout.simple_spinner_item, sexoArray)
+        spTipoDocumento.adapter = android.widget.ArrayAdapter(this, android.R.layout.simple_spinner_item, tipoDocArray)
+        spEstado.adapter = android.widget.ArrayAdapter(this, android.R.layout.simple_spinner_item, estadoArray)
+    }
+
+    private fun actualizarBotonTipo(btnSocio: Button, btnNoSocio: Button, esSocio: Boolean) {
+        val colorPrimary = ContextCompat.getColor(this, R.color.colorPrimary)
+        val colorWhite = ContextCompat.getColor(this, R.color.white)
+
+        if (esSocio) {
+            btnSocio.setBackgroundColor(colorPrimary)
+            btnSocio.setTextColor(colorWhite)
+            btnNoSocio.setBackgroundColor(colorWhite)
+            btnNoSocio.setTextColor(colorPrimary)
+        } else {
+            btnNoSocio.setBackgroundColor(colorPrimary)
+            btnNoSocio.setTextColor(colorWhite)
+            btnSocio.setBackgroundColor(colorWhite)
+            btnSocio.setTextColor(colorPrimary)
+        }
+    }
+
+    private fun validarCampos(
+        etNombre: EditText, etApellido: EditText, spSexo: Spinner, spTipoDocumento: Spinner,
+        etNroDocumento: EditText, etEmail: EditText, etTelefono: EditText
+    ): Boolean {
+        val nombre = etNombre.text.toString().trim()
+        val apellido = etApellido.text.toString().trim()
+        val sexo = spSexo.selectedItem.toString()
+        val tipoDoc = spTipoDocumento.selectedItem.toString()
+        val nroDoc = etNroDocumento.text.toString().trim()
+        val email = etEmail.text.toString().trim()
+        val telefono = etTelefono.text.toString().trim()
+
+        when {
+            nombre.isEmpty() -> {
+                Toast.makeText(this, "El nombre es obligatorio", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            apellido.isEmpty() -> {
+                Toast.makeText(this, "El apellido es obligatorio", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            sexo == "Seleccionar" -> {
+                Toast.makeText(this, "Selecciona un sexo", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            tipoDoc == "Seleccionar" -> {
+                Toast.makeText(this, "Selecciona un tipo de documento", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            nroDoc.isEmpty() -> {
+                Toast.makeText(this, "El número de documento es obligatorio", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            email.isEmpty() -> {
+                Toast.makeText(this, "El email es obligatorio", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                Toast.makeText(this, "El email no es válido", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            telefono.isEmpty() -> {
+                Toast.makeText(this, "El teléfono es obligatorio", Toast.LENGTH_SHORT).show()
+                return false
+            }
+>>>>>>> 54518671d750ab64098dca594612cf46e23df701
         }
         return true
     }
 
+<<<<<<< HEAD
     private fun procesarAlta(
         etNombre: EditText, etApellido: EditText, spSexo: Spinner, spTipoDocumento: Spinner,
         etNroDocumento: EditText, etFechaNacimiento: EditText, etEmail: EditText, etTelefono: EditText,
         etDomicilio: EditText, cbAptoFisico: CheckBox, etVencimientoApto: EditText,
         etObservaciones: EditText, spEstado: Spinner, etMotivo: EditText
     ) {
-        val nom = etNombre.text.toString().trim()
-        val ape = etApellido.text.toString().trim()
-        val dni = etNroDocumento.text.toString().trim()
+        val nombre = etNombre.text.toString().trim()
+        val apellido = etApellido.text.toString().trim()
+        val nroDocumento = etNroDocumento.text.toString().trim()
         val email = etEmail.text.toString().trim()
-        val tel = etTelefono.text.toString().trim()
-        
-        var idPersona = personaDao.obtenerPorDni(dni).toLong()
+        val telefono = etTelefono.text.toString().trim()
+        val fechaNacimiento = if (etFechaNacimiento.text.toString().isNotEmpty()) etFechaNacimiento.text.toString() else null
+        val domicilio = if (etDomicilio.text.toString().isNotEmpty()) etDomicilio.text.toString() else null
+        val vencimientoApto = if (cbAptoFisico.isChecked && etVencimientoApto.text.toString().isNotEmpty()) {
+            etVencimientoApto.text.toString()
+        } else null
 
-        if (idPersona <= 0) {
-            val nuevaPersona = Persona(
-                nombres = nom,
-                apellidos = ape,
-                sexo = spSexo.selectedItem.toString(),
-                tipoDocumento = spTipoDocumento.selectedItem.toString(),
-                nroDocumento = dni,
-                fechaNacimiento = etFechaNacimiento.text.toString(),
-                email = email,
-                telefono = tel,
-                domicilio = etDomicilio.text.toString()
-            )
-            idPersona = personaDao.insertarPersona(nuevaPersona)
-        }
+        val persona = Persona(
+            nombres = nombre,
+            apellidos = apellido,
+            sexo = spSexo.selectedItem.toString(),
+            tipoDocumento = spTipoDocumento.selectedItem.toString(),
+            nroDocumento = nroDocumento,
+            fechaNacimiento = fechaNacimiento,
+            email = email,
+            telefono = telefono,
+            domicilio = domicilio
+        )
+
+        val idPersona = personaDao.insertarPersona(persona).toInt()
 
         if (idPersona > 0) {
-            val vencimientoApto = if (cbAptoFisico.isChecked) etVencimientoApto.text.toString() else null
-            
             if (esSocio) {
-                val obs = etObservaciones.text.toString()
-                val idSocio = socioDao.insertarSocio(idPersona.toInt(), vencimientoApto, if (obs.isEmpty()) null else obs)
-                
+                val observaciones = if (etObservaciones.text.toString().isNotEmpty()) {
+                    etObservaciones.text.toString()
+                } else null
+                val idSocio = socioDao.insertarSocio(idPersona, vencimientoApto, observaciones)
+
                 if (idSocio > 0) {
                     Toast.makeText(this, "Socio registrado con éxito", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, DetalleSocioActivity::class.java)
-                    intent.putExtra("INTENT_NOMBRE", "$nom $ape")
-                    intent.putExtra("INTENT_DNI", dni)
+                    intent.putExtra("INTENT_NOMBRE", "$nombre $apellido")
+                    intent.putExtra("INTENT_DNI", nroDocumento)
                     intent.putExtra("INTENT_TIPO", "Socio")
                     intent.putExtra("INTENT_VENCE", vencimientoApto ?: "--/--/----")
                     intent.putExtra("INTENT_EMAIL", email)
-                    intent.putExtra("INTENT_TELEFONO", tel)
+                    intent.putExtra("INTENT_TELEFONO", telefono)
                     startActivity(intent)
                     finish()
                 } else {
@@ -198,21 +277,23 @@ class AltaSocioActivity : AppCompatActivity() {
                 }
             } else {
                 val estado = spEstado.selectedItem.toString()
-                val motivo = etMotivo.text.toString()
-                val idNoSocio = noSocioDao.insertarNoSocio(idPersona.toInt(), estado, vencimientoApto, if (motivo.isEmpty()) null else motivo)
-                
+                val motivo = if (etMotivo.text.toString().isNotEmpty()) etMotivo.text.toString() else null
+                val idNoSocio = noSocioDao.insertarNoSocio(idPersona, estado, vencimientoApto, motivo)
+
                 if (idNoSocio > 0) {
                     Toast.makeText(this, "¡No Socio registrado!", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, CobroActividadActivity::class.java)
                     intent.putExtra("INTENT_ID", idNoSocio.toInt())
-                    intent.putExtra("INTENT_NOMBRE", "$nom $ape")
-                    intent.putExtra("INTENT_DNI", dni)
+                    intent.putExtra("INTENT_NOMBRE", "$nombre $apellido")
+                    intent.putExtra("INTENT_DNI", nroDocumento)
                     startActivity(intent)
                     finish()
                 } else {
                     Toast.makeText(this, "Esta persona ya es No Socio", Toast.LENGTH_SHORT).show()
                 }
             }
+        } else {
+            Toast.makeText(this, "Error al registrar la persona", Toast.LENGTH_SHORT).show()
         }
     }
 }

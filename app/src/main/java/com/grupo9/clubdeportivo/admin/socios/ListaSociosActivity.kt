@@ -41,7 +41,6 @@ class ListaSociosActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Configurar el buscador (Paso 3: El Buscador Inteligente)
         etBuscar.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -51,26 +50,20 @@ class ListaSociosActivity : AppCompatActivity() {
         })
     }
 
-    // Paso 2: La Lista Dinámica Unificada
     private fun cargarLista(filtro: String = "") {
         container.removeAllViews()
 
         val lista: List<PersonaData> = if (filtro.isEmpty()) {
             personaDao.listarTodos()
         } else {
-            // Lógica para mapear el input a los parámetros del DAO.buscar()
             if (filtro.all { it.isDigit() }) {
-                // Si son todos números, buscamos por DNI
                 personaDao.buscar("", "", filtro)
             } else if (filtro.contains(" ")) {
-                // Si tiene espacio, intentamos Nombre y Apellido
                 val partes = filtro.split(" ")
                 val nom = partes[0]
                 val ape = partes.subList(1, partes.size).joinToString(" ")
                 personaDao.buscar(nom, ape, "")
             } else {
-                // Si es una sola palabra, el DAO actual requiere ambos (>=3), 
-                // así que por ahora buscamos como si fuera solo nombre (o devolvemos vacío)
                 personaDao.buscar(filtro, "", "")
             }
         }
@@ -88,15 +81,14 @@ class ListaSociosActivity : AppCompatActivity() {
 
         for (persona in lista) {
             val itemView = inflater.inflate(R.layout.item_lista_personas, container, false)
-            
+
             val tvNombre = itemView.findViewById<TextView>(R.id.tvNombre)
             val tvDni = itemView.findViewById<TextView>(R.id.tvDocumento)
             val tvCat = itemView.findViewById<TextView>(R.id.tvCategoria)
 
             tvNombre.text = "${persona.nombres} ${persona.apellidos}"
             tvDni.text = "DNI: ${persona.nroDocumento}"
-            
-            // Distinguir visualmente Socio vs No Socio (Paso 2)
+
             if (persona.categoria == "Socio") {
                 tvCat.text = "SOCIO"
                 tvCat.setTextColor(ContextCompat.getColor(this, R.color.white))
@@ -107,7 +99,6 @@ class ListaSociosActivity : AppCompatActivity() {
                 tvCat.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBackgroundGray))
             }
 
-            // Paso 4: Navegación al Detalle pasando ID y Categoría
             itemView.setOnClickListener {
                 val intent = Intent(this, DetalleSocioActivity::class.java)
                 intent.putExtra("INTENT_ID", persona.id)
@@ -117,7 +108,7 @@ class ListaSociosActivity : AppCompatActivity() {
                 intent.putExtra("INTENT_TIPO", persona.categoria)
                 intent.putExtra("INTENT_VENCE", persona.vtoAptoFisico ?: "--/--/----")
                 intent.putExtra("INTENT_EMAIL", persona.email ?: "---")
-                intent.putExtra("INTENT_TELEFONO", persona.nacimiento ?: "---") // Usamos el campo nacimiento o teléfono según disponibilidad
+                intent.putExtra("INTENT_TELEFONO", persona.telefono ?: "---")
                 startActivity(intent)
             }
 
@@ -127,7 +118,6 @@ class ListaSociosActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        // Cargamos la lista sin filtros al inicio o al volver
         cargarLista(etBuscar.text.toString().trim())
     }
 }
