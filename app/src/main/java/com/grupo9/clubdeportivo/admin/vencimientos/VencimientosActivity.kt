@@ -25,7 +25,9 @@ class VencimientosActivity : AppCompatActivity() {
     private lateinit var contenedor: LinearLayout
     private lateinit var tvListaVacia: TextView
     private lateinit var switchPorVencer: Switch
+    private lateinit var dbHelper: DBHelper
     private lateinit var cuotaDao: CuotaDao
+    private lateinit var usuario: String
     private val hoy = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +37,9 @@ class VencimientosActivity : AppCompatActivity() {
         contenedor = findViewById(R.id.contenedorSocios)
         tvListaVacia = findViewById(R.id.tvListaVacia)
         switchPorVencer = findViewById(R.id.switchPorVencer)
-        cuotaDao = CuotaDao(DBHelper(this))
+        dbHelper = DBHelper(this)
+        cuotaDao = CuotaDao(dbHelper)
+        usuario = intent.getStringExtra("USUARIO") ?: "Admin"
 
         val btnVolver = findViewById<TextView>(R.id.btnVolverVencimientos)
         val btnHoy = findViewById<Button>(R.id.btnHoy)
@@ -85,7 +89,8 @@ class VencimientosActivity : AppCompatActivity() {
     }
 
     private fun agregarItem(cuota: CuotaPendiente) {
-        val view = LayoutInflater.from(this).inflate(R.layout.item_socio_vencimiento, contenedor, false)
+        val view = LayoutInflater.from(this)
+            .inflate(R.layout.item_socio_vencimiento, contenedor, false)
 
         val colorBorde: Int
         val colorEstado: Int
@@ -97,11 +102,13 @@ class VencimientosActivity : AppCompatActivity() {
                 colorEstado = ContextCompat.getColor(this, R.color.colorError)
                 colorFondo = ContextCompat.getColor(this, R.color.colorErrorLight)
             }
+
             "VENCE HOY" -> {
                 colorBorde = ContextCompat.getColor(this, R.color.colorWarning)
                 colorEstado = ContextCompat.getColor(this, R.color.colorWarning)
-                colorFondo = Color.parseColor("#FFF8E1")
+                colorFondo = ContextCompat.getColor(this, R.color.colorWarningLight)
             }
+
             else -> {
                 colorBorde = ContextCompat.getColor(this, R.color.colorStatusOk)
                 colorEstado = ContextCompat.getColor(this, R.color.colorStatusOk)
@@ -112,17 +119,25 @@ class VencimientosActivity : AppCompatActivity() {
         view.findViewById<View>(R.id.bordeLateral).setBackgroundColor(colorBorde)
         view.setBackgroundColor(colorFondo)
 
-        view.findViewById<TextView>(R.id.txtNombreSocio).text = "${cuota.apellidos}, ${cuota.nombres}"
-        view.findViewById<TextView>(R.id.txtPeriodo).text = "Período: ${cuota.periodo}"
+        view.findViewById<TextView>(R.id.txtNombreSocio).text =
+            "${cuota.apellidos}, ${cuota.nombres}"
+
+        view.findViewById<TextView>(R.id.txtPeriodo).text =
+            "Período: ${cuota.periodo}"
+
         view.findViewById<TextView>(R.id.txtEstadoSocio).apply {
             text = cuota.estado
             setTextColor(colorEstado)
         }
+
         view.findViewById<TextView>(R.id.txtFechaSocio).apply {
             text = cuota.fechaVencimiento
             setTextColor(colorEstado)
         }
-        view.findViewById<TextView>(R.id.txtMonto).text = "$${cuota.monto}"
+
+        view.findViewById<TextView>(R.id.txtMonto).text =
+            "$${cuota.monto}"
+
         view.findViewById<TextView>(R.id.txtDiasVencidos).text =
             if (cuota.diasVencidos > 0) "${cuota.diasVencidos} días vencidos" else ""
 
@@ -131,20 +146,31 @@ class VencimientosActivity : AppCompatActivity() {
             intent.putExtra("ID_SOCIO", cuota.idSocio)
             intent.putExtra("NOMBRE_SOCIO", "${cuota.nombres} ${cuota.apellidos}")
             intent.putExtra("DNI_SOCIO", "")
-            intent.putExtra("USUARIO", "Admin")
+            intent.putExtra("USUARIO", usuario)
             startActivity(intent)
         }
 
         contenedor.addView(view)
     }
 
-    private fun actualizarBotones(seleccionado: Button, opcion1: Button, opcion2: Button) {
+    private fun actualizarBotones(
+        seleccionado: Button,
+        opcion1: Button,
+        opcion2: Button
+    ) {
         val azulPrimario = ContextCompat.getColor(this, R.color.colorPrimary)
+
         seleccionado.setBackgroundColor(azulPrimario)
         seleccionado.setTextColor(Color.WHITE)
+
         listOf(opcion1, opcion2).forEach { boton ->
             boton.setBackgroundColor(Color.WHITE)
             boton.setTextColor(azulPrimario)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        dbHelper.close()
     }
 }
