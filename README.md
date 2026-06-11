@@ -1,13 +1,12 @@
 # 🏋️ Grupo 9 – Gimnasio y Club
-
 ### Aplicación Android — Gestión de Club Deportivo
 
 ---
 
 ## 📋 Descripción
 
-Aplicación móvil nativa para Android que digitaliza la gestión del **Grupo 9 – Gimnasio y Club**.
-Permite a un **administrador** registrar socios y no socios, cobrar la cuota mensual (socios) o el pase diario (no socios) y controlar el listado diario de cuotas que vencen.
+Aplicación móvil nativa para Android que digitaliza la gestión del **Grupo 9 – Gimnasio y Club**.  
+Permite administrar socios, registrar pagos, controlar vencimientos de cuotas y consultar el cronograma de actividades.
 
 Este proyecto es la migración del sistema de escritorio desarrollado en C#/.NET/WinForms durante las materias **DSOO** y **MDS**, adaptado al ecosistema Android con Kotlin.
 
@@ -16,30 +15,30 @@ Este proyecto es la migración del sistema de escritorio desarrollado en C#/.NET
 ## 👥 Equipo
 
 | Integrante | Comisión |
-| ---------- | -------- |
-| Albornoz   | A        |
-| Blanco     | A        |
-| Olivera    | A        |
-| Tome       | A        |
-| Zalazar    | A        |
+|---|---|
+| Albornoz | A |
+| Blanco | A |
+| Olivera | A |
+| Tome | A |
+| Zalazar | A |
 
-**Grupo:** Nro. 9
-**Materia:** Desarrollo de Aplicaciones Móviles
-**Profesor:** Prof. Kevin Del Bello
+**Grupo:** Nro. 9  
+**Materia:** Desarrollo de Aplicaciones Móviles  
+**Profesor:** Prof. Kevin Del Bello  
 **Instituto:** IFTS Nº 29 — 2026, 1° cuatrimestre
 
 ---
 
 ## 🛠️ Tecnologías
 
-| Herramienta   | Versión / Detalle                     |
-| ------------- | ------------------------------------- |
-| Lenguaje      | Kotlin                                |
-| IDE           | Android Studio                        |
-| UI            | Empty Views Activity + LinearLayout   |
-| Base de datos | SQLite (SQLiteOpenHelper)             |
-| Min SDK       | API 24 (Android 7.0)                  |
-| Target SDK    | API 36 (Android 16)                   |
+| Herramienta | Versión / Detalle |
+|---|---|
+| Lenguaje | Kotlin |
+| IDE | Android Studio |
+| UI | Empty Views Activity + LinearLayout |
+| Base de datos | SQLite (Room) |
+| Min SDK | API 24 (Android 7.0) |
+| Target SDK | API 36 (Android 16) |
 
 ---
 
@@ -73,28 +72,24 @@ app/
         │   │   │   └── CobroActividadActivity.kt
         │   │   ├── pagos/
         │   │   │   └── RegistrarPagoActivity.kt
-        │   │   ├── cuotas/
-        │   │   │   └── GenerarCuotasActivity.kt
         │   │   └── vencimientos/
         │   │       └── VencimientosActivity.kt
         │   │
-        │   ├── db/                      # (pendiente — SQLiteOpenHelper)
-        │   │   ├── DBHelper.kt
-        │   │   └── dao/
-        │   │       ├── PersonaDao.kt
-        │   │       ├── SocioDao.kt
-        │   │       ├── NoSocioDao.kt
-        │   │       ├── CuotaDao.kt
-        │   │       ├── PaseDiarioDao.kt
-        │   │       └── UsuarioDao.kt
+        │   ├── socio/                   # (pendiente)
+        │   │   ├── DashboardSocioActivity.kt
+        │   │   ├── PerfilSocioActivity.kt
+        │   │   └── ActividadesActivity.kt
+        │   │
+        │   ├── db/                      # (pendiente — Room)
+        │   │   ├── AppDatabase.kt
+        │   │   ├── dao/
+        │   │   └── entities/
         │   │
         │   └── model/                   # (pendiente)
-        │       ├── Persona.kt
         │       ├── Socio.kt
         │       ├── NoSocio.kt
-        │       ├── CuotaSocio.kt
-        │       ├── PaseDiario.kt
-        │       └── SesionUsuario.kt
+        │       ├── Pago.kt
+        │       └── Actividad.kt
         │
         └── res/
             ├── layout/                  # XML de cada Activity
@@ -109,78 +104,64 @@ app/
 
 ## 🖥️ Pantallas
 
-| #  | Pantalla                       | Rol           |
-| -- | ------------------------------ | ------------- |
-| 1  | Splash                         | Todos         |
-| 2  | Login                          | Administrador |
-| 3  | Dashboard Admin                | Administrador |
-| 4  | Listado de Socios              | Administrador |
-| 5  | Búsqueda de Socios             | Administrador |
-| 6  | Detalle de Socio + Carnet      | Administrador |
-| 7  | Alta de Socio / No Socio       | Administrador |
-| 8  | Vencimientos                   | Administrador |
-| 9  | Registrar Pago (cuota mensual) | Administrador |
-| 10 | Listado de No Socios           | Administrador |
-| 11 | Cobro de Actividad (No Socio)  | Administrador |
-| 12 | Generar Cuotas del Periodo     | Administrador |
+| # | Pantalla | Rol |
+|---|---|---|
+| 1 | Splash | Todos |
+| 2 | Login | Todos |
+| 3 | Dashboard Admin | Administrador |
+| 4 | Listado de Socios | Administrador |
+| 5 | Búsqueda de Socios | Administrador |
+| 6 | Detalle de Socio | Administrador |
+| 7 | Alta de Socio / No Socio | Administrador |
+| 8 | Vencimientos | Administrador |
+| 9 | Registrar Pago | Administrador |
+| 10 | Listado de No Socios | Administrador |
+| 11 | Cobro de Actividad (No Socio) | Administrador |
+| 12 | Dashboard Socio | Socio |
+| 13 | Perfil Socio | Socio |
+| 14 | Actividades | Socio / Admin |
 
 ---
 
 ## 🎨 Identidad visual
 
-| Nombre                | Hex       | Uso                             |
-| --------------------- | --------- | ------------------------------- |
-| `colorPrimary`        | `#1B4F8A` | Header, íconos, texto primario  |
-| `colorSecondary`      | `#6AA8D0` | Avatar, acentos secundarios     |
-| `colorPrimaryDark`    | `#1A3A5C` | Botones activos, selección      |
-| `colorPrimaryLight`   | `#CCE4F7` | Subtítulos sobre fondo primario |
-| `colorBackground`     | `#F5F8FC` | Fondo de pantallas              |
-| `colorBackgroundGray` | `#F0F0F0` | Botones desactivados            |
-| `colorTextPrimary`    | `#1A1A1A` | Texto principal                 |
-| `colorTextMuted`      | `#888888` | Texto secundario / hint         |
-| `colorTextHint`       | `#9E9E9E` | Texto muy tenue                 |
-| `colorStatusOk`       | `#2E7D32` | Texto "Al día"                  |
-| `colorStatusOkLight`  | `#E0F4E3` | Fondo badge "Al día"            |
-| `colorError`          | `#C62828` | Texto "Vencida"                 |
-| `colorErrorLight`     | `#FDDEDE` | Fondo badge "Vencida"           |
-| `colorSuccess`        | `#34C759` | Íconos de éxito                 |
-| `colorWarning`        | `#FF8D28` | Íconos de advertencia           |
-| Tipografía            | Roboto    | —                               |
+| Nombre | Hex | Uso |
+|---|---|---|
+| `colorPrimary` | `#1B4F8A` | Header, íconos, texto primario |
+| `colorSecondary` | `#6AA8D0` | Avatar, acentos secundarios |
+| `colorPrimaryDark` | `#1A3A5C` | Botones activos, selección |
+| `colorPrimaryLight` | `#CCE4F7` | Subtítulos sobre fondo primario |
+| `colorBackground` | `#F5F8FC` | Fondo de pantallas |
+| `colorBackgroundGray` | `#F0F0F0` | Botones desactivados |
+| `colorTextPrimary` | `#1A1A1A` | Texto principal |
+| `colorTextMuted` | `#888888` | Texto secundario / hint |
+| `colorTextHint` | `#9E9E9E` | Texto muy tenue |
+| `colorStatusOk` | `#2E7D32` | Texto "Al día" |
+| `colorStatusOkLight` | `#E0F4E3` | Fondo badge "Al día" |
+| `colorError` | `#C62828` | Texto "Vencida" |
+| `colorErrorLight` | `#FDDEDE` | Fondo badge "Vencida" |
+| `colorSuccess` | `#34C759` | Íconos de éxito |
+| `colorWarning` | `#FF8D28` | Íconos de advertencia |
+| Tipografía | Roboto | — |
 
 ---
 
 ## 🗄️ Modelo de datos
 
-El modelo replica el esquema de la base C#/MySQL del sistema original, portado a SQLite. Trabaja con **periodos** (`AAAAMM`): las cuotas mensuales se generan por adelantado para los socios activos y el pago actualiza la cuota ya generada.
-
 ### Entidades principales
 
-**Persona** (entidad base)
-- id_persona, nombres, apellidos, sexo, tipo_documento, nro_documento
-- fecha_nacimiento, email, telefono, domicilio
-- es_activo, fecha_alta, fecha_modificacion
+**Socio**
+- id, nombre, apellido, dni, email, telefono
+- estado (Al día / Vencida), fechaVencimiento, nroCarnet, aptoFisico
 
-**Socio** (referencia a Persona)
-- id_socio, id_persona, fecha_alta, fecha_baja (baja lógica)
-- apto_fisico, observaciones
+**NoSocio**
+- id, nombre, apellido, dni, email, telefono, nroCarnet
 
-**NoSocio** (referencia a Persona)
-- id_no_socio, id_persona, estado (Adherente / Baja Administrativa / Baja Voluntaria)
-- apto_fisico, motivo, fecha_registro, fecha_actualizacion
+**Pago**
+- id, idPersona, tipo (Mensual / Diario), monto, fecha, metodoPago
 
-**CuotaSocio**
-- id_pago, id_socio, periodo (AAAAMM), fecha_vencimiento
-- fecha_pago (NULL si está impaga), monto, medio, usuario_registro
-
-**PaseDiario** (cobro diario de no socios)
-- id_pase, id_no_socio, fecha, monto, medio, usuario_registro
-
-**ConfiguracionCuota**
-- id, tipo_cuota (Mensual / Diaria), importe_actual, vigente_desde
-
-**Usuario** y **Rol** (autenticación)
-- usuario: CodUsu, NombreUsu, PassUsu, RolUsu, Activo
-- rol: RolUsu, NomRol
+**Actividad**
+- id, nombre, horario, profesor, cupoTotal, cupoOcupado, costoDiario
 
 ---
 
@@ -189,16 +170,18 @@ El modelo replica el esquema de la base C#/MySQL del sistema original, portado a
 ```
 Splash
   └── Login
-        └── Dashboard Admin
-              ├── Listado Socios
-              │     ├── Detalle Socio + Carnet
-              │     │     └── Registrar Pago
-              │     └── Alta Socio / No Socio
-              ├── No Socios
-              │     └── Cobro Actividad
-              ├── Generar Cuotas del Periodo
-              └── Vencimientos
-                    └── Registrar Pago
+        ├── Dashboard Admin
+        │     ├── Listado Socios
+        │     │     ├── Detalle Socio
+        │     │     │     └── Registrar Pago
+        │     │     └── Alta Socio
+        │     ├── No Socios
+        │     │     └── Cobro Actividad
+        │     ├── Vencimientos
+        │     └── Actividades
+        └── Dashboard Socio
+              ├── Perfil Socio
+              └── Actividades
 ```
 
 ---
@@ -211,7 +194,7 @@ Splash
 
 ## 📁 Sistema desktop original
 
-El sistema de escritorio del que parte este proyecto está disponible en:
+El sistema de escritorio del que parte este proyecto está disponible en:  
 [club-deportivo-dotnet](https://github.com/Nicoalazar/club-deportivo-dotnet)
 
 Desarrollado en C# / .NET / WinForms con base de datos MySQL.
@@ -230,22 +213,23 @@ Desarrollado en C# / .NET / WinForms con base de datos MySQL.
 
 ## 🔒 Credenciales
 
-El login valida contra la tabla `usuario` de la base de datos local. La base se inicializa con un usuario administrador por defecto:
+En etapa de desarrollo se ingresa con:
+- Usuario: **admin**
+- Password: **admin123**
 
-- Usuario: **Admin**
-- Password: **admin**
+El botón **¿Olvidaste tu contraseña?** muestra un Toast con las credenciales.
 
-**⚠️ El password se almacena en texto plano por simplicidad del trabajo práctico; en un entorno real iría hasheado. ⚠️**
+**⚠️ SOLO PARA DESARROLLO ⚠️**
 
 ---
 
 ## 📌 Estado del proyecto
 
-| Etapa                      | Estado         |
-| -------------------------- | -------------- |
-| Análisis                   | ✅ Completo     |
-| Diseño (Figma)             | ✅ Completo     |
-| Entorno Android Studio     | ✅ Completo     |
-| Codificación               | ✅ Completo     |
-| Conexión con base de datos | ✅ Completo     |
-| Presentación               | ✅ Completo     |
+| Etapa                      | Estado |
+|----------------------------|---|
+| Análisis                   | ✅ Completo |
+| Diseño (Figma)             | ✅ Completo |
+| Entorno Android Studio     | 🔄 En progreso |
+| Codificación               | 🔄 En progreso |
+| Conexion con base de datos | ⏳ Pendiente |
+| Presentación               | ⏳ Pendiente |

@@ -32,28 +32,15 @@ class BuscarSociosActivity : AppCompatActivity() {
         }
 
         // Socios → RegistrarPagoActivity
-        val sociosData = listOf(
-            Triple(1, "Juan Pérez", "38.123.456"),
-            Triple(2, "María González", "29.876.543"),
-            Triple(3, "Carlos Ramírez", "41.222.111"),
-            Triple(4, "Laura Méndez", "35.654.321")
-        )
-
         val socios = listOf(
             binding.cardSocio1,
             binding.cardSocio2,
             binding.cardSocio3,
             binding.cardSocio4
         )
-
-        socios.forEachIndexed { index, card ->
+        socios.forEach { card ->
             card.setOnClickListener {
-                val intent = Intent(this, RegistrarPagoActivity::class.java)
-                intent.putExtra("ID_SOCIO", sociosData[index].first)
-                intent.putExtra("NOMBRE_SOCIO", sociosData[index].second)
-                intent.putExtra("DNI_SOCIO", sociosData[index].third)
-                intent.putExtra("USUARIO", "Admin")
-                startActivity(intent)
+                startActivity(Intent(this, RegistrarPagoActivity::class.java))
             }
         }
     }

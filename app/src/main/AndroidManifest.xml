@@ -13,61 +13,49 @@
         android:theme="@style/Theme.ClubDeportivo">
 
         <activity
-            android:name=".admin.cuotas.GenerarCuotasActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
-        <activity
             android:name=".admin.vencimientos.VencimientosActivity"
-            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".admin.socios.AltaSocioActivity"
-            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".admin.noSocios.ListaNoSociosActivity"
-            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".admin.socios.ListaSociosActivity"
-            android:screenOrientation="portrait"
             android:exported="false" />
 
         <activity
             android:name=".admin.socios.DetalleSocioActivity"
-            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".admin.DashboardAdminActivity"
-            android:screenOrientation="portrait"
             android:exported="false" />
 
         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".admin.socios.BuscarSociosActivity"
-            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".admin.pagos.RegistrarPagoActivity"
-            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".admin.noSocios.CobroActividadActivity"
-            android:screenOrientation="portrait"
             android:exported="false" />
 
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
 
     </application>
 
