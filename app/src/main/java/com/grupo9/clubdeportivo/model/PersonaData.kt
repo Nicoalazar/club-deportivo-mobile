@@ -2,6 +2,7 @@ package com.grupo9.clubdeportivo.model
 
 data class PersonaData(
     val id: Int,
+    val idPersona: Int,
     val categoria: String,          // "Socio" o "No Socio"
     val nombres: String,
     val apellidos: String,

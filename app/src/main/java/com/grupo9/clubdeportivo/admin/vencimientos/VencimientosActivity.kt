@@ -169,6 +169,11 @@ class VencimientosActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        cargarVencimientos()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         dbHelper.close()

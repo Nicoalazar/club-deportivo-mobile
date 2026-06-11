@@ -69,7 +69,8 @@ class DashboardAdminActivity : AppCompatActivity() {
 
         // Cableado de Generar Cuotas (Card que dice "Generar Cuotas" en la UI)
         cardActividades.setOnClickListener {
-            Toast.makeText(this, "Abriendo Generación de Cuotas...", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, com.grupo9.clubdeportivo.admin.cuotas.GenerarCuotasActivity::class.java)
+            startActivity(intent)
         }
 
         // Card Apto Físico (se mantiene con aviso temporal de expansión)

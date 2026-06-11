@@ -166,6 +166,10 @@ class AltaSocioActivity : AppCompatActivity() {
                 Toast.makeText(this, "El número de documento es obligatorio", Toast.LENGTH_SHORT).show()
                 return false
             }
+            tipoDoc == "DNI" && !nroDoc.matches(Regex("\\d{7,8}")) -> {
+                Toast.makeText(this, "El DNI debe tener entre 7 y 8 dígitos numéricos", Toast.LENGTH_SHORT).show()
+                return false
+            }
             email.isEmpty() -> {
                 Toast.makeText(this, "El email es obligatorio", Toast.LENGTH_SHORT).show()
                 return false
@@ -176,6 +180,10 @@ class AltaSocioActivity : AppCompatActivity() {
             }
             telefono.isEmpty() -> {
                 Toast.makeText(this, "El teléfono es obligatorio", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            !telefono.matches(Regex("[0-9+\\-\\s]{6,15}")) -> {
+                Toast.makeText(this, "El teléfono no es válido", Toast.LENGTH_SHORT).show()
                 return false
             }
         }
@@ -223,6 +231,8 @@ class AltaSocioActivity : AppCompatActivity() {
                 if (idSocio > 0) {
                     Toast.makeText(this, "Socio registrado con éxito", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, DetalleSocioActivity::class.java)
+                    intent.putExtra("INTENT_ID", idPersona)
+                    intent.putExtra("INTENT_CATEGORIA", "Socio")
                     intent.putExtra("INTENT_NOMBRE", "$nombre $apellido")
                     intent.putExtra("INTENT_DNI", nroDocumento)
                     intent.putExtra("INTENT_TIPO", "Socio")

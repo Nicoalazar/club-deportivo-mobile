@@ -103,10 +103,11 @@ class ListaSociosActivity : AppCompatActivity() {
 
             itemView.setOnClickListener {
                 val intent = Intent(this, DetalleSocioActivity::class.java)
-                intent.putExtra("INTENT_ID", persona.id)
+                intent.putExtra("INTENT_ID", persona.idPersona)
                 intent.putExtra("INTENT_NOMBRE", "${persona.nombres} ${persona.apellidos}")
                 intent.putExtra("INTENT_DNI", persona.nroDocumento)
                 intent.putExtra("INTENT_ESTADO", persona.estado)
+                intent.putExtra("INTENT_CATEGORIA", persona.categoria)
                 intent.putExtra("INTENT_TIPO", persona.categoria)
                 intent.putExtra("INTENT_VENCE", persona.vtoAptoFisico ?: "--/--/----")
                 intent.putExtra("INTENT_EMAIL", persona.email ?: "---")

@@ -113,7 +113,7 @@ class DBHelper(context: Context) :
 
     companion object {
         const val DB_NAME = "club_deportivo.db"
-        const val DB_VERSION = 1
+        const val DB_VERSION = 2
 
         // Montos iniciales de cuota.
         private const val CUOTA_MENSUAL_INICIAL = 15000.0
@@ -261,6 +261,7 @@ class DBHelper(context: Context) :
         private const val CREATE_VIEW_PERSONAS_DATA = """
             CREATE VIEW $VIEW_PERSONAS_DATA AS
             SELECT s.id_socio                 AS Id,
+                   p.id_persona               AS IdPersona,
                    'Socio'                    AS Categoria,
                    p.nombres                  AS Nombres,
                    p.apellidos                AS Apellidos,
@@ -278,6 +279,7 @@ class DBHelper(context: Context) :
             WHERE s.fecha_baja IS NULL
             UNION
             SELECT n.id_no_socio              AS Id,
+                   p1.id_persona              AS IdPersona,
                    'No Socio'                 AS Categoria,
                    p1.nombres                 AS Nombres,
                    p1.apellidos               AS Apellidos,
