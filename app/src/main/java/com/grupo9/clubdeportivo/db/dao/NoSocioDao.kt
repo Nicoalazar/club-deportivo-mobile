@@ -11,6 +11,15 @@ class NoSocioDao(private val dbHelper: DBHelper) {
 
     private val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
 
+    fun obtenerIdNoSocioPorPersona(idPersona: Int): Int? {
+        val db = dbHelper.readableDatabase
+        val query = "SELECT id_no_socio FROM ${DBHelper.TABLE_NO_SOCIOS} WHERE id_persona = ?"
+        db.rawQuery(query, arrayOf(idPersona.toString())).use { cursor ->
+            if (!cursor.moveToFirst()) return null
+            return cursor.getInt(cursor.getColumnIndexOrThrow("id_no_socio"))
+        }
+    }
+
     private fun existeNoSocio(idPersona: Int): Boolean {
         val db = dbHelper.readableDatabase
         val query = "SELECT id_no_socio FROM ${DBHelper.TABLE_NO_SOCIOS} WHERE id_persona = ?"

@@ -245,7 +245,7 @@ El login valida contra la tabla `usuario` de la base de datos local. La base se 
 | -------------------------- | -------------- |
 | Análisis                   | ✅ Completo     |
 | Diseño (Figma)             | ✅ Completo     |
-| Entorno Android Studio     | 🔄 En progreso |
-| Codificación               | 🔄 En progreso |
-| Conexión con base de datos | ⏳ Pendiente    |
-| Presentación               | ⏳ Pendiente    |
+| Entorno Android Studio     | ✅ Completo     |
+| Codificación               | ✅ Completo     |
+| Conexión con base de datos | ✅ Completo     |
+| Presentación               | ✅ Completo     |

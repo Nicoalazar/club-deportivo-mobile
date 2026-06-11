@@ -58,7 +58,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="#1B4F8A"
+                app:cardBackgroundColor="@color/colorPrimary"
                 app:cardElevation="4dp">
 
                 <LinearLayout
@@ -105,7 +105,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="DNI: 38.123.456"
-                            android:textColor="#E0E0E0"
+                            android:textColor="@color/colorPrimaryLight"
                             android:textSize="14sp"
                             android:layout_marginTop="2dp" />
 
@@ -114,7 +114,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Categoría: Socio"
-                            android:textColor="#E0E0E0"
+                            android:textColor="@color/colorPrimaryLight"
                             android:textSize="14sp"
                             android:layout_marginTop="2dp" />
 
@@ -123,7 +123,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Carnet N° 00042"
-                            android:textColor="#E0E0E0"
+                            android:textColor="@color/colorPrimaryLight"
                             android:textSize="14sp"
                             android:layout_marginTop="2dp" />
 
@@ -133,7 +133,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="✓ Cuota al día"
-                            android:textColor="#00FF00"
+                            android:textColor="@color/colorSuccess"
                             android:textStyle="bold"
                             android:textSize="14sp"
                             android:background="#22000000"
@@ -255,8 +255,8 @@
                 android:layout_height="52dp"
                 android:layout_weight="1"
                 android:text="EDITAR"
-                android:backgroundTint="#ECEFF1"
-                android:textColor="#37474F"
+                android:backgroundTint="@color/colorBackgroundGray"
+                android:textColor="@color/colorTextPrimary"
                 android:textStyle="bold"
                 android:layout_marginEnd="4dp" />
 
@@ -266,7 +266,7 @@
                 android:layout_height="52dp"
                 android:layout_weight="1"
                 android:text="DAR DE BAJA"
-                android:backgroundTint="#D32F2F"
+                android:backgroundTint="@color/colorError"
                 android:textColor="@color/white"
                 android:layout_marginStart="4dp" />
         </LinearLayout>

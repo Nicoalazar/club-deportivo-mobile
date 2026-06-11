@@ -13,6 +13,7 @@ import com.grupo9.clubdeportivo.admin.noSocios.CobroActividadActivity
 import com.grupo9.clubdeportivo.admin.pagos.RegistrarPagoActivity
 import com.grupo9.clubdeportivo.db.DBHelper
 import com.grupo9.clubdeportivo.db.dao.CuotaDao
+import com.grupo9.clubdeportivo.db.dao.NoSocioDao
 import com.grupo9.clubdeportivo.db.dao.PersonaDao
 import com.grupo9.clubdeportivo.db.dao.SocioDao
 
@@ -54,7 +55,9 @@ class DetalleSocioActivity : AppCompatActivity() {
 
         // 3. CARGA DE DATOS DESDE LA BASE DE DATOS
         val personaDao = PersonaDao(dbHelper)
-        val personaData = personaDao.obtenerPorId(personaId)
+        val socioDao = SocioDao(dbHelper)
+        val personaData = personaDao.obtenerPorIdPersona(personaId)
+        var idSocio: Int? = null
 
         if (personaData != null) {
             // Llenamos los datos de texto generales
@@ -79,8 +82,10 @@ class DetalleSocioActivity : AppCompatActivity() {
                 tvCarnetCategoria.text = "Categoría: Socio"
 
                 // Consultamos las cuotas usando el CuotaDao como pide la consigna
+                val idSocioActual = socioDao.obtenerIdSocioPorPersona(personaId)
+                idSocio = idSocioActual
                 val cuotaDao = CuotaDao(dbHelper)
-                val cuotas = cuotaDao.cuotasDeSocio(personaId)
+                val cuotas = if (idSocioActual != null) cuotaDao.cuotasDeSocio(idSocioActual) else emptyList()
 
                 // Si tiene alguna cuota donde la fecha de pago sea nula (pendiente), evaluamos su estado
                 val tieneDeuda = cuotas.any { it.fechaPago.isNullOrEmpty() }
@@ -112,14 +117,16 @@ class DetalleSocioActivity : AppCompatActivity() {
             if (categoria.equals("Socio", ignoreCase = true)) {
                 // Navega a Registrar Pago (Vínculo con Issue #12)
                 val intentPago = Intent(this, RegistrarPagoActivity::class.java)
-                intentPago.putExtra("ID_SOCIO", personaId)
+                intentPago.putExtra("ID_SOCIO", idSocio ?: -1)
                 intentPago.putExtra("NOMBRE_SOCIO", "${personaData?.nombres} ${personaData?.apellidos}")
                 intentPago.putExtra("DNI_SOCIO", personaData?.nroDocumento ?: "")
                 intentPago.putExtra("USUARIO", usuario)
                 startActivity(intentPago)
             } else {
+                val noSocioDao = NoSocioDao(dbHelper)
+                val idNoSocio = noSocioDao.obtenerIdNoSocioPorPersona(personaId) ?: -1
                 val intentCobro = Intent(this, CobroActividadActivity::class.java)
-                intentCobro.putExtra("INTENT_ID", personaId)
+                intentCobro.putExtra("INTENT_ID", idNoSocio)
                 intentCobro.putExtra("INTENT_NOMBRE", "${personaData?.nombres} ${personaData?.apellidos}")
                 intentCobro.putExtra("INTENT_DNI", personaData?.nroDocumento ?: "")
                 intentCobro.putExtra("USUARIO", usuario)

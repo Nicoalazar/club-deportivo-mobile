@@ -19,6 +19,15 @@ class SocioDao(private val dbHelper: DBHelper) {
         }
     }
 
+    fun obtenerIdSocioPorPersona(idPersona: Int): Int? {
+        val db = dbHelper.readableDatabase
+        val query = "SELECT id_socio FROM ${DBHelper.TABLE_SOCIOS} WHERE id_persona = ?"
+        db.rawQuery(query, arrayOf(idPersona.toString())).use { cursor ->
+            if (!cursor.moveToFirst()) return null
+            return cursor.getInt(cursor.getColumnIndexOrThrow("id_socio"))
+        }
+    }
+
     fun insertarSocio(idPersona: Int, aptoVencimiento: String?, observaciones: String? = null): Long {
         if (existeSocioActivo(idPersona)) return -1L
 
@@ -41,12 +50,12 @@ class SocioDao(private val dbHelper: DBHelper) {
         return db.update(DBHelper.TABLE_SOCIOS, values, "id_socio = ?", arrayOf(idSocio.toString()))
     }
 
-    fun darDeBaja(idSocio: Int): Int {
+    fun darDeBaja(idPersona: Int): Int {
         val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
             put("fecha_baja", sdf.format(Date()))
         }
-        return db.update(DBHelper.TABLE_SOCIOS, values, "id_socio = ?", arrayOf(idSocio.toString()))
+        return db.update(DBHelper.TABLE_SOCIOS, values, "id_persona = ? AND fecha_baja IS NULL", arrayOf(idPersona.toString()))
     }
 
     fun obtenerPorId(idSocio: Int): Socio? {

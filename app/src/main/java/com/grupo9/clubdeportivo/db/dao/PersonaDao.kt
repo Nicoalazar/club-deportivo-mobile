@@ -109,9 +109,22 @@ class PersonaDao(private val dbHelper: DBHelper) {
         }
         return null
     }
+
+    fun obtenerPorIdPersona(idPersona: Int): PersonaData? {
+        val db = dbHelper.readableDatabase
+        val query = "SELECT * FROM ${DBHelper.VIEW_PERSONAS_DATA} WHERE IdPersona = ?"
+
+        db.rawQuery(query, arrayOf(idPersona.toString())).use { cursor ->
+            if (cursor.moveToFirst()) {
+                return cursorToPersonaData(cursor)
+            }
+        }
+        return null
+    }
     private fun cursorToPersonaData(cursor: Cursor): PersonaData {
         return PersonaData(
             id           = cursor.getInt(cursor.getColumnIndexOrThrow("Id")),
+            idPersona    = cursor.getInt(cursor.getColumnIndexOrThrow("IdPersona")),
             categoria    = cursor.getString(cursor.getColumnIndexOrThrow("Categoria")),
             nombres      = cursor.getString(cursor.getColumnIndexOrThrow("Nombres")),
             apellidos    = cursor.getString(cursor.getColumnIndexOrThrow("Apellidos")),
