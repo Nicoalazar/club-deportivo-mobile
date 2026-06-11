@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:background="@color/colorBackground">
 
-    <!-- Header Azul Primario (#1B4F8A) -->
+    <!-- Header -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
@@ -20,7 +20,7 @@
             android:text="←"
             android:textColor="@color/white"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -33,7 +33,7 @@
             android:layout_marginStart="50dp"/>
     </RelativeLayout>
 
-    <!-- Filtros (Botones Hoy, 7 días, Todos) -->
+    <!-- Filtros -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,6 +77,42 @@
             android:textColor="@color/colorPrimary"/>
     </LinearLayout>
 
+    <!-- Switch incluir por vencer -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="8dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Incluir por vencer"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="14sp"/>
+
+        <Switch
+            android:id="@+id/switchPorVencer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <!-- Lista vacía -->
+    <TextView
+        android:id="@+id/tvListaVacia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No hay vencimientos para la fecha"
+        android:textColor="@color/colorTextMuted"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:padding="32dp"
+        android:visibility="gone"/>
+
     <!-- Contenedor Dinámico -->
     <ScrollView
         android:layout_width="match_parent"
@@ -87,9 +123,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="15dp">
-            <!-- Aquí se inyectan los socios por código -->
-        </LinearLayout>
+            android:padding="15dp"/>
     </ScrollView>
 
 </LinearLayout>

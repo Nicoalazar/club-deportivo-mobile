@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:background="@color/colorBackground">
 
-    <!-- Barra Superior Azul -->
+    <!-- Barra Superior -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -34,159 +34,229 @@
             android:layout_marginStart="16dp" />
     </LinearLayout>
 
-    <!-- Tarjeta de Usuario (Pedro Alvarez) -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/white"
-        android:layout_margin="20dp"
-        android:padding="16dp">
-
-        <TextView
-            android:id="@+id/tvNombreNoSocio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pedro Alvarez"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="DNI: 40.111.222"
-            android:textColor="@color/colorTextMuted"
-            android:textSize="14sp" />
-    </LinearLayout>
-
-    <!-- Selección de Actividad -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Seleccioná la actividad"
-        android:textColor="@color/colorPrimary"
-        android:textStyle="bold"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="10dp" />
-
-    <!-- Fila 1 Actividades -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="10dp"
-        android:weightSum="2">
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Musculación"
-            android:backgroundTint="@color/colorPrimary"
-            android:layout_marginRight="5dp" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Pilates"
-            android:backgroundTint="@color/white"
-            android:textColor="@color/colorTextMuted"
-            android:layout_marginLeft="5dp" />
-    </LinearLayout>
-
-    <!-- Fila 2 Actividades -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:weightSum="2">
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Zumba"
-            android:backgroundTint="@color/white"
-            android:textColor="@color/colorTextMuted"
-            android:layout_marginRight="5dp" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Spinning"
-            android:backgroundTint="@color/white"
-            android:textColor="@color/colorTextMuted"
-            android:layout_marginLeft="5dp" />
-    </LinearLayout>
-
-    <!-- Costo de la actividad -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Costo de la actividad"
-        android:textColor="@color/colorPrimary"
-        android:textStyle="bold"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_margin="20dp"
-        android:background="@color/white"
-        android:padding="15dp"
-        android:text="$800"
-        android:textColor="@color/colorPrimary"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:inputType="number" />
-
-    <!-- Metodo de pago -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Método de pago"
-        android:textColor="@color/colorPrimary"
-        android:textStyle="bold"
-        android:layout_marginLeft="20dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="20dp"
-        android:weightSum="2">
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Efectivo"
-            android:backgroundTint="@color/colorPrimary"
-            android:layout_marginRight="5dp" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Transferencia"
-            android:backgroundTint="@color/white"
-            android:textColor="@color/colorTextMuted"
-            android:layout_marginLeft="5dp" />
-    </LinearLayout>
-
-    <Space
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Sección búsqueda (visible cuando no se recibe ID por Intent) -->
+            <LinearLayout
+                android:id="@+id/sectionBusqueda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:layout_margin="20dp"
+                android:padding="16dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Buscar no socio"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="8dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+
+                    <EditText
+                        android:id="@+id/etBuscarNoSocio"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:hint="Nombre o DNI"
+                        android:inputType="text"
+                        android:textColor="@color/black"
+                        android:layout_marginEnd="8dp" />
+
+                    <Button
+                        android:id="@+id/btnBuscar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Buscar"
+                        android:backgroundTint="@color/colorPrimary" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/containerResultadosBusqueda"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
+            <!-- Tarjeta de datos del no socio -->
+            <LinearLayout
+                android:id="@+id/sectionDatosNoSocio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:layout_margin="20dp"
+                android:padding="16dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tvNombreNoSocio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre del No Socio"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvDniNoSocio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DNI: -"
+                    android:textColor="@color/colorTextMuted"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Selección de Actividad -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Seleccioná la actividad"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/btnMusculacion"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Musculación"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:layout_marginEnd="5dp" />
+
+                <Button
+                    android:id="@+id/btnPilates"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Pilates"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/colorTextMuted"
+                    android:layout_marginStart="5dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/btnZumba"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Zumba"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/colorTextMuted"
+                    android:layout_marginEnd="5dp" />
+
+                <Button
+                    android:id="@+id/btnSpinning"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Spinning"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/colorTextMuted"
+                    android:layout_marginStart="5dp" />
+            </LinearLayout>
+
+            <!-- Costo de la actividad -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Costo de la actividad"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp" />
+
+            <EditText
+                android:id="@+id/etCostoActividad"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_margin="20dp"
+                android:background="@color/white"
+                android:padding="15dp"
+                android:hint="0"
+                android:textColor="@color/colorPrimary"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:inputType="numberDecimal" />
+
+            <!-- Método de pago -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Método de pago"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:layout_marginStart="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="20dp"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/btnPagoEfectivo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Efectivo"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:layout_marginEnd="5dp" />
+
+                <Button
+                    android:id="@+id/btnPagoTransferencia"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Virtual"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/colorTextMuted"
+                    android:layout_marginStart="5dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Botón fijo abajo -->
     <Button
         android:id="@+id/btnConfirmarCobro"
         android:layout_width="match_parent"
