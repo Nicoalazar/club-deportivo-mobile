@@ -112,7 +112,10 @@ class DetalleSocioActivity : AppCompatActivity() {
             if (categoria.equals("Socio", ignoreCase = true)) {
                 // Navega a Registrar Pago (Vínculo con Issue #12)
                 val intentPago = Intent(this, RegistrarPagoActivity::class.java)
-                intentPago.putExtra("SOCI_ID", personaId)
+                intentPago.putExtra("ID_SOCIO", personaId)
+                intentPago.putExtra("NOMBRE_SOCIO", "${personaData?.nombres} ${personaData?.apellidos}")
+                intentPago.putExtra("DNI_SOCIO", personaData?.nroDocumento ?: "")
+                intentPago.putExtra("USUARIO", usuario)
                 startActivity(intentPago)
             } else {
                 val intentCobro = Intent(this, CobroActividadActivity::class.java)
