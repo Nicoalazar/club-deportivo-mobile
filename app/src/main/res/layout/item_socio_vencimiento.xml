@@ -12,13 +12,14 @@
         android:id="@+id/bordeLateral"
         android:layout_width="4dp"
         android:layout_height="match_parent"
-        android:layout_marginEnd="10dp" />
+        android:layout_marginEnd="10dp"/>
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/txtNombreSocio"
             android:layout_width="wrap_content"
@@ -26,16 +27,50 @@
             android:textStyle="bold"
             android:textColor="@color/colorTextPrimary"
             android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/txtPeriodo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/colorTextMuted"/>
+
         <TextView
             android:id="@+id/txtEstadoSocio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"/>
+            android:textSize="12sp"
+            android:textStyle="bold"/>
+
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/txtFechaSocio"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"/>
+        android:orientation="vertical"
+        android:gravity="end">
+
+        <TextView
+            android:id="@+id/txtFechaSocio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/txtMonto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="@color/colorTextPrimary"/>
+
+        <TextView
+            android:id="@+id/txtDiasVencidos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:textColor="@color/colorTextMuted"/>
+
+    </LinearLayout>
+
 </LinearLayout>

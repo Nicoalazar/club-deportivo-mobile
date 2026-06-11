@@ -50,6 +50,7 @@ class DashboardAdminActivity : AppCompatActivity() {
 
         cardVencimientos.setOnClickListener {
             val intent = Intent(this, VencimientosActivity::class.java)
+            intent.putExtra("USUARIO", usuarioActual)
             startActivity(intent)
         }
 
