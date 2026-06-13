@@ -133,11 +133,11 @@ class DetalleSocioActivity : AppCompatActivity() {
                 }
 
                 if (cuotaVencida) {
-                    tvBadgeEstado.text = "✗ Cuota Vencida"
-                    tvBadgeEstado.setTextColor(ContextCompat.getColor(this, android.R.color.holo_red_light))
+                    tvBadgeEstado.text = "Cuota Vencida"
+                    tvBadgeEstado.setTextColor(ContextCompat.getColor(this, R.color.colorError))
                 } else {
-                    tvBadgeEstado.text = "✓ Cuota al Día"
-                    tvBadgeEstado.setTextColor(ContextCompat.getColor(this, android.R.color.holo_green_light))
+                    tvBadgeEstado.text = "Cuota al Día"
+                    tvBadgeEstado.setTextColor(ContextCompat.getColor(this, R.color.colorStatusOk))
                 }
 
                 // Cargar últimos pagos

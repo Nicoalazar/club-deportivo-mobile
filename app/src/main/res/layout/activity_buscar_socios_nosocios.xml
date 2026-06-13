@@ -43,16 +43,37 @@
         android:padding="16dp"
         android:background="@color/colorBackgroundGray">
 
-        <EditText
-            android:id="@+id/etBuscar"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:hint="@string/buscar_personas"
-            android:textSize="14sp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
+            android:orientation="horizontal"
             android:background="@android:drawable/edit_text"
-            android:inputType="text"/>
+            android:gravity="center_vertical"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/fitness"
+                android:contentDescription="Buscar"
+                android:layout_marginEnd="8dp"
+                app:tint="@color/colorTextMuted"/>
+
+            <EditText
+                android:id="@+id/etBuscar"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="@string/buscar_personas"
+                android:textSize="14sp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:background="@android:color/transparent"
+                android:inputType="text"
+                android:textColor="@color/colorTextPrimary"
+                android:textColorHint="@color/colorTextHint"/>
+        </LinearLayout>
     </LinearLayout>
 
     <!-- LISTA -->
