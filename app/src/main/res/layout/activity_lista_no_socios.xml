@@ -38,22 +38,44 @@
 
     <!-- Buscador -->
     <LinearLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="16dp"
         android:background="@color/colorBackground">
 
-        <EditText
-            android:id="@+id/etBuscar"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="44dp"
-            android:hint="🔍  Buscar por nombre o DNI..."
-            android:inputType="text"
+            android:orientation="horizontal"
             android:background="@android:drawable/edit_text"
+            android:gravity="center_vertical"
             android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:textSize="14sp" />
+            android:paddingEnd="12dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/fitness"
+                android:contentDescription="Buscar"
+                android:layout_marginEnd="8dp"
+                app:tint="@color/colorTextMuted"/>
+
+            <EditText
+                android:id="@+id/etBuscar"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="Buscar por nombre o DNI..."
+                android:inputType="text"
+                android:background="@android:color/transparent"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:textSize="14sp"
+                android:textColor="@color/colorTextPrimary"
+                android:textColorHint="@color/colorTextHint"/>
+        </LinearLayout>
 
     </LinearLayout>
 
