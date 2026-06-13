@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.grupo9.clubdeportivo.R
@@ -24,19 +25,19 @@ class GenerarCuotasActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_generar_cuotas)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Generar Cuotas"
-
         // Obtener usuario de DashboardAdminActivity
         usuarioActual = intent.getStringExtra("USUARIO") ?: "Admin"
 
         dbHelper = DBHelper(this)
         cuotaDao = CuotaDao(dbHelper)
 
+        val btnVolver = findViewById<TextView>(R.id.btnVolver)
         val spinnerPeriodo = findViewById<Spinner>(R.id.spinnerPeriodo)
         val etDiaVencimiento = findViewById<EditText>(R.id.etDiaVencimiento)
         val etMonto = findViewById<EditText>(R.id.etMonto)
         val btnGenerar = findViewById<Button>(R.id.btnGenerar)
+
+        btnVolver.setOnClickListener { finish() }
 
         // Cargar períodos disponibles
         cargarPeriodos(spinnerPeriodo)

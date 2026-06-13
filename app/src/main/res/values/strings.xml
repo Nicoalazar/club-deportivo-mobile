@@ -50,4 +50,5 @@
     </string-array>
 
     <string name="buscar_personas">🔍 Buscar socios/no socios...</string>
+    <string name="generar_cuotas">Generar Cuotas</string>
 </resources>
