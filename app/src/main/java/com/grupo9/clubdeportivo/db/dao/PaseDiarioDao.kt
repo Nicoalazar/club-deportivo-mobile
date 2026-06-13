@@ -39,12 +39,41 @@ class PaseDiarioDao(private val dbHelper: DBHelper) {
     fun pasesDeNoSocio(idNoSocio: Int): List<PaseDiario> {
         val pases = mutableListOf<PaseDiario>()
         val db = dbHelper.readableDatabase
-        
+
         val cursor = db.query(
             DBHelper.TABLE_PASES_DIARIOS,
             null,
             "id_no_socio = ?",
             arrayOf(idNoSocio.toString()),
+            null, null, "fecha DESC"
+        )
+
+        if (cursor.moveToFirst()) {
+            do {
+                pases.add(PaseDiario(
+                    idPase = cursor.getInt(cursor.getColumnIndexOrThrow("id_pase")),
+                    idNoSocio = cursor.getInt(cursor.getColumnIndexOrThrow("id_no_socio")),
+                    fecha = cursor.getString(cursor.getColumnIndexOrThrow("fecha")),
+                    monto = cursor.getDouble(cursor.getColumnIndexOrThrow("monto")),
+                    medio = cursor.getString(cursor.getColumnIndexOrThrow("medio")),
+                    usuarioRegistro = cursor.getString(cursor.getColumnIndexOrThrow("usuario_registro"))
+                ))
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        return pases
+    }
+
+    // Obtiene todos los pases registrados en una fecha específica
+    fun obtenerPasesDelDia(fecha: String): List<PaseDiario> {
+        val pases = mutableListOf<PaseDiario>()
+        val db = dbHelper.readableDatabase
+
+        val cursor = db.query(
+            DBHelper.TABLE_PASES_DIARIOS,
+            null,
+            "fecha = ?",
+            arrayOf(fecha),
             null, null, "fecha DESC"
         )
 
