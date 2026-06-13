@@ -81,12 +81,16 @@ class DetalleSocioActivity : AppCompatActivity() {
 
             // Vencimiento del apto físico
             tvAptoFisico.text = if (!personaData.vtoAptoFisico.isNullOrEmpty()) {
-                val vtoDate = SimpleDateFormat("yyyy-MM-dd", Locale.US).parse(personaData.vtoAptoFisico)
-                val hoy = Date()
-                if (vtoDate != null && hoy > vtoDate) {
+                try {
+                    val vtoDate = SimpleDateFormat("yyyy-MM-dd", Locale.US).parse(personaData.vtoAptoFisico)
+                    val hoy = Date()
+                    if (vtoDate != null && hoy > vtoDate) {
+                        "Vencido"
+                    } else {
+                        "Vence: ${personaData.vtoAptoFisico}"
+                    }
+                } catch (e: Exception) {
                     "Vencido"
-                } else {
-                    "Vence: ${personaData.vtoAptoFisico}"
                 }
             } else {
                 "Vencido"
@@ -114,8 +118,15 @@ class DetalleSocioActivity : AppCompatActivity() {
                 val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
                 val hoy = Date()
                 val cuotaVencida = cuotas.any { cuota ->
-                    cuota.fechaPago.isNullOrEmpty() &&
-                    sdf.parse(cuota.fechaVencimiento)?.let { hoy > it } ?: false
+                    if (cuota.fechaPago.isNullOrEmpty()) {
+                        try {
+                            sdf.parse(cuota.fechaVencimiento)?.let { hoy > it } ?: false
+                        } catch (e: Exception) {
+                            false
+                        }
+                    } else {
+                        false
+                    }
                 }
 
                 if (cuotaVencida) {
@@ -225,7 +236,11 @@ class DetalleSocioActivity : AppCompatActivity() {
             }
 
             val fechaFormato = if (!cuota.fechaPago.isNullOrEmpty()) {
-                sdf.parse(cuota.fechaPago)?.let { sdfFormato.format(it) } ?: cuota.fechaPago
+                try {
+                    sdf.parse(cuota.fechaPago)?.let { sdfFormato.format(it) } ?: cuota.fechaPago
+                } catch (e: Exception) {
+                    cuota.fechaPago
+                }
             } else {
                 "--/--/----"
             }
