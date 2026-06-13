@@ -155,7 +155,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:cardCornerRadius="8dp">
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/white">
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
