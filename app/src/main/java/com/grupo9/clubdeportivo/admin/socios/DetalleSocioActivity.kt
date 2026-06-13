@@ -82,15 +82,18 @@ class DetalleSocioActivity : AppCompatActivity() {
             // Vencimiento del apto físico
             tvAptoFisico.text = if (!personaData.vtoAptoFisico.isNullOrEmpty()) {
                 try {
-                    val vtoDate = SimpleDateFormat("yyyy-MM-dd", Locale.US).parse(personaData.vtoAptoFisico)
-                    val hoy = Date()
-                    if (vtoDate != null && hoy > vtoDate) {
+                    val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+                    val vtoDate = sdf.parse(personaData.vtoAptoFisico)
+                    val hoy = sdf.parse(sdf.format(Date())) // Normalizar fecha sin hora
+
+                    if (vtoDate != null && hoy != null && hoy > vtoDate) {
                         "Vencido"
                     } else {
                         "Vence: ${personaData.vtoAptoFisico}"
                     }
                 } catch (e: Exception) {
-                    "Vencido"
+                    // Si hay error en parsing, mostrar el valor como está
+                    "Vence: ${personaData.vtoAptoFisico}"
                 }
             } else {
                 "Vencido"
