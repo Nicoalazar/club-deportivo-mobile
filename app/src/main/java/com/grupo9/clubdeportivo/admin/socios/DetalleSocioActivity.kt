@@ -256,7 +256,7 @@ class DetalleSocioActivity : AppCompatActivity() {
             }
 
             val tvMedio = TextView(this).apply {
-                text = cuota.medio
+                text = "${cuota.periodo} - ${cuota.medio}"
                 textSize = 11f
                 setTextColor(ContextCompat.getColor(this@DetalleSocioActivity, R.color.colorTextHint))
                 layoutParams = android.widget.RelativeLayout.LayoutParams(

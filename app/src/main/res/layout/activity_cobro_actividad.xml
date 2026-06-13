@@ -6,32 +6,34 @@
     android:orientation="vertical"
     android:background="@color/colorBackground">
 
-    <!-- Barra Superior -->
+    <!-- HEADER -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/colorPrimary"
+        android:layout_height="56dp"
+        android:background="@color/colorPrimaryDark"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:paddingStart="16dp">
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp">
 
         <TextView
             android:id="@+id/btnVolverCobro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="←"
+            android:textSize="22sp"
             android:textColor="@color/white"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:layout_marginEnd="12dp"
+            android:clickable="true"
+            android:focusable="true"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cobro de Actividad"
             android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginStart="16dp" />
+            android:textSize="18sp"
+            android:textStyle="bold"/>
     </LinearLayout>
 
     <ScrollView
