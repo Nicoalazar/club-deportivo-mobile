@@ -68,9 +68,11 @@ class ListaSociosActivity : AppCompatActivity() {
             }
         }
 
-        if (lista.isEmpty()) {
+        val solos = lista.filter { it.categoria == "Socio" }
+
+        if (solos.isEmpty()) {
             val tvVacio = TextView(this)
-            tvVacio.text = "No se encontraron personas."
+            tvVacio.text = "No se encontraron socios."
             tvVacio.textAlignment = View.TEXT_ALIGNMENT_CENTER
             tvVacio.setPadding(0, 50, 0, 0)
             container.addView(tvVacio)
@@ -79,7 +81,7 @@ class ListaSociosActivity : AppCompatActivity() {
 
         val inflater = LayoutInflater.from(this)
 
-        for (persona in lista) {
+        for (persona in solos) {
             val itemView = inflater.inflate(R.layout.item_lista_personas, container, false)
 
             val tvNombre = itemView.findViewById<TextView>(R.id.tvNombre)
