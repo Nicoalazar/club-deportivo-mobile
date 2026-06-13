@@ -3,10 +3,12 @@ package com.grupo9.clubdeportivo.admin.socios
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.grupo9.clubdeportivo.R
 import com.grupo9.clubdeportivo.admin.noSocios.CobroActividadActivity
@@ -16,6 +18,10 @@ import com.grupo9.clubdeportivo.db.dao.CuotaDao
 import com.grupo9.clubdeportivo.db.dao.NoSocioDao
 import com.grupo9.clubdeportivo.db.dao.PersonaDao
 import com.grupo9.clubdeportivo.db.dao.SocioDao
+import java.text.NumberFormat
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class DetalleSocioActivity : AppCompatActivity() {
 
@@ -34,6 +40,7 @@ class DetalleSocioActivity : AppCompatActivity() {
         val tvDniDetalle      = findViewById<TextView>(R.id.tvDniDetalle)
         val tvEmailDetalle    = findViewById<TextView>(R.id.tvEmailDetalle)
         val tvTelefonoDetalle = findViewById<TextView>(R.id.tvTelefonoDetalle)
+        val tvAptoFisico      = findViewById<TextView>(R.id.tvAptoFisico)
 
         // Elementos internos del Carnet Azul
         val tvAvatar          = findViewById<TextView>(R.id.tvAvatar)
@@ -42,6 +49,9 @@ class DetalleSocioActivity : AppCompatActivity() {
         val tvCarnetCategoria = findViewById<TextView>(R.id.tvCarnetCategoria)
         val tvNumCarnet       = findViewById<TextView>(R.id.tvNumCarnet)
         val tvBadgeEstado     = findViewById<TextView>(R.id.tvBadgeEstado)
+
+        // Container de pagos
+        val containerPagos    = findViewById<LinearLayout>(R.id.containerPagos)
 
         // Botones de Acción
         val btnAccionPrincipal = findViewById<Button>(R.id.btnAccionPrincipal)
@@ -67,7 +77,14 @@ class DetalleSocioActivity : AppCompatActivity() {
             tvCarnetDni.text = "DNI: ${personaData.nroDocumento}"
             tvDniDetalle.text = personaData.nroDocumento
             tvEmailDetalle.text = personaData.email ?: "Sin Email"
-            tvTelefonoDetalle.text = "11-XXXX-XXXX" // Aquí puedes mapear el teléfono si tu modelo lo tiene suelto, o dejar un placeholder
+            tvTelefonoDetalle.text = personaData.telefono ?: "Sin teléfono"
+
+            // Vencimiento del apto físico
+            tvAptoFisico.text = if (!personaData.vtoAptoFisico.isNullOrEmpty()) {
+                "Vence: ${personaData.vtoAptoFisico}"
+            } else {
+                "Vence: --/--/----"
+            }
 
             // Generamos las iniciales para el Avatar redondo
             val partes = nombreCompleto.trim().split(" ")
@@ -97,6 +114,9 @@ class DetalleSocioActivity : AppCompatActivity() {
                     tvBadgeEstado.text = "✓ Cuota al Día"
                     tvBadgeEstado.setTextColor(ContextCompat.getColor(this, android.R.color.holo_green_light))
                 }
+
+                // Cargar últimos pagos
+                cargarUltimosPagos(containerPagos, cuotas)
 
             } else {
                 // Si es No Socio, el issue pide otro flujo
@@ -155,4 +175,91 @@ class DetalleSocioActivity : AppCompatActivity() {
                 .show()
         }
     }
+
+    private fun cargarUltimosPagos(container: LinearLayout, cuotas: List<com.grupo9.clubdeportivo.model.CuotaSocio>) {
+        container.removeAllViews()
+
+        val cuotasPagadas = cuotas.filter { !it.fechaPago.isNullOrEmpty() }.take(5)
+
+        if (cuotasPagadas.isEmpty()) {
+            val tvVacio = TextView(this)
+            tvVacio.text = "Sin pagos registrados"
+            tvVacio.setPadding(16, 16, 16, 16)
+            container.addView(tvVacio)
+            return
+        }
+
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+        val sdfFormato = SimpleDateFormat("dd/MM/yyyy", Locale("es", "AR"))
+        val nf = NumberFormat.getCurrencyInstance(Locale("es", "AR"))
+
+        for (cuota in cuotasPagadas) {
+            val cardView = CardView(this).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    bottomMargin = 8.dpToPx()
+                }
+                setCardBackgroundColor(ContextCompat.getColor(this@DetalleSocioActivity, R.color.white))
+                radius = 6f
+            }
+
+            val layout = android.widget.RelativeLayout(this).apply {
+                layoutParams = android.widget.RelativeLayout.LayoutParams(
+                    android.widget.RelativeLayout.LayoutParams.MATCH_PARENT,
+                    android.widget.RelativeLayout.LayoutParams.WRAP_CONTENT
+                )
+                setPadding(12.dpToPx(), 12.dpToPx(), 12.dpToPx(), 12.dpToPx())
+            }
+
+            val fechaFormato = if (!cuota.fechaPago.isNullOrEmpty()) {
+                sdf.parse(cuota.fechaPago)?.let { sdfFormato.format(it) } ?: cuota.fechaPago
+            } else {
+                "--/--/----"
+            }
+
+            val tvFecha = TextView(this).apply {
+                text = fechaFormato
+                textSize = 14f
+                setTextColor(ContextCompat.getColor(this@DetalleSocioActivity, R.color.colorTextMuted))
+                id = android.view.View.generateViewId()
+            }
+
+            val tvMedio = TextView(this).apply {
+                text = cuota.medio
+                textSize = 11f
+                setTextColor(ContextCompat.getColor(this@DetalleSocioActivity, R.color.colorTextHint))
+                layoutParams = android.widget.RelativeLayout.LayoutParams(
+                    android.widget.RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    android.widget.RelativeLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    addRule(android.widget.RelativeLayout.BELOW, tvFecha.id)
+                }
+            }
+
+            val tvMonto = TextView(this).apply {
+                text = nf.format(cuota.monto)
+                textSize = 14f
+                setTypeface(null, android.graphics.Typeface.BOLD)
+                setTextColor(ContextCompat.getColor(this@DetalleSocioActivity, R.color.colorStatusOk))
+                layoutParams = android.widget.RelativeLayout.LayoutParams(
+                    android.widget.RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    android.widget.RelativeLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    addRule(android.widget.RelativeLayout.ALIGN_PARENT_END)
+                    addRule(android.widget.RelativeLayout.CENTER_VERTICAL)
+                }
+            }
+
+            layout.addView(tvFecha)
+            layout.addView(tvMedio)
+            layout.addView(tvMonto)
+
+            cardView.addView(layout)
+            container.addView(cardView)
+        }
+    }
+
+    private fun Int.dpToPx(): Int = (this * resources.displayMetrics.density).toInt()
 }
