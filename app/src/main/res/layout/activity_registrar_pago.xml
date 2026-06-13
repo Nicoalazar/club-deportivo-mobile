@@ -54,13 +54,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="8dp"
-                app:cardElevation="2dp">
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="16dp"
+                    android:background="@color/white">
 
                     <TextView
                         android:id="@+id/tvNombreSocio"
