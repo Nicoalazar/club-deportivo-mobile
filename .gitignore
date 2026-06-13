@@ -20,6 +20,7 @@ local.properties
 keystore.properties
 google-services.json
 .env
+.claude
 
 # QA screenshots (adb manual testing)
 qa_*.png
