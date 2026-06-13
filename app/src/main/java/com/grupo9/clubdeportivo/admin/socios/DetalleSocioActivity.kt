@@ -81,9 +81,15 @@ class DetalleSocioActivity : AppCompatActivity() {
 
             // Vencimiento del apto físico
             tvAptoFisico.text = if (!personaData.vtoAptoFisico.isNullOrEmpty()) {
-                "Vence: ${personaData.vtoAptoFisico}"
+                val vtoDate = SimpleDateFormat("yyyy-MM-dd", Locale.US).parse(personaData.vtoAptoFisico)
+                val hoy = Date()
+                if (vtoDate != null && hoy > vtoDate) {
+                    "Vencido"
+                } else {
+                    "Vence: ${personaData.vtoAptoFisico}"
+                }
             } else {
-                "Vence: --/--/----"
+                "Vencido"
             }
 
             // Generamos las iniciales para el Avatar redondo
@@ -104,10 +110,15 @@ class DetalleSocioActivity : AppCompatActivity() {
                 val cuotaDao = CuotaDao(dbHelper)
                 val cuotas = if (idSocioActual != null) cuotaDao.cuotasDeSocio(idSocioActual) else emptyList()
 
-                // Si tiene alguna cuota donde la fecha de pago sea nula (pendiente), evaluamos su estado
-                val tieneDeuda = cuotas.any { it.fechaPago.isNullOrEmpty() }
+                // Evaluamos si hay cuota vencida (pendiente y pasada la fecha de vencimiento)
+                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+                val hoy = Date()
+                val cuotaVencida = cuotas.any { cuota ->
+                    cuota.fechaPago.isNullOrEmpty() &&
+                    sdf.parse(cuota.fechaVencimiento)?.let { hoy > it } ?: false
+                }
 
-                if (tieneDeuda) {
+                if (cuotaVencida) {
                     tvBadgeEstado.text = "✗ Cuota Vencida"
                     tvBadgeEstado.setTextColor(ContextCompat.getColor(this, android.R.color.holo_red_light))
                 } else {
@@ -155,7 +166,7 @@ class DetalleSocioActivity : AppCompatActivity() {
         }
 
         btnEditar.setOnClickListener {
-            Toast.makeText(this, "Abriendo pantalla de edición...", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Proximamente", Toast.LENGTH_SHORT).show()
         }
 
         btnDarDeBaja.setOnClickListener {
