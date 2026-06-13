@@ -137,9 +137,10 @@ class BuscarSociosActivity : AppCompatActivity() {
 
             card.setOnClickListener {
                 val intent = Intent(this, CobroActividadActivity::class.java)
-                intent.putExtra("ID_NO_SOCIO", persona.id)
-                intent.putExtra("NOMBRE_NO_SOCIO", "${persona.nombres} ${persona.apellidos}")
-                intent.putExtra("DNI_NO_SOCIO", persona.nroDocumento)
+                intent.putExtra("INTENT_ID", persona.id)
+                intent.putExtra("INTENT_NOMBRE", "${persona.nombres} ${persona.apellidos}")
+                intent.putExtra("INTENT_DNI", persona.nroDocumento)
+                intent.putExtra("USUARIO", "Admin")
                 startActivity(intent)
             }
         }
